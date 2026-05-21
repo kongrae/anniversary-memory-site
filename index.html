@@ -24,6 +24,7 @@
   --apricot:#f4c8a2;
   --rose:#b76e79;
   --brown:#c98f70;
+  --aura:linear-gradient(120deg,#6f5cff 0%,#d86f9f 28%,#f0a262 58%,#7ab7cf 100%);
   --line:rgba(112,78,67,.16);
   --shadow:0 22px 60px rgba(126,78,63,.14);
   --soft:0 12px 32px rgba(126,78,63,.1);
@@ -32,7 +33,7 @@
 html { scroll-behavior:smooth; }
 body {
   margin:0;
-  color:var(--ink);
+  color:#3a2a28;
   font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
   background:
     radial-gradient(circle at 10% 8%,rgba(244,167,163,.42),transparent 25%),
@@ -172,7 +173,7 @@ button { cursor:pointer; }
   position:absolute;
   top:-40px;
   left:var(--x);
-  color:rgba(183,110,121,.24);
+  color:rgba(183,110,121,.28);
   font-size:var(--s);
   animation:heartFall var(--d) linear infinite;
   animation-delay:var(--delay);
@@ -202,12 +203,16 @@ button { cursor:pointer; }
 }
 .title {
   margin:0;
-  color:var(--deep);
+  color:transparent;
+  background:var(--aura);
+  -webkit-background-clip:text;
+  background-clip:text;
   font-family:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,sans-serif;
   font-weight:950;
   font-size:clamp(46px,9vw,94px);
   line-height:1.02;
   letter-spacing:0;
+  text-shadow:0 12px 34px rgba(183,110,121,.14);
 }
 .subtitle {
   margin:20px 0 0;
@@ -314,7 +319,10 @@ button { cursor:pointer; }
 }
 .section-heading h2 {
   margin:0;
-  color:var(--deep);
+  color:transparent;
+  background:var(--aura);
+  -webkit-background-clip:text;
+  background-clip:text;
   font-size:clamp(28px,5vw,48px);
   line-height:1.05;
 }
@@ -353,7 +361,10 @@ button { cursor:pointer; }
 }
 .bento-value {
   margin:0;
-  color:var(--deep);
+  color:transparent;
+  background:var(--aura);
+  -webkit-background-clip:text;
+  background-clip:text;
   font-size:clamp(28px,5vw,58px);
   line-height:1;
 }
@@ -579,16 +590,16 @@ button { cursor:pointer; }
 .modal-shell {
   position:relative;
   z-index:1;
-  transform:translateY(24px);
+  transform:translateY(8px);
   width:min(1060px,100%);
-  max-height:calc(100svh - 44px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  max-height:calc(100svh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   display:grid;
   gap:14px;
   justify-items:end;
 }
 .modal-card {
   width:100%;
-  max-height:min(88svh,calc(100svh - 118px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+  max-height:min(91svh,calc(100svh - 92px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
   display:flex;
   flex-direction:column;
   overflow:hidden;
@@ -611,7 +622,10 @@ button { cursor:pointer; }
 }
 .modal-head h3 {
   margin:0 0 6px;
-  color:var(--deep);
+  color:transparent;
+  background:var(--aura);
+  -webkit-background-clip:text;
+  background-clip:text;
   text-shadow:0 1px 0 rgba(255,255,255,.42);
 }
 .modal-head p {
@@ -645,6 +659,24 @@ button { cursor:pointer; }
   justify-content:center;
   background:
     linear-gradient(145deg,rgba(255,250,247,.74),rgba(234,217,205,.72));
+}
+.modal-memory {
+  margin:0;
+  display:grid;
+  gap:9px;
+}
+.modal-caption {
+  margin:0;
+  padding:10px 12px;
+  border:1px solid rgba(255,255,255,.58);
+  border-radius:15px;
+  color:#5f4740;
+  background:linear-gradient(145deg,rgba(255,255,255,.55),rgba(255,247,240,.28));
+  backdrop-filter:blur(18px) saturate(1.28);
+  box-shadow:0 10px 24px rgba(61,44,46,.08), inset 0 1px 0 rgba(255,255,255,.66);
+  font-size:13px;
+  font-weight:750;
+  line-height:1.55;
 }
 .modal-photo img,
 .modal-photo video {
@@ -709,9 +741,9 @@ footer {
   .letter-photo { min-height:260px; }
   .letter-card { padding:24px; }
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
-  .modal-shell { max-height:calc(100svh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; }
+  .modal-shell { max-height:calc(100svh - 18px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; transform:translateY(4px); }
   .brand { font-size:13px; }
-  .modal-card { max-height:calc(100svh - 104px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); border-radius:24px; }
+  .modal-card { max-height:calc(100svh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); border-radius:24px; }
   .modal-head { padding:18px; border-radius:24px 24px 0 0; }
   .modal-grid { padding:14px; gap:12px; border-radius:0 0 24px 24px; }
   .modal-photo img, .modal-photo video { min-height:0; max-height:72svh; }
@@ -744,8 +776,8 @@ const memories = [
     image: "assets/seasons/summer-1.jpg",
     tilt: "-2deg",
     media: [
-      { type:"image", src:"assets/seasons/summer-1.jpg", alt:"여름 첫 사진" },
-      { type:"image", src:"assets/seasons/summer-2.jpg", alt:"여름 두 번째 사진" }
+      { type:"image", src:"assets/seasons/summer-1.jpg", alt:"여름 첫 사진", caption:"처음이라 더 선명했던 우리. 서툰 마음까지 여름처럼 반짝였던 날." },
+      { type:"image", src:"assets/seasons/summer-2.jpg", alt:"여름 두 번째 사진", caption:"익숙해지는 속도보다 좋아지는 마음이 조금 더 빨랐던 계절." }
     ]
   },
   {
@@ -757,8 +789,8 @@ const memories = [
     image: "assets/seasons/autumn-2.jpg",
     tilt: "1.6deg",
     media: [
-      { type:"video", src:"assets/seasons/autumn-1.mp4", alt:"가을 영상", autoPlay:true },
-      { type:"image", src:"assets/seasons/autumn-2.jpg", alt:"가을 사진" }
+      { type:"video", src:"assets/seasons/autumn-1.mp4", alt:"가을 영상", autoPlay:true, caption:"제주 바람 속에서 남긴 장면들. 움직이는 순간까지 오래 보고 싶은 가을." },
+      { type:"image", src:"assets/seasons/autumn-2.jpg", alt:"가을 사진", caption:"선선한 날씨와 테니스, 그리고 우리답게 웃던 시간이 가득했던 계절." }
     ]
   },
   {
@@ -770,11 +802,11 @@ const memories = [
     image: "assets/seasons/winter-5.jpg",
     tilt: "-1.2deg",
     media: [
-      { type:"image", src:"assets/seasons/winter-1.jpg", alt:"겨울 첫 사진" },
-      { type:"image", src:"assets/seasons/winter-2.jpg", alt:"겨울 두 번째 사진" },
-      { type:"image", src:"assets/seasons/winter-3.jpg", alt:"겨울 세 번째 사진" },
-      { type:"image", src:"assets/seasons/winter-4.jpg", alt:"겨울 네 번째 사진" },
-      { type:"image", src:"assets/seasons/winter-5.jpg", alt:"겨울 다섯 번째 사진" }
+      { type:"image", src:"assets/seasons/winter-1.jpg", alt:"겨울 첫 사진", caption:"차가 생기고 우리의 이동 반경도, 추억의 크기도 조금 더 넓어졌어." },
+      { type:"image", src:"assets/seasons/winter-2.jpg", alt:"겨울 두 번째 사진", caption:"추운 계절인데도 함께 있으면 묘하게 따뜻했던 순간." },
+      { type:"image", src:"assets/seasons/winter-3.jpg", alt:"겨울 세 번째 사진", caption:"캠핑이라는 취미가 생기고, 평범한 밤도 특별한 장면이 됐어." },
+      { type:"image", src:"assets/seasons/winter-4.jpg", alt:"겨울 네 번째 사진", caption:"작은 케이크 하나에도 우리의 표정이 오래 남았던 날." },
+      { type:"image", src:"assets/seasons/winter-5.jpg", alt:"겨울 다섯 번째 사진", caption:"겨울 끝자락에 남긴 다정한 기념일, 그래서 더 소중한 사진." }
     ]
   },
   {
@@ -786,12 +818,12 @@ const memories = [
     image: "assets/seasons/spring-2.jpg",
     tilt: "2deg",
     media: [
-      { type:"image", src:"assets/seasons/spring-1.jpg", alt:"봄 첫 사진" },
-      { type:"image", src:"assets/seasons/spring-2.jpg", alt:"봄 두 번째 사진" },
-      { type:"image", src:"assets/seasons/spring-3.jpg", alt:"봄 세 번째 사진" },
-      { type:"image", src:"assets/seasons/spring-4.jpg", alt:"봄 네 번째 사진" },
-      { type:"image", src:"assets/seasons/spring-5.jpg", alt:"봄 다섯 번째 사진" },
-      { type:"image", src:"assets/seasons/spring-6.jpg", alt:"봄 여섯 번째 사진" }
+      { type:"image", src:"assets/seasons/spring-1.jpg", alt:"봄 첫 사진", caption:"다시 따뜻해진 날씨처럼 우리도 더 자주 밖으로 나섰던 봄." },
+      { type:"image", src:"assets/seasons/spring-2.jpg", alt:"봄 두 번째 사진", caption:"나들이와 차박, 캠핑으로 주말마다 작은 여행을 만들던 시간." },
+      { type:"image", src:"assets/seasons/spring-3.jpg", alt:"봄 세 번째 사진", caption:"햇살이 좋은 날엔 사진도 마음도 조금 더 밝아졌어." },
+      { type:"image", src:"assets/seasons/spring-4.jpg", alt:"봄 네 번째 사진", caption:"업그레이드된 캠핑 장비만큼 앞으로의 계절도 기대되던 순간." },
+      { type:"image", src:"assets/seasons/spring-5.jpg", alt:"봄 다섯 번째 사진", caption:"풍경보다 먼저 떠오르는 건 결국 옆에 있던 너의 표정." },
+      { type:"image", src:"assets/seasons/spring-6.jpg", alt:"봄 여섯 번째 사진", caption:"돌아보면 봄은 우리가 더 멀리, 더 자주 함께 움직인 계절." }
     ]
   }
 ];
@@ -1046,9 +1078,12 @@ function MemoryModal({ memory, onClose }) {
           </div>
           <div className="modal-grid">
             {memory.media.map((item, index) => (
-              <div className="modal-photo" key={`${item.src}-${index}`}>
-                <Media item={item} />
-              </div>
+              <figure className="modal-memory" key={`${item.src}-${index}`}>
+                <div className="modal-photo">
+                  <Media item={item} />
+                </div>
+                <figcaption className="modal-caption">{item.caption || item.alt || memory.memo}</figcaption>
+              </figure>
             ))}
           </div>
         </div>
@@ -1070,6 +1105,10 @@ function App() {
         <span style={{ "--x":"62%", "--s":"26px", "--d":"10.8s", "--delay":"-2s", "--drift":"18px" }}>♥</span>
         <span style={{ "--x":"76%", "--s":"19px", "--d":"12.6s", "--delay":"-6s", "--drift":"-20px" }}>♥</span>
         <span style={{ "--x":"91%", "--s":"30px", "--d":"11.8s", "--delay":"-4s", "--drift":"16px" }}>♥</span>
+        <span style={{ "--x":"12%", "--s":"32px", "--d":"14s", "--delay":"-9s", "--drift":"-30px" }}>♥</span>
+        <span style={{ "--x":"41%", "--s":"22px", "--d":"15s", "--delay":"-10s", "--drift":"28px" }}>♥</span>
+        <span style={{ "--x":"69%", "--s":"34px", "--d":"13.8s", "--delay":"-8s", "--drift":"-24px" }}>♥</span>
+        <span style={{ "--x":"84%", "--s":"25px", "--d":"16s", "--delay":"-11s", "--drift":"30px" }}>♥</span>
       </div>
       <div className="app">
         <Nav />
