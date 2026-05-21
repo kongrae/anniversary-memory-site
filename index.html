@@ -42,12 +42,11 @@ body {
   min-height:100svh;
 }
 body.modal-locked {
-  overflow:hidden;
-  position:fixed;
   width:100%;
 }
 html.modal-locked-root,
 html.modal-locked-root body {
+  overscroll-behavior:none;
   background:#5a4b4c !important;
 }
 body::before {
@@ -356,24 +355,37 @@ button { cursor:pointer; }
   gap:18px;
 }
 .polaroid {
-  border:0;
+  display:block;
+  width:100%;
+  border:1px solid rgba(255,255,255,.74);
   text-align:left;
-  padding:12px 12px 20px;
-  border-radius:8px;
-  background:#fff;
-  box-shadow:0 18px 42px rgba(77,48,38,.14);
-  transition:transform .22s ease, box-shadow .22s ease;
+  padding:14px;
+  border-radius:26px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.48),rgba(255,247,240,.22));
+  backdrop-filter:blur(30px) saturate(1.45);
+  box-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.72);
+  cursor:pointer;
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+}
+.polaroid:focus-visible {
+  outline:3px solid rgba(183,110,121,.38);
+  outline-offset:4px;
 }
 .polaroid:hover {
   transform:translateY(-4px) scale(1.015) rotate(var(--tilt));
-  box-shadow:0 24px 60px rgba(77,48,38,.2);
+  border-color:rgba(255,255,255,.9);
+  background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,247,240,.3));
+  box-shadow:0 24px 68px rgba(77,48,38,.18), inset 0 1px 0 rgba(255,255,255,.82);
 }
 .photo-surface {
   position:relative;
   overflow:hidden;
   aspect-ratio:4/3;
-  border-radius:4px;
-  background:#ead9cd;
+  border:1px solid rgba(255,255,255,.58);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,250,247,.72),rgba(234,217,205,.58));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.62);
 }
 .photo-surface img,
 .photo-surface video {
@@ -383,7 +395,7 @@ button { cursor:pointer; }
   display:block;
 }
 .polaroid-meta {
-  padding:14px 4px 0;
+  padding:14px 4px 2px;
 }
 .polaroid-meta time {
   color:var(--rose);
@@ -513,10 +525,13 @@ button { cursor:pointer; }
 }
 .modal {
   position:fixed;
-  inset:0;
+  left:0;
+  right:0;
+  top:0;
+  height:140lvh;
   z-index:20;
   display:none;
-  place-items:center;
+  place-items:start center;
   padding:calc(22px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));
   min-height:100vh;
   min-height:100dvh;
@@ -530,7 +545,10 @@ button { cursor:pointer; }
 .modal::before {
   content:"";
   position:fixed;
-  inset:-50vh 0;
+  left:0;
+  right:0;
+  top:-40lvh;
+  height:220lvh;
   z-index:0;
   background:rgba(61,44,46,.52);
   backdrop-filter:blur(18px);
@@ -858,14 +876,27 @@ function Album({ onOpen }) {
       </div>
       <div className="album-grid">
         {memories.map(memory => (
-          <button className="polaroid" key={memory.id} onClick={() => onOpen(memory)} style={{ "--tilt": memory.tilt, transform:`rotate(${memory.tilt})` }}>
+          <article
+            className="polaroid"
+            key={memory.id}
+            role="button"
+            tabIndex="0"
+            onClick={() => onOpen(memory)}
+            onKeyDown={event => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onOpen(memory);
+              }
+            }}
+            style={{ "--tilt": memory.tilt, transform:`rotate(${memory.tilt})` }}
+          >
             <div className="photo-surface"><img src={memory.image} alt={memory.title} loading="lazy" /></div>
             <div className="polaroid-meta">
               <time>{memory.date}</time>
               <h3>{memory.title}</h3>
               <p>{memory.place} · {memory.memo}</p>
             </div>
-          </button>
+          </article>
         ))}
       </div>
     </section>
@@ -942,16 +973,20 @@ function FinalSection() {
 function MemoryModal({ memory, onClose }) {
   React.useEffect(() => {
     if (!memory) return undefined;
-    const scrollY = window.scrollY;
 
     function handleKey(event) {
       if (event.key === "Escape") onClose();
     }
 
-    document.body.style.top = `-${scrollY}px`;
+    function lockBackgroundTouch(event) {
+      if (event.target?.closest?.(".modal-grid")) return;
+      event.preventDefault();
+    }
+
     document.documentElement.classList.add("modal-locked-root");
     document.body.classList.add("modal-locked");
     window.addEventListener("keydown", handleKey);
+    document.querySelector(".modal")?.addEventListener("touchmove", lockBackgroundTouch, { passive:false });
     const playTimer = window.setTimeout(() => {
       document.querySelectorAll(".modal video").forEach(video => {
         if (!video.autoplay) return;
@@ -963,10 +998,9 @@ function MemoryModal({ memory, onClose }) {
     return () => {
       window.clearTimeout(playTimer);
       document.querySelectorAll(".modal video").forEach(video => video.pause?.());
+      document.querySelector(".modal")?.removeEventListener("touchmove", lockBackgroundTouch);
       document.documentElement.classList.remove("modal-locked-root");
       document.body.classList.remove("modal-locked");
-      document.body.style.top = "";
-      window.scrollTo(0, scrollY);
       window.removeEventListener("keydown", handleKey);
     };
   }, [memory, onClose]);
