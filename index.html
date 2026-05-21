@@ -23,7 +23,7 @@ body {
   color:var(--ink);
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   background:
-    linear-gradient(180deg,#fbf7f2 0,#f7efe7 44%,#fbf7f2 100%);
+    linear-gradient(180deg,#fbf7f2 0,#f4ece3 42%,#f9f4ee 100%);
 }
 button { font:inherit; }
 .hero {
@@ -101,6 +101,8 @@ h1 {
   margin:0 auto;
   padding:58px 18px;
 }
+#gallery { padding-bottom:24px; }
+#current { padding-top:14px; }
 .section-title {
   display:flex;
   justify-content:space-between;
@@ -127,10 +129,10 @@ h2 {
 }
 .stat {
   border:1px solid var(--line);
-  background:rgba(255,255,255,.72);
+  background:rgba(255,255,255,.78);
   border-radius:8px;
   padding:18px;
-  box-shadow:0 18px 44px rgba(31,35,40,.07);
+  box-shadow:0 16px 38px rgba(31,35,40,.06);
 }
 .stat b {
   display:block;
@@ -147,14 +149,14 @@ h2 {
   grid-column:span 4;
   border:0;
   padding:0;
-  background:#1f2328;
-  border-radius:14px;
+  background:#15171b;
+  border-radius:8px;
   overflow:hidden;
-  border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 22px 62px rgba(31,35,40,.12);
+  border:1px solid rgba(255,255,255,.76);
+  box-shadow:0 18px 48px rgba(31,35,40,.11);
   cursor:pointer;
   text-align:left;
-  transition:transform .22s ease, box-shadow .22s ease;
+  transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
   position:relative;
   min-height:360px;
   isolation:isolate;
@@ -162,12 +164,12 @@ h2 {
 .memory::after {
   content:"";
   position:absolute;
-  inset:36% 0 0;
+  inset:30% 0 0;
   z-index:1;
-  background:linear-gradient(180deg,rgba(20,23,28,0),rgba(20,23,28,.72) 54%,rgba(20,23,28,.9));
+  background:linear-gradient(180deg,rgba(15,17,20,0),rgba(15,17,20,.68) 52%,rgba(15,17,20,.93));
   pointer-events:none;
 }
-.memory:hover { transform:translateY(-4px); box-shadow:0 30px 78px rgba(31,35,40,.18); }
+.memory:hover { transform:translateY(-3px); box-shadow:0 24px 64px rgba(31,35,40,.17); filter:saturate(1.03); }
 .memory:nth-child(1), .memory:nth-child(4) { grid-column:span 6; }
 .photo {
   width:100%;
@@ -189,7 +191,7 @@ h2 {
   right:0;
   bottom:0;
   z-index:2;
-  padding:24px;
+  padding:22px;
   color:#fff;
 }
 .date {
@@ -202,8 +204,8 @@ h2 {
   letter-spacing:.04em;
   padding:6px 10px;
   border:1px solid rgba(255,255,255,.34);
-  border-radius:999px;
-  background:rgba(255,255,255,.14);
+  border-radius:8px;
+  background:rgba(255,255,255,.13);
   backdrop-filter:blur(10px);
 }
 .memory h3 {
@@ -227,22 +229,22 @@ h2 {
   font-size:12px;
   font-weight:900;
   padding:6px 10px;
-  border-radius:999px;
-  background:rgba(255,255,255,.18);
+  border-radius:8px;
+  background:rgba(255,255,255,.16);
   backdrop-filter:blur(10px);
 }
 .current-wrap {
   display:grid;
-  grid-template-columns:.82fr 1.18fr;
-  gap:18px;
+  grid-template-columns:.7fr 1.3fr;
+  gap:14px;
   align-items:stretch;
 }
 .current-copy {
   border:1px solid var(--line);
   border-radius:8px;
-  padding:28px;
-  background:rgba(255,255,255,.76);
-  box-shadow:0 18px 48px rgba(31,35,40,.07);
+  padding:24px;
+  background:rgba(255,255,255,.82);
+  box-shadow:0 16px 42px rgba(31,35,40,.06);
   display:grid;
   align-content:center;
 }
@@ -252,12 +254,12 @@ h2 {
   letter-spacing:0;
 }
 .current-photo {
-  min-height:420px;
-  border:1px dashed #b9a382;
+  min-height:360px;
+  border:1px dashed rgba(31,35,40,.28);
   border-radius:8px;
   background:
-    linear-gradient(135deg,rgba(255,255,255,.58),rgba(255,248,241,.86)),
-    repeating-linear-gradient(45deg,rgba(200,174,138,.16) 0 12px,rgba(255,255,255,.28) 12px 24px);
+    linear-gradient(135deg,rgba(255,255,255,.66),rgba(245,238,230,.9)),
+    repeating-linear-gradient(45deg,rgba(31,35,40,.055) 0 10px,rgba(255,255,255,.38) 10px 20px);
   display:grid;
   place-items:center;
   color:#8a6a42;
@@ -268,9 +270,9 @@ h2 {
 .current-photo span {
   display:inline-flex;
   padding:10px 14px;
-  border-radius:999px;
-  background:rgba(255,255,255,.72);
-  border:1px solid rgba(185,163,130,.45);
+  border-radius:8px;
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(31,35,40,.16);
 }
 .timeline {
   display:grid;
@@ -343,43 +345,38 @@ h2 {
   display:none;
   place-items:center;
   padding:18px;
-  background:rgba(17,24,39,.78);
+  background:rgba(10,12,16,.82);
+  backdrop-filter:blur(10px);
   z-index:10;
 }
 .modal.open { display:grid; }
 .modal-card {
   width:min(1040px,100%);
   max-height:92svh;
-  background:#fff;
+  background:#fbfaf8;
   border-radius:8px;
   overflow:hidden;
   overflow-y:auto;
-}
-.modal-hero img,
-.modal-hero video {
-  width:100%;
-  max-height:62svh;
-  object-fit:cover;
-  display:block;
-  background:#111;
+  box-shadow:0 28px 90px rgba(0,0,0,.36);
 }
 .modal-text {
-  padding:16px 18px 18px;
+  padding:18px 18px 14px;
   display:flex;
   justify-content:space-between;
   gap:14px;
   align-items:start;
+  border-bottom:1px solid rgba(31,35,40,.08);
 }
 .modal-text h3 { margin:0 0 6px; }
 .modal-text p { margin:0; color:var(--muted); line-height:1.55; }
 .album-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  padding:0 18px 18px;
+  gap:12px;
+  padding:18px;
 }
 .album-tile {
-  min-height:180px;
+  min-height:220px;
   border-radius:8px;
   overflow:hidden;
   background:#111;
@@ -388,14 +385,14 @@ h2 {
 .album-tile video {
   width:100%;
   height:100%;
-  min-height:180px;
+  min-height:220px;
   object-fit:cover;
   display:block;
 }
 .close {
-  border:1px solid var(--line);
+  border:1px solid rgba(31,35,40,.12);
   background:#fff;
-  border-radius:999px;
+  border-radius:8px;
   min-width:42px;
   height:42px;
   font-weight:900;
@@ -411,6 +408,8 @@ footer {
   .hero-inner { padding-bottom:38px; }
   .hero p { font-size:16px; }
   .section { padding:42px 14px; }
+  #gallery { padding-bottom:16px; }
+  #current { padding-top:8px; }
   .section-title { display:block; }
   .section-title p { margin-top:10px; }
   .stats { grid-template-columns:repeat(2,1fr); }
@@ -420,7 +419,7 @@ footer {
   .memory-body { padding:20px; }
   .current-wrap { grid-template-columns:1fr; }
   .current-copy { padding:22px; }
-  .current-photo { min-height:330px; }
+  .current-photo { min-height:280px; }
   .letter { grid-template-columns:1fr; }
   .letter-img { min-height:300px; }
   .letter-card { padding:22px; }
@@ -497,7 +496,6 @@ footer {
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal-card">
-    <div class="modal-hero" id="modalHero"></div>
     <div class="modal-text">
       <div>
         <h3 id="modalTitle"></h3>
@@ -519,8 +517,6 @@ const memories = [
     title: "여름, 우리라는 계절의 시작",
     desc: "5월 27일 이후의 첫 계절. 서툴고 뜨거웠지만, 그래서 더 선명했던 시작.",
     image: "assets/seasons/summer-1.jpg",
-    heroImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=82",
-    heroAlt: "여름 바다 풍경",
     media: [
       { type:"image", src:"assets/seasons/summer-1.jpg", alt:"여름 첫 사진" },
       { type:"image", src:"assets/seasons/summer-2.jpg", alt:"여름 두 번째 사진" }
@@ -531,8 +527,6 @@ const memories = [
     title: "가을, 조금 더 우리답게",
     desc: "선선한 제주 바람 속에 잊지 못할 추억을 많이 남겼고, 함께 시작한 테니스까지 유난히 좋았던 계절.",
     image: "assets/seasons/autumn-2.jpg",
-    heroImage: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=82",
-    heroAlt: "가을 들판 풍경",
     media: [
       { type:"video", src:"assets/seasons/autumn-1.mp4", alt:"가을 영상" },
       { type:"image", src:"assets/seasons/autumn-2.jpg", alt:"가을 사진" }
@@ -543,13 +537,12 @@ const memories = [
     title: "겨울, 따뜻한 쪽으로",
     desc: "함께 여행할 차가 생기고, 캠핑이라는 취미도 만들고, 스키장까지 다녀오며 추억을 차곡차곡 쌓았던 계절.",
     image: "assets/seasons/winter-1.jpg",
-    heroImage: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1400&q=82",
-    heroAlt: "겨울 산과 밤하늘",
     media: [
       { type:"image", src:"assets/seasons/winter-1.jpg", alt:"겨울 첫 사진" },
       { type:"image", src:"assets/seasons/winter-2.jpg", alt:"겨울 두 번째 사진" },
       { type:"image", src:"assets/seasons/winter-3.jpg", alt:"겨울 세 번째 사진" },
-      { type:"image", src:"assets/seasons/winter-4.jpg", alt:"겨울 네 번째 사진" }
+      { type:"image", src:"assets/seasons/winter-4.jpg", alt:"겨울 네 번째 사진" },
+      { type:"image", src:"assets/seasons/winter-5.jpg", alt:"겨울 다섯 번째 사진" }
     ]
   },
   {
@@ -557,8 +550,6 @@ const memories = [
     title: "봄, 다시 피어난 우리",
     desc: "차박, 캠핑, 나들이로 이곳저곳 많이 다녔고, 업그레이드된 캠핑 장비 덕분에 앞으로가 더 기대되는 계절.",
     image: "assets/seasons/spring-2.jpg",
-    heroImage: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=82",
-    heroAlt: "봄꽃 풍경",
     media: [
       { type:"image", src:"assets/seasons/spring-1.jpg", alt:"봄 첫 사진" },
       { type:"image", src:"assets/seasons/spring-2.jpg", alt:"봄 두 번째 사진" },
@@ -573,7 +564,6 @@ const memories = [
 const grid = document.getElementById("galleryGrid");
 const timeline = document.getElementById("timeline");
 const modal = document.getElementById("modal");
-const modalHero = document.getElementById("modalHero");
 const modalAlbum = document.getElementById("modalAlbum");
 const modalTitle = document.getElementById("modalTitle");
 const modalDesc = document.getElementById("modalDesc");
@@ -618,7 +608,6 @@ function openMemory(index) {
   const item = memories[index];
   if (!item) return;
   const media = item.media && item.media.length ? item.media : [{ type:"image", src:item.image, alt:item.title }];
-  modalHero.innerHTML = renderMedia({ type:"image", src:item.heroImage || item.image, alt:item.heroAlt || item.title }, true);
   modalAlbum.innerHTML = media.map(piece => `<div class="album-tile">${renderMedia(piece)}</div>`).join("");
   modalTitle.textContent = item.title;
   modalDesc.textContent = `${item.date} · ${item.desc}`;
