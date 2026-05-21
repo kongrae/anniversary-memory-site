@@ -231,6 +231,50 @@ h2 {
   background:rgba(255,255,255,.18);
   backdrop-filter:blur(10px);
 }
+.current-wrap {
+  display:grid;
+  grid-template-columns:.82fr 1.18fr;
+  gap:18px;
+  align-items:stretch;
+}
+.current-copy {
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:28px;
+  background:rgba(255,255,255,.76);
+  box-shadow:0 18px 48px rgba(31,35,40,.07);
+}
+.current-copy h2 {
+  margin:0 0 12px;
+  font-size:clamp(28px,4vw,48px);
+  letter-spacing:0;
+}
+.current-copy p {
+  margin:0;
+  color:var(--muted);
+  line-height:1.75;
+}
+.current-photo {
+  min-height:420px;
+  border:1px dashed #b9a382;
+  border-radius:8px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.58),rgba(255,248,241,.86)),
+    repeating-linear-gradient(45deg,rgba(200,174,138,.16) 0 12px,rgba(255,255,255,.28) 12px 24px);
+  display:grid;
+  place-items:center;
+  color:#8a6a42;
+  font-weight:900;
+  text-align:center;
+  padding:24px;
+}
+.current-photo span {
+  display:inline-flex;
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(185,163,130,.45);
+}
 .timeline {
   display:grid;
   gap:14px;
@@ -390,6 +434,9 @@ footer {
   .memory, .memory:nth-child(1), .memory:nth-child(4) { grid-column:auto; }
   .memory, .photo { min-height:330px; }
   .memory-body { padding:20px; }
+  .current-wrap { grid-template-columns:1fr; }
+  .current-copy { padding:22px; }
+  .current-photo { min-height:330px; }
   .letter { grid-template-columns:1fr; }
   .letter-img { min-height:300px; }
   .letter-card { padding:22px; }
@@ -431,6 +478,18 @@ footer {
     <p>5월 27일부터 시작된 첫해를 여름, 가을, 겨울, 봄 순서로 담았어요.</p>
   </div>
   <div class="gallery" id="galleryGrid"></div>
+</section>
+
+<section class="section" id="current">
+  <div class="current-wrap">
+    <div class="current-copy">
+      <h2>그리고, 현재의 우리</h2>
+      <p>기념일 당일의 사진을 담아둘 자리. 1년을 지나 지금의 우리 얼굴로 이 페이지의 마지막 장을 채워두려고 해요.</p>
+    </div>
+    <div class="current-photo" aria-label="기념일 당일 사진 자리">
+      <span>기념일 당일 사진 자리</span>
+    </div>
+  </div>
 </section>
 
 <section class="section">
@@ -492,7 +551,7 @@ const memories = [
   {
     date: "2025 가을",
     title: "가을, 조금 더 우리답게",
-    desc: "바람이 선선해질수록 마음은 더 가까워졌고, 평범한 하루도 같이 있으면 장면이 됐어.",
+    desc: "선선한 제주 바람 속에 잊지 못할 추억을 많이 남겼고, 함께 시작한 테니스까지 유난히 좋았던 계절.",
     image: "assets/seasons/autumn-2.jpg",
     media: [
       { type:"video", src:"assets/seasons/autumn-1.mp4", alt:"가을 영상" },
@@ -502,7 +561,7 @@ const memories = [
   {
     date: "2025 겨울",
     title: "겨울, 따뜻한 쪽으로",
-    desc: "차가운 계절에도 함께 있으면 이상하게 온도가 올라갔던 날들.",
+    desc: "함께 여행할 차가 생기고, 캠핑이라는 취미도 만들고, 스키장까지 다녀오며 추억을 차곡차곡 쌓았던 계절.",
     image: "assets/seasons/winter-1.jpg",
     media: [
       { type:"image", src:"assets/seasons/winter-1.jpg", alt:"겨울 첫 사진" },
@@ -514,7 +573,7 @@ const memories = [
   {
     date: "2026 봄",
     title: "봄, 다시 피어난 우리",
-    desc: "처음의 설렘이 익숙한 편안함으로 바뀌고, 다시 예쁘게 피어난 계절.",
+    desc: "차박, 캠핑, 나들이로 이곳저곳 많이 다녔고, 업그레이드된 캠핑 장비 덕분에 앞으로가 더 기대되는 계절.",
     image: "assets/seasons/spring-2.jpg",
     media: [
       { type:"image", src:"assets/seasons/spring-1.jpg", alt:"봄 첫 사진" },
