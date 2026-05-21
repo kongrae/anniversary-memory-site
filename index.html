@@ -602,8 +602,8 @@ button { cursor:pointer; }
   display:grid;
   grid-template-columns:repeat(2,1fr);
   grid-auto-rows:max-content;
-  align-content:start;
-  align-items:start;
+  align-content:center;
+  align-items:center;
   gap:16px;
   padding:20px;
   overflow:auto;
@@ -704,7 +704,7 @@ footer {
 const CONFIG = {
   anniversaryStart: "2025-05-27",
   firstMetLabel: "2025.05.27",
-  brandTitle: "2025.05.27, 하린이와 홍래 사랑 진행 중 ♥",
+  brandTitle: "2025.05.27 하린이와 홍래 사랑 진행 중 ♥",
   heroTitle: "뭉리니의 첫 번째 기록",
   heroSubtitle: "함께한 계절들이 모여, 오늘의 우리가 됐어.",
   signature: "From. 홍래"
@@ -1039,8 +1039,8 @@ function App() {
         <Intro />
         <Summary />
         <Album onOpen={setSelectedMemory} />
-        <Timeline />
         <CurrentSlot />
+        <Timeline />
         <Letter />
         <FinalSection />
       </div>
