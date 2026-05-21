@@ -243,16 +243,13 @@ h2 {
   padding:28px;
   background:rgba(255,255,255,.76);
   box-shadow:0 18px 48px rgba(31,35,40,.07);
+  display:grid;
+  align-content:center;
 }
 .current-copy h2 {
-  margin:0 0 12px;
+  margin:0;
   font-size:clamp(28px,4vw,48px);
   letter-spacing:0;
-}
-.current-copy p {
-  margin:0;
-  color:var(--muted);
-  line-height:1.75;
 }
 .current-photo {
   min-height:420px;
@@ -339,19 +336,6 @@ h2 {
   color:var(--rose);
   font-weight:900;
   font-size:18px;
-}
-.replace-guide {
-  border:1px dashed #c8ae8a;
-  background:#fff8ed;
-  border-radius:8px;
-  padding:18px;
-  color:#6b4c26;
-  line-height:1.65;
-}
-.replace-guide code {
-  background:#ffedd5;
-  border-radius:6px;
-  padding:2px 6px;
 }
 .modal {
   position:fixed;
@@ -484,7 +468,6 @@ footer {
   <div class="current-wrap">
     <div class="current-copy">
       <h2>그리고, 현재의 우리</h2>
-      <p>기념일 당일의 사진을 담아둘 자리. 1년을 지나 지금의 우리 얼굴로 이 페이지의 마지막 장을 채워두려고 해요.</p>
     </div>
     <div class="current-photo" aria-label="기념일 당일 사진 자리">
       <span>기념일 당일 사진 자리</span>
@@ -512,13 +495,6 @@ footer {
   </div>
 </section>
 
-<section class="section">
-  <div class="replace-guide">
-    <b>우리의 첫해</b><br>
-    뜨거웠던 시작, 선선해진 마음, 추운 날의 온기, 다시 피어난 봄까지. 계절은 바뀌었고 우리는 조금 더 우리다워졌어요.
-  </div>
-</section>
-
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal-card">
     <div class="modal-hero" id="modalHero"></div>
@@ -543,6 +519,8 @@ const memories = [
     title: "여름, 우리라는 계절의 시작",
     desc: "5월 27일 이후의 첫 계절. 서툴고 뜨거웠지만, 그래서 더 선명했던 시작.",
     image: "assets/seasons/summer-1.jpg",
+    heroImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=82",
+    heroAlt: "여름 바다 풍경",
     media: [
       { type:"image", src:"assets/seasons/summer-1.jpg", alt:"여름 첫 사진" },
       { type:"image", src:"assets/seasons/summer-2.jpg", alt:"여름 두 번째 사진" }
@@ -553,6 +531,8 @@ const memories = [
     title: "가을, 조금 더 우리답게",
     desc: "선선한 제주 바람 속에 잊지 못할 추억을 많이 남겼고, 함께 시작한 테니스까지 유난히 좋았던 계절.",
     image: "assets/seasons/autumn-2.jpg",
+    heroImage: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=82",
+    heroAlt: "가을 들판 풍경",
     media: [
       { type:"video", src:"assets/seasons/autumn-1.mp4", alt:"가을 영상" },
       { type:"image", src:"assets/seasons/autumn-2.jpg", alt:"가을 사진" }
@@ -563,6 +543,8 @@ const memories = [
     title: "겨울, 따뜻한 쪽으로",
     desc: "함께 여행할 차가 생기고, 캠핑이라는 취미도 만들고, 스키장까지 다녀오며 추억을 차곡차곡 쌓았던 계절.",
     image: "assets/seasons/winter-1.jpg",
+    heroImage: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1400&q=82",
+    heroAlt: "겨울 산과 밤하늘",
     media: [
       { type:"image", src:"assets/seasons/winter-1.jpg", alt:"겨울 첫 사진" },
       { type:"image", src:"assets/seasons/winter-2.jpg", alt:"겨울 두 번째 사진" },
@@ -575,6 +557,8 @@ const memories = [
     title: "봄, 다시 피어난 우리",
     desc: "차박, 캠핑, 나들이로 이곳저곳 많이 다녔고, 업그레이드된 캠핑 장비 덕분에 앞으로가 더 기대되는 계절.",
     image: "assets/seasons/spring-2.jpg",
+    heroImage: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=82",
+    heroAlt: "봄꽃 풍경",
     media: [
       { type:"image", src:"assets/seasons/spring-1.jpg", alt:"봄 첫 사진" },
       { type:"image", src:"assets/seasons/spring-2.jpg", alt:"봄 두 번째 사진" },
@@ -634,7 +618,7 @@ function openMemory(index) {
   const item = memories[index];
   if (!item) return;
   const media = item.media && item.media.length ? item.media : [{ type:"image", src:item.image, alt:item.title }];
-  modalHero.innerHTML = renderMedia(media[0], true);
+  modalHero.innerHTML = renderMedia({ type:"image", src:item.heroImage || item.image, alt:item.heroAlt || item.title }, true);
   modalAlbum.innerHTML = media.map(piece => `<div class="album-tile">${renderMedia(piece)}</div>`).join("");
   modalTitle.textContent = item.title;
   modalDesc.textContent = `${item.date} · ${item.desc}`;
