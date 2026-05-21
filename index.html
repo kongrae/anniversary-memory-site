@@ -459,8 +459,14 @@ footer {
   .letter { grid-template-columns:1fr; }
   .letter-img { min-height:300px; }
   .letter-card { padding:22px; }
-  .modal { padding:10px; align-items:end; }
-  .modal-card { max-height:86svh; border-radius:10px 10px 0 0; }
+  .modal {
+    padding:14px;
+    place-items:center;
+  }
+  .modal-card {
+    max-height:88svh;
+    border-radius:10px;
+  }
   .modal-close-floating {
     top:auto;
     bottom:max(14px, env(safe-area-inset-bottom));
