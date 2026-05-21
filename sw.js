@@ -1,8 +1,11 @@
-const CACHE_NAME = "anniversary-memory-v5";
+const CACHE_NAME = "anniversary-memory-v6";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./assets/vendor/react.production.min.js",
+  "./assets/vendor/react-dom.production.min.js",
+  "./assets/vendor/babel.min.js",
   "./assets/main-hero-cropped.jpg",
   "./assets/icons/apple-touch-icon.png",
   "./assets/icons/icon-192.png",
