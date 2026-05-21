@@ -159,6 +159,28 @@ button { cursor:pointer; }
   backdrop-filter:blur(26px) saturate(1.22);
   box-shadow:0 28px 80px rgba(126,78,63,.16), inset 0 1px 0 rgba(255,255,255,.8);
 }
+.heart-rain {
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.heart-rain span {
+  position:absolute;
+  top:-24px;
+  left:var(--x);
+  color:rgba(183,110,121,.28);
+  font-size:var(--s);
+  animation:heartFall var(--d) linear infinite;
+  animation-delay:var(--delay);
+  filter:blur(.1px);
+}
+@keyframes heartFall {
+  0% { transform:translate3d(0,-12px,0) rotate(0deg); opacity:0; }
+  14% { opacity:.78; }
+  100% { transform:translate3d(var(--drift),520px,0) rotate(26deg); opacity:0; }
+}
 .hero-card::before {
   content:"";
   position:absolute;
@@ -166,6 +188,10 @@ button { cursor:pointer; }
   pointer-events:none;
   border:1px dashed rgba(183,110,121,.18);
   border-radius:26px;
+}
+.hero-card > *:not(.heart-rain) {
+  position:relative;
+  z-index:1;
 }
 .kicker {
   display:inline-flex;
@@ -347,7 +373,6 @@ button { cursor:pointer; }
   color:var(--rose);
   font-weight:900;
   font-size:12px;
-  transform:rotate(-2deg);
 }
 .album-grid {
   display:grid;
@@ -528,10 +553,10 @@ button { cursor:pointer; }
   left:0;
   right:0;
   top:0;
-  height:140lvh;
+  height:100lvh;
   z-index:20;
   display:none;
-  place-items:start center;
+  place-items:center;
   padding:calc(22px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));
   min-height:100vh;
   min-height:100dvh;
@@ -556,6 +581,7 @@ button { cursor:pointer; }
 .modal-shell {
   position:relative;
   z-index:1;
+  transform:translateY(24px);
   width:min(1060px,100%);
   max-height:calc(100svh - 44px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   display:grid;
@@ -705,7 +731,7 @@ const CONFIG = {
   anniversaryStart: "2025-05-27",
   firstMetLabel: "2025.05.27",
   brandTitle: "2025.05.27 하린이와 홍래 사랑 진행 중 ♥",
-  heroTitle: "뭉리니의 첫 번째 기록",
+  heroTitle: "우리의 아름다운 1년",
   heroSubtitle: "함께한 계절들이 모여, 오늘의 우리가 됐어.",
   signature: "From. 홍래"
 };
@@ -815,6 +841,13 @@ function Intro() {
   return (
     <section className="section intro" id="intro">
       <div className="hero-card fade-up">
+        <div className="heart-rain" aria-hidden="true">
+          <span style={{ "--x":"14%", "--s":"15px", "--d":"8.5s", "--delay":"-1s", "--drift":"18px" }}>♥</span>
+          <span style={{ "--x":"34%", "--s":"11px", "--d":"10s", "--delay":"-4s", "--drift":"-12px" }}>♥</span>
+          <span style={{ "--x":"58%", "--s":"13px", "--d":"9.2s", "--delay":"-2.5s", "--drift":"16px" }}>♥</span>
+          <span style={{ "--x":"78%", "--s":"10px", "--d":"11s", "--delay":"-6s", "--drift":"-18px" }}>♥</span>
+          <span style={{ "--x":"91%", "--s":"14px", "--d":"9.8s", "--delay":"-3s", "--drift":"10px" }}>♥</span>
+        </div>
         <div>
           <span className="kicker">♥ 뭉리니 스크랩북</span>
           <h1 className="title">{CONFIG.heroTitle}</h1>
