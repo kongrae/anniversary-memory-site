@@ -358,6 +358,27 @@ h2 {
   z-index:10;
 }
 .modal.open { display:grid; }
+.modal-close-floating {
+  position:fixed;
+  top:max(14px, env(safe-area-inset-top));
+  right:max(14px, env(safe-area-inset-right));
+  z-index:11;
+  border:1px solid rgba(255,255,255,.24);
+  background:rgba(255,255,255,.92);
+  color:#171717;
+  border-radius:999px;
+  height:46px;
+  min-width:46px;
+  padding:0 15px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-weight:900;
+  box-shadow:0 16px 44px rgba(0,0,0,.26);
+  cursor:pointer;
+}
+.modal-close-floating span { font-size:20px; line-height:1; }
 .modal-card {
   width:min(1040px,100%);
   max-height:92svh;
@@ -369,10 +390,7 @@ h2 {
 }
 .modal-text {
   padding:18px 18px 14px;
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
-  align-items:start;
+  display:block;
   border-bottom:1px solid rgba(31,35,40,.08);
 }
 .modal-text h3 { margin:0 0 6px; }
@@ -397,15 +415,25 @@ h2 {
   object-fit:cover;
   display:block;
 }
+.modal-actions {
+  padding:0 18px 18px;
+  display:flex;
+  justify-content:center;
+}
 .close {
   border:1px solid rgba(31,35,40,.12);
   background:#fff;
-  border-radius:8px;
-  min-width:42px;
-  height:42px;
+  color:#171717;
+  border-radius:999px;
+  min-width:120px;
+  height:46px;
+  padding:0 18px;
   font-weight:900;
   cursor:pointer;
+  box-shadow:0 12px 30px rgba(31,35,40,.1);
 }
+.close:hover,
+.modal-close-floating:hover { transform:translateY(-1px); }
 footer {
   padding:26px 18px 42px;
   text-align:center;
@@ -431,7 +459,15 @@ footer {
   .letter { grid-template-columns:1fr; }
   .letter-img { min-height:300px; }
   .letter-card { padding:22px; }
-  .modal-text { align-items:center; }
+  .modal { padding:10px; align-items:end; }
+  .modal-card { max-height:86svh; border-radius:10px 10px 0 0; }
+  .modal-close-floating {
+    top:auto;
+    bottom:max(14px, env(safe-area-inset-bottom));
+    right:max(14px, env(safe-area-inset-right));
+    height:52px;
+    min-width:92px;
+  }
   .album-grid { grid-template-columns:1fr; }
   .album-tile, .album-tile img, .album-tile video { min-height:260px; }
 }
@@ -503,15 +539,20 @@ footer {
 </section>
 
 <div class="modal" id="modal" aria-hidden="true">
+  <button class="modal-close-floating" type="button" data-close-modal aria-label="앨범 닫기">
+    <span aria-hidden="true">×</span>닫기
+  </button>
   <div class="modal-card">
     <div class="modal-text">
       <div>
         <h3 id="modalTitle"></h3>
         <p id="modalDesc"></p>
       </div>
-      <button class="close" id="closeModal" type="button" aria-label="닫기">×</button>
     </div>
     <div class="album-grid" id="modalAlbum"></div>
+    <div class="modal-actions">
+      <button class="close" type="button" data-close-modal>앨범 닫기</button>
+    </div>
   </div>
 </div>
 
@@ -636,7 +677,9 @@ grid.addEventListener("click", event => {
   const card = event.target.closest(".memory");
   if (card) openMemory(Number(card.dataset.index));
 });
-document.getElementById("closeModal").addEventListener("click", closeMemory);
+document.querySelectorAll("[data-close-modal]").forEach(button => {
+  button.addEventListener("click", closeMemory);
+});
 modal.addEventListener("click", event => {
   if (event.target === modal) closeMemory();
 });
