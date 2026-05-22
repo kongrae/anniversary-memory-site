@@ -305,7 +305,7 @@ button { cursor:pointer; }
 .stack-card.back-b { --tx:210px; --ty:-88px; --tz:-82px; --rot:14deg; z-index:2; }
 .stack-card.back-c { --tx:-202px; --ty:154px; --tz:-64px; --rot:12deg; z-index:3; }
 .stack-card.back-d { --tx:204px; --ty:156px; --tz:-58px; --rot:-13deg; z-index:4; }
-.stack-card.blank { --tx:0; --ty:0; --tz:0; --rot:1.5deg; z-index:5; width:60%; max-width:310px; }
+.stack-card.blank { --tx:0; --ty:0; --tz:0; --rot:1.5deg; z-index:5; width:66%; max-width:340px; }
 .stack-card.blank.active {
   transform:translate3d(0,-14px,120px) rotate(.4deg) scale(1.06);
 }
@@ -349,6 +349,17 @@ button { cursor:pointer; }
 .stack-placeholder span {
   font-weight:950;
   line-height:1.55;
+}
+.stack-upload-photo {
+  width:100%;
+  aspect-ratio:4/5;
+  display:block;
+  overflow:hidden;
+  border-radius:12px;
+  cursor:pointer;
+}
+.stack-upload-photo .stack-photo {
+  height:100%;
 }
 .stack-upload-input {
   position:absolute;
@@ -741,11 +752,13 @@ button { cursor:pointer; }
   box-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.76);
   font-size:18px;
   touch-action:none;
+  --slide-gap:28px;
 }
 .modal-track {
   width:100%;
   height:100%;
   display:flex;
+  gap:var(--slide-gap);
   transition:transform .42s cubic-bezier(.16,1,.3,1);
   will-change:transform;
 }
@@ -888,7 +901,7 @@ footer {
   .stack-card.back-b { --tx:136px; --ty:-52px; }
   .stack-card.back-c { --tx:-132px; --ty:112px; }
   .stack-card.back-d { --tx:134px; --ty:114px; }
-  .stack-card.blank { width:62%; }
+  .stack-card.blank { width:68%; }
   .title { font-size:48px; }
   .subtitle { font-size:15px; }
   .actions { display:grid; }
@@ -917,7 +930,7 @@ footer {
   .modal-card { max-height:calc(100svh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; }
   .modal-head { min-height:76px; padding:18px; border-radius:22px; }
   .modal-head h3 { font-size:26px; }
-  .modal-grid { padding:14px; border-radius:24px; }
+  .modal-grid { padding:14px; border-radius:24px; --slide-gap:22px; }
   .modal-caption { font-size:16px; }
   .modal-pager { bottom:70px; }
   .modal-nav { display:none; }
@@ -1123,14 +1136,17 @@ function Intro() {
               <div className="stack-photo" style={{ "--photo":'url("assets/hero-stack/stack-4.jpg")' }}></div>
             </article>
             <article className={`stack-card blank${activeStackCard === "blank" ? " active" : ""}`} data-label="anniversary day" role="button" tabIndex="0" onClick={() => setActiveStackCard("blank")} onKeyDown={event => handleStackKey(event, "blank")}>
-              <label className="stack-placeholder" onClick={() => setActiveStackCard("blank")}>
-                {anniversaryPhoto ? (
+              {anniversaryPhoto ? (
+                <label className="stack-upload-photo" onClick={() => setActiveStackCard("blank")}>
                   <span className="stack-photo" style={{ "--photo":`url("${anniversaryPhoto}")` }}></span>
-                ) : (
+                  <input className="stack-upload-input" type="file" accept="image/*" onChange={handleAnniversaryPhoto} />
+                </label>
+              ) : (
+                <label className="stack-placeholder" onClick={() => setActiveStackCard("blank")}>
                   <span>기념일 당일<br />사진을 채울 자리<br /><small>앨범에서 선택</small></span>
-                )}
-                <input className="stack-upload-input" type="file" accept="image/*" onChange={handleAnniversaryPhoto} />
-              </label>
+                  <input className="stack-upload-input" type="file" accept="image/*" onChange={handleAnniversaryPhoto} />
+                </label>
+              )}
             </article>
           </div>
         </div>
@@ -1382,7 +1398,7 @@ function MemoryModal({ memory, closing, onClose }) {
             </div>
           </div>
           <div className="modal-grid" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} aria-label={`${memory.title} 사진 넘기기`}>
-            <div className="modal-track" style={{ transform:`translate3d(-${activeIndex * 100}%,0,0)` }}>
+            <div className="modal-track" style={{ transform:`translate3d(calc(-${activeIndex * 100}% - ${activeIndex} * var(--slide-gap)),0,0)` }}>
               {memory.media.map((item, index) => (
                 <figure className="modal-memory" key={`${item.src}-${index}`}>
                   <div className="modal-photo">
