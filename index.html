@@ -258,32 +258,52 @@ button { cursor:pointer; }
   min-height:470px;
   display:grid;
   place-items:center;
+  perspective:1200px;
 }
-.film-frame {
-  width:min(410px,82vw);
-  transform:rotate(2deg);
-  padding:16px 16px 54px;
-  border-radius:8px;
-  background:#fff;
-  box-shadow:0 22px 54px rgba(69,43,36,.2);
+.memory-stack {
+  position:relative;
+  width:min(420px,84vw);
+  height:min(520px,108vw);
+  display:grid;
+  place-items:center;
 }
-.film-frame::after {
-  content:"2025.05.27  Our first year";
+.stack-card {
+  position:absolute;
+  width:76%;
+  max-width:330px;
+  aspect-ratio:4/5.35;
+  padding:13px 13px 46px;
+  border:1px solid rgba(255,255,255,.86);
+  border-radius:18px;
+  background:rgba(255,255,255,.84);
+  box-shadow:0 24px 58px rgba(69,43,36,.18), inset 0 1px 0 rgba(255,255,255,.8);
+  transform:translate3d(var(--tx),var(--ty),var(--tz)) rotate(var(--rot));
+  transition:transform .28s ease, box-shadow .28s ease;
+}
+.stack-card::after {
+  content:attr(data-label);
   display:block;
-  margin-top:12px;
+  margin-top:10px;
   color:#8b7066;
   font-family:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,sans-serif;
-  font-weight:800;
-  font-size:17px;
+  font-weight:850;
+  font-size:14px;
+  white-space:nowrap;
 }
-.hero-photo {
+.stack-card.back-a { --tx:-78px; --ty:-18px; --tz:-70px; --rot:-10deg; z-index:1; }
+.stack-card.back-b { --tx:76px; --ty:-8px; --tz:-60px; --rot:9deg; z-index:2; }
+.stack-card.back-c { --tx:-58px; --ty:50px; --tz:-42px; --rot:7deg; z-index:3; }
+.stack-card.back-d { --tx:60px; --ty:58px; --tz:-38px; --rot:-8deg; z-index:4; }
+.stack-card.blank { --tx:0; --ty:0; --tz:0; --rot:1.5deg; z-index:5; }
+.stack-photo {
   position:relative;
+  width:100%;
   aspect-ratio:4/5;
-  border-radius:6px;
+  border-radius:12px;
   overflow:hidden;
-  background:url("assets/main-hero-cropped.jpg") center 45%/cover no-repeat;
+  background:var(--photo) center/cover no-repeat;
 }
-.hero-photo::after,
+.stack-photo::after,
 .photo-surface::after,
 .modal-photo::after {
   content:"";
@@ -296,6 +316,28 @@ button { cursor:pointer; }
     linear-gradient(90deg,rgba(61,44,46,.12),transparent 12%,rgba(255,255,255,.12) 50%,transparent 88%);
   background-size:18px 18px,100% 100%;
   mix-blend-mode:soft-light;
+}
+.stack-placeholder {
+  width:100%;
+  aspect-ratio:4/5;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  text-align:center;
+  color:#8a5b55;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,247,240,.24)),
+    repeating-linear-gradient(135deg,rgba(183,110,121,.08) 0 1px,transparent 1px 18px);
+  border:2px dashed rgba(183,110,121,.32);
+}
+.stack-placeholder span {
+  font-weight:950;
+  line-height:1.55;
+}
+.memory-stack:hover .stack-card.blank {
+  transform:translate3d(0,-6px,0) rotate(1deg);
+  box-shadow:0 30px 74px rgba(69,43,36,.22), inset 0 1px 0 rgba(255,255,255,.86);
 }
 .tape {
   position:absolute;
@@ -547,39 +589,6 @@ button { cursor:pointer; }
   color:var(--brown);
   font-weight:900;
   text-align:right;
-}
-.current-wrap {
-  display:grid;
-  grid-template-columns:.82fr 1.18fr;
-  gap:18px;
-}
-.memory-connector {
-  width:min(980px,100%);
-  margin:-4px auto -4px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  gap:7px;
-  color:rgba(183,110,121,.78);
-  font-size:38px;
-  line-height:.42;
-  text-shadow:0 10px 24px rgba(183,110,121,.2);
-}
-.memory-connector::before,
-.memory-connector::after {
-  content:"";
-  width:1px;
-  height:44px;
-  background:linear-gradient(180deg,transparent,rgba(183,110,121,.4),transparent);
-}
-.current-photo {
-  min-height:300px;
-  border:2px dashed rgba(183,110,121,.32);
-  display:grid;
-  place-items:center;
-  color:var(--rose);
-  font-weight:900;
 }
 .final-card {
   text-align:center;
@@ -838,8 +847,7 @@ footer {
 }
 @media (max-width:900px) {
   .hero-card,
-  .letter-wrap,
-  .current-wrap { grid-template-columns:1fr; }
+  .letter-wrap { grid-template-columns:1fr; }
   .hero-photo-wrap { min-height:360px; }
   .album-grid { grid-template-columns:repeat(2,1fr); }
 }
@@ -851,7 +859,13 @@ footer {
   .intro { min-height:auto; padding-top:12px; }
   .hero-card { padding:20px; border-radius:26px; }
   .hero-photo-wrap { min-height:300px; }
-  .film-frame { width:min(280px,82vw); padding:12px 12px 42px; }
+  .memory-stack { width:min(330px,86vw); height:410px; }
+  .stack-card { width:74%; padding:10px 10px 38px; border-radius:15px; }
+  .stack-card::after { font-size:12px; }
+  .stack-card.back-a { --tx:-48px; --ty:-12px; }
+  .stack-card.back-b { --tx:48px; --ty:-4px; }
+  .stack-card.back-c { --tx:-38px; --ty:38px; }
+  .stack-card.back-d { --tx:40px; --ty:44px; }
   .title { font-size:48px; }
   .subtitle { font-size:15px; }
   .actions { display:grid; }
@@ -1037,7 +1051,23 @@ function Intro() {
           <span className="tape two"></span>
           <span className="sticker heart-a">♥</span>
           <span className="sticker heart-b">♥</span>
-          <div className="film-frame"><div className="hero-photo"></div></div>
+          <div className="memory-stack" aria-label="기념일 사진 카드 스택">
+            <article className="stack-card back-a" data-label="summer">
+              <div className="stack-photo" style={{ "--photo":'url("assets/seasons/summer-1.jpg")' }}></div>
+            </article>
+            <article className="stack-card back-b" data-label="autumn">
+              <div className="stack-photo" style={{ "--photo":'url("assets/seasons/autumn-2.jpg")' }}></div>
+            </article>
+            <article className="stack-card back-c" data-label="winter">
+              <div className="stack-photo" style={{ "--photo":'url("assets/seasons/winter-5.jpg")' }}></div>
+            </article>
+            <article className="stack-card back-d" data-label="spring">
+              <div className="stack-photo" style={{ "--photo":'url("assets/seasons/spring-3.jpg")' }}></div>
+            </article>
+            <article className="stack-card blank" data-label="anniversary day">
+              <div className="stack-placeholder"><span>기념일 당일<br />사진을 채울 자리</span></div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -1131,22 +1161,6 @@ function Timeline() {
   );
 }
 
-function CurrentSlot() {
-  return (
-    <section className="section fade-up" id="current">
-      <div className="current-wrap">
-        <article className="paper-card final-card">
-          <h2>그리고, 현재의 우리</h2>
-          <p className="bento-text">기념일 당일 사진을 채워 넣을 빈 페이지.</p>
-        </article>
-        <article className="paper-card current-photo">
-          <span>기념일 당일 사진 자리</span>
-        </article>
-      </div>
-    </section>
-  );
-}
-
 function Letter() {
   return (
     <section className="section fade-up" id="letter">
@@ -1180,8 +1194,13 @@ function FinalSection() {
 
 function MemoryModal({ memory, closing, onClose }) {
   const [activeIndex, setActiveIndex] = React.useState(0);
+  const activeIndexRef = React.useRef(0);
   const touchStartX = React.useRef(null);
   const mediaCount = memory?.media?.length || 0;
+
+  React.useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   const goToSlide = React.useCallback(index => {
     if (!mediaCount) return;
@@ -1224,11 +1243,21 @@ function MemoryModal({ memory, closing, onClose }) {
 
   React.useEffect(() => {
     if (!memory) return undefined;
+    const lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const previousBodyStyle = {
+      position:document.body.style.position,
+      top:document.body.style.top,
+      left:document.body.style.left,
+      right:document.body.style.right,
+      width:document.body.style.width,
+      overflow:document.body.style.overflow
+    };
+    const previousHtmlOverflow = document.documentElement.style.overflow;
 
     function handleKey(event) {
       if (event.key === "Escape") onClose();
-      if (event.key === "ArrowLeft") goToSlide(activeIndex - 1);
-      if (event.key === "ArrowRight") goToSlide(activeIndex + 1);
+      if (event.key === "ArrowLeft") goToSlide(activeIndexRef.current - 1);
+      if (event.key === "ArrowRight") goToSlide(activeIndexRef.current + 1);
     }
 
     function lockBackgroundTouch(event) {
@@ -1238,6 +1267,13 @@ function MemoryModal({ memory, closing, onClose }) {
 
     document.documentElement.classList.add("modal-locked-root");
     document.body.classList.add("modal-locked");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleKey);
     document.querySelector(".modal")?.addEventListener("touchmove", lockBackgroundTouch, { passive:false });
     const playTimer = window.setTimeout(() => {
@@ -1256,9 +1292,17 @@ function MemoryModal({ memory, closing, onClose }) {
       document.querySelector(".modal")?.removeEventListener("touchmove", lockBackgroundTouch);
       document.documentElement.classList.remove("modal-locked-root");
       document.body.classList.remove("modal-locked");
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.position = previousBodyStyle.position;
+      document.body.style.top = previousBodyStyle.top;
+      document.body.style.left = previousBodyStyle.left;
+      document.body.style.right = previousBodyStyle.right;
+      document.body.style.width = previousBodyStyle.width;
+      document.body.style.overflow = previousBodyStyle.overflow;
+      window.scrollTo(0, lockedScrollY);
       window.removeEventListener("keydown", handleKey);
     };
-  }, [memory, onClose, activeIndex, goToSlide]);
+  }, [memory, onClose, goToSlide]);
 
   if (!memory) return null;
   const handleTouchStart = event => {
@@ -1351,8 +1395,6 @@ function App() {
         <Intro />
         <Summary />
         <Album onOpen={openMemory} />
-        <div className="memory-connector" aria-hidden="true"><span>·</span><span>·</span><span>·</span></div>
-        <CurrentSlot />
         <Timeline />
         <Letter />
         <FinalSection />
