@@ -35,6 +35,7 @@ body {
   margin:0;
   color:#3a2a28;
   font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  font-size:17px;
   background:
     radial-gradient(circle at 10% 8%,rgba(244,167,163,.42),transparent 25%),
     radial-gradient(circle at 88% 6%,rgba(244,200,162,.42),transparent 26%),
@@ -128,7 +129,7 @@ button { cursor:pointer; }
 .nav-links {
   display:flex;
   gap:18px;
-  font-size:13px;
+  font-size:14px;
   font-weight:900;
 }
 .nav-links a {
@@ -173,7 +174,7 @@ button { cursor:pointer; }
   position:absolute;
   top:-40px;
   left:var(--x);
-  color:rgba(183,110,121,.28);
+  color:rgba(183,110,121,.32);
   font-size:var(--s);
   animation:heartFall var(--d) linear infinite;
   animation-delay:var(--delay);
@@ -330,6 +331,7 @@ button { cursor:pointer; }
   margin:0;
   max-width:420px;
   color:var(--muted);
+  font-size:17px;
   line-height:1.65;
 }
 .bento {
@@ -356,7 +358,7 @@ button { cursor:pointer; }
   display:block;
   margin-bottom:12px;
   color:var(--rose);
-  font-size:13px;
+  font-size:14px;
   font-weight:900;
 }
 .bento-value {
@@ -371,6 +373,7 @@ button { cursor:pointer; }
 .bento-text {
   margin:0;
   color:var(--muted);
+  font-size:17px;
   line-height:1.7;
 }
 .stamp {
@@ -381,7 +384,7 @@ button { cursor:pointer; }
   border-radius:999px;
   color:var(--rose);
   font-weight:900;
-  font-size:12px;
+  font-size:13px;
 }
 .album-grid {
   display:grid;
@@ -433,19 +436,19 @@ button { cursor:pointer; }
 }
 .polaroid-meta time {
   color:var(--rose);
-  font-size:12px;
+  font-size:13px;
   font-weight:900;
 }
 .polaroid-meta h3 {
   margin:6px 0 5px;
   color:var(--deep);
-  font-size:20px;
+  font-size:21px;
 }
 .polaroid-meta p {
   margin:0;
   color:var(--muted);
   line-height:1.55;
-  font-size:14px;
+  font-size:15px;
 }
 .timeline {
   position:relative;
@@ -488,7 +491,7 @@ button { cursor:pointer; }
 .timeline-item time {
   color:var(--rose);
   font-weight:900;
-  font-size:13px;
+  font-size:14px;
 }
 .timeline-item h3 {
   margin:8px 0 5px;
@@ -497,6 +500,7 @@ button { cursor:pointer; }
 .timeline-item p {
   margin:0;
   color:var(--muted);
+  font-size:16px;
   line-height:1.6;
 }
 .letter-wrap {
@@ -547,21 +551,23 @@ button { cursor:pointer; }
 }
 .memory-connector {
   width:min(980px,100%);
-  margin:-12px auto -10px;
+  margin:-4px auto -4px;
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:10px;
-  color:rgba(183,110,121,.5);
-  font-size:26px;
-  letter-spacing:8px;
+  flex-direction:column;
+  gap:7px;
+  color:rgba(183,110,121,.78);
+  font-size:38px;
+  line-height:.42;
+  text-shadow:0 10px 24px rgba(183,110,121,.2);
 }
 .memory-connector::before,
 .memory-connector::after {
   content:"";
-  width:min(22vw,120px);
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(183,110,121,.26),transparent);
+  width:1px;
+  height:44px;
+  background:linear-gradient(180deg,transparent,rgba(183,110,121,.4),transparent);
 }
 .current-photo {
   min-height:300px;
@@ -595,24 +601,25 @@ button { cursor:pointer; }
 }
 .modal.open { display:grid; }
 .modal.open .modal-shell {
-  animation:modalIn .26s cubic-bezier(.2,.8,.2,1) both;
+  animation:modalIn .32s cubic-bezier(.16,1,.3,1) both;
 }
 .modal.closing .modal-shell {
-  animation:modalOut .18s ease both;
+  animation:modalOut .24s cubic-bezier(.7,0,.84,0) both;
 }
 .modal.open::before {
-  animation:veilIn .26s ease both;
+  animation:veilIn .28s ease both;
 }
 .modal.closing::before {
-  animation:veilOut .18s ease both;
+  animation:veilOut .24s ease both;
 }
 @keyframes modalIn {
-  from { opacity:0; transform:translateY(30px) scale(.975); }
-  to { opacity:1; transform:translateY(8px) scale(1); }
+  from { opacity:0; transform:translateY(8px) scale(.92); filter:blur(12px); }
+  68% { opacity:1; transform:translateY(8px) scale(1.012); filter:blur(0); }
+  to { opacity:1; transform:translateY(8px) scale(1); filter:blur(0); }
 }
 @keyframes modalOut {
-  from { opacity:1; transform:translateY(8px) scale(1); }
-  to { opacity:0; transform:translateY(26px) scale(.985); }
+  from { opacity:1; transform:translateY(8px) scale(1); filter:blur(0); }
+  to { opacity:0; transform:translateY(8px) scale(.94); filter:blur(10px); }
 }
 @keyframes veilIn {
   from { opacity:0; }
@@ -660,6 +667,9 @@ button { cursor:pointer; }
 .modal-head {
   position:relative;
   flex:0 0 auto;
+  min-height:78px;
+  display:flex;
+  align-items:center;
   border-radius:28px 28px 0 0;
   padding:20px 22px;
   border-bottom:1px solid var(--line);
@@ -668,7 +678,7 @@ button { cursor:pointer; }
   box-shadow:0 12px 28px rgba(61,44,46,.07), inset 0 1px 0 rgba(255,255,255,.62);
 }
 .modal-head h3 {
-  margin:0 0 6px;
+  margin:0;
   color:transparent;
   background:var(--aura);
   -webkit-background-clip:text;
@@ -721,7 +731,7 @@ button { cursor:pointer; }
   background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,247,240,.18));
   backdrop-filter:blur(24px) saturate(1.35);
   box-shadow:0 10px 24px rgba(61,44,46,.08), inset 0 1px 0 rgba(255,255,255,.66);
-  font-size:13px;
+  font-size:14px;
   font-weight:750;
   line-height:1.55;
 }
@@ -790,16 +800,17 @@ footer {
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell { max-height:calc(100svh - 18px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; transform:translateY(4px); }
   @keyframes modalIn {
-    from { opacity:0; transform:translateY(22px) scale(.975); }
-    to { opacity:1; transform:translateY(4px) scale(1); }
+    from { opacity:0; transform:translateY(4px) scale(.92); filter:blur(12px); }
+    68% { opacity:1; transform:translateY(4px) scale(1.012); filter:blur(0); }
+    to { opacity:1; transform:translateY(4px) scale(1); filter:blur(0); }
   }
   @keyframes modalOut {
-    from { opacity:1; transform:translateY(4px) scale(1); }
-    to { opacity:0; transform:translateY(20px) scale(.985); }
+    from { opacity:1; transform:translateY(4px) scale(1); filter:blur(0); }
+    to { opacity:0; transform:translateY(4px) scale(.94); filter:blur(10px); }
   }
   .brand { font-size:13px; }
   .modal-card { max-height:calc(100svh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); border-radius:24px; }
-  .modal-head { padding:18px; border-radius:24px 24px 0 0; }
+  .modal-head { min-height:72px; padding:18px; border-radius:24px 24px 0 0; }
   .modal-grid { padding:14px; gap:12px; border-radius:0 0 24px 24px; }
   .modal-photo img, .modal-photo video { min-height:0; max-height:72svh; }
   .modal-close-floating { height:50px; min-width:88px; }
@@ -1165,10 +1176,10 @@ function App() {
   return (
     <>
       <div className="heart-rain" aria-hidden="true">
-        <span style={{ "--x":"7%", "--s":"24px", "--d":"10.5s", "--delay":"-1s", "--drift":"24px" }}>♥</span>
+        <span style={{ "--x":"4%", "--s":"28px", "--d":"10.5s", "--delay":"-1s", "--drift":"24px" }}>♥</span>
         <span style={{ "--x":"19%", "--s":"18px", "--d":"12s", "--delay":"-5s", "--drift":"-18px" }}>♥</span>
         <span style={{ "--x":"32%", "--s":"28px", "--d":"11.2s", "--delay":"-3s", "--drift":"22px" }}>♥</span>
-        <span style={{ "--x":"48%", "--s":"20px", "--d":"13s", "--delay":"-7s", "--drift":"-26px" }}>♥</span>
+        <span style={{ "--x":"48%", "--s":"24px", "--d":"13s", "--delay":"-7s", "--drift":"-26px" }}>♥</span>
         <span style={{ "--x":"62%", "--s":"26px", "--d":"10.8s", "--delay":"-2s", "--drift":"18px" }}>♥</span>
         <span style={{ "--x":"76%", "--s":"19px", "--d":"12.6s", "--delay":"-6s", "--drift":"-20px" }}>♥</span>
         <span style={{ "--x":"91%", "--s":"30px", "--d":"11.8s", "--delay":"-4s", "--drift":"16px" }}>♥</span>
@@ -1176,13 +1187,17 @@ function App() {
         <span style={{ "--x":"41%", "--s":"22px", "--d":"15s", "--delay":"-10s", "--drift":"28px" }}>♥</span>
         <span style={{ "--x":"69%", "--s":"34px", "--d":"13.8s", "--delay":"-8s", "--drift":"-24px" }}>♥</span>
         <span style={{ "--x":"84%", "--s":"25px", "--d":"16s", "--delay":"-11s", "--drift":"30px" }}>♥</span>
+        <span style={{ "--x":"25%", "--s":"36px", "--d":"14.5s", "--delay":"-12s", "--drift":"-34px" }}>♥</span>
+        <span style={{ "--x":"55%", "--s":"30px", "--d":"12.8s", "--delay":"-9.5s", "--drift":"34px" }}>♥</span>
+        <span style={{ "--x":"96%", "--s":"22px", "--d":"15.5s", "--delay":"-13s", "--drift":"-22px" }}>♥</span>
+        <span style={{ "--x":"1%", "--s":"20px", "--d":"13.4s", "--delay":"-6.5s", "--drift":"28px" }}>♥</span>
       </div>
       <div className="app">
         <Nav />
         <Intro />
         <Summary />
         <Album onOpen={openMemory} />
-        <div className="memory-connector" aria-hidden="true">···</div>
+        <div className="memory-connector" aria-hidden="true"><span>·</span><span>·</span><span>·</span></div>
         <CurrentSlot />
         <Timeline />
         <Letter />
