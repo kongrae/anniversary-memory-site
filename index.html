@@ -657,6 +657,7 @@ button { cursor:pointer; }
   justify-items:end;
 }
 .modal-card {
+  position:relative;
   width:100%;
   max-height:min(91svh,calc(100svh - 92px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
   display:flex;
@@ -687,25 +688,18 @@ button { cursor:pointer; }
 }
 .modal-head h3 {
   margin:0;
-  color:transparent;
-  background:var(--aura);
-  -webkit-background-clip:text;
-  background-clip:text;
+  color:#4e3732;
+  background:none;
   font-size:clamp(27px,4.4vw,42px);
   line-height:1.18;
-  text-shadow:0 1px 0 rgba(255,255,255,.42);
+  font-weight:950;
+  text-shadow:0 1px 0 rgba(255,255,255,.72), 0 12px 28px rgba(183,110,121,.16);
 }
 .modal-grid {
   flex:1 1 auto;
   min-height:0;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  grid-auto-rows:max-content;
-  align-content:start;
-  align-items:start;
-  gap:16px;
   padding:20px;
-  overflow:auto;
+  overflow:hidden;
   overscroll-behavior:contain;
   border:1px solid rgba(255,255,255,.72);
   border-radius:28px;
@@ -715,6 +709,14 @@ button { cursor:pointer; }
   backdrop-filter:blur(34px) saturate(1.56) brightness(1.05);
   box-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.76);
   font-size:18px;
+  touch-action:pan-y;
+}
+.modal-track {
+  width:100%;
+  height:100%;
+  display:flex;
+  transition:transform .42s cubic-bezier(.16,1,.3,1);
+  will-change:transform;
 }
 .modal-photo {
   position:relative;
@@ -729,8 +731,13 @@ button { cursor:pointer; }
 }
 .modal-memory {
   margin:0;
+  flex:0 0 100%;
+  min-width:100%;
   display:grid;
-  gap:9px;
+  grid-template-rows:minmax(0,1fr) auto;
+  align-content:center;
+  gap:12px;
+  padding:0;
 }
 .modal-caption {
   margin:0;
@@ -745,6 +752,57 @@ button { cursor:pointer; }
   font-weight:750;
   line-height:1.55;
 }
+.modal-pager {
+  position:absolute;
+  left:50%;
+  bottom:74px;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transform:translateX(-50%);
+  padding:8px 11px;
+  border:1px solid rgba(255,255,255,.58);
+  border-radius:999px;
+  background:linear-gradient(135deg,rgba(255,255,255,.44),rgba(255,247,240,.2));
+  backdrop-filter:blur(22px) saturate(1.45);
+  box-shadow:0 12px 30px rgba(61,44,46,.12), inset 0 1px 0 rgba(255,255,255,.7);
+}
+.modal-dot {
+  display:block;
+  width:7px;
+  height:7px;
+  border:0;
+  border-radius:999px;
+  padding:0;
+  background:rgba(95,71,64,.28);
+  transition:width .2s ease, background .2s ease;
+}
+.modal-dot.active {
+  width:22px;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+}
+.modal-nav {
+  position:absolute;
+  top:50%;
+  z-index:2;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.66);
+  border-radius:50%;
+  color:#5b403a;
+  background:linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,247,240,.22));
+  backdrop-filter:blur(24px) saturate(1.45);
+  box-shadow:0 12px 30px rgba(61,44,46,.14), inset 0 1px 0 rgba(255,255,255,.72);
+  transform:translateY(-50%);
+}
+.modal-nav:disabled {
+  opacity:.32;
+}
+.modal-nav.prev { left:16px; }
+.modal-nav.next { right:16px; }
 .modal-photo img,
 .modal-photo video {
   width:auto;
@@ -822,8 +880,10 @@ footer {
   .modal-card { max-height:calc(100svh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; }
   .modal-head { min-height:76px; padding:18px; border-radius:22px; }
   .modal-head h3 { font-size:26px; }
-  .modal-grid { padding:14px; gap:12px; border-radius:24px; }
-  .modal-caption { font-size:15px; }
+  .modal-grid { padding:14px; border-radius:24px; }
+  .modal-caption { font-size:16px; }
+  .modal-pager { bottom:70px; }
+  .modal-nav { display:none; }
   .modal-photo img, .modal-photo video { min-height:0; max-height:72svh; }
   .modal-close-floating { height:50px; min-width:88px; }
 }
@@ -1119,11 +1179,56 @@ function FinalSection() {
 }
 
 function MemoryModal({ memory, closing, onClose }) {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const touchStartX = React.useRef(null);
+  const mediaCount = memory?.media?.length || 0;
+
+  const goToSlide = React.useCallback(index => {
+    if (!mediaCount) return;
+    const nextIndex = Math.max(0, Math.min(index, mediaCount - 1));
+    setActiveIndex(nextIndex);
+    window.requestAnimationFrame(() => {
+      document.querySelectorAll(".modal-memory").forEach((slide, slideIndex) => {
+        const video = slide.querySelector("video");
+        if (!video || !video.autoplay) return;
+        video.controls = false;
+        video.muted = true;
+        if (slideIndex === nextIndex) {
+          video.play?.().catch(() => {});
+        } else {
+          video.pause?.();
+        }
+      });
+    });
+  }, [mediaCount]);
+
+  React.useEffect(() => {
+    setActiveIndex(0);
+  }, [memory?.id]);
+
+  React.useEffect(() => {
+    if (!memory) return;
+    document.querySelectorAll(".modal-memory").forEach((slide, index) => {
+      const video = slide.querySelector("video");
+      if (!video) return;
+      if (!video.autoplay) return;
+      video.controls = false;
+      video.muted = true;
+      if (index === activeIndex) {
+        video.play?.().catch(() => {});
+      } else {
+        video.pause?.();
+      }
+    });
+  }, [memory, activeIndex]);
+
   React.useEffect(() => {
     if (!memory) return undefined;
 
     function handleKey(event) {
       if (event.key === "Escape") onClose();
+      if (event.key === "ArrowLeft") goToSlide(activeIndex - 1);
+      if (event.key === "ArrowRight") goToSlide(activeIndex + 1);
     }
 
     function lockBackgroundTouch(event) {
@@ -1135,10 +1240,6 @@ function MemoryModal({ memory, closing, onClose }) {
     document.body.classList.add("modal-locked");
     window.addEventListener("keydown", handleKey);
     document.querySelector(".modal")?.addEventListener("touchmove", lockBackgroundTouch, { passive:false });
-    window.requestAnimationFrame(() => {
-      const grid = document.querySelector(".modal-grid");
-      if (grid) grid.scrollTop = 0;
-    });
     const playTimer = window.setTimeout(() => {
       document.querySelectorAll(".modal video").forEach(video => {
         if (!video.autoplay) return;
@@ -1157,9 +1258,21 @@ function MemoryModal({ memory, closing, onClose }) {
       document.body.classList.remove("modal-locked");
       window.removeEventListener("keydown", handleKey);
     };
-  }, [memory, onClose]);
+  }, [memory, onClose, activeIndex, goToSlide]);
 
   if (!memory) return null;
+  const handleTouchStart = event => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+  };
+  const handleTouchEnd = event => {
+    if (touchStartX.current === null) return;
+    const endX = event.changedTouches[0]?.clientX ?? touchStartX.current;
+    const diff = touchStartX.current - endX;
+    touchStartX.current = null;
+    if (Math.abs(diff) < 42) return;
+    goToSlide(activeIndex + (diff > 0 ? 1 : -1));
+  };
+
   return (
     <div className={`modal open${closing ? " closing" : ""}`} onClick={event => event.target.classList.contains("modal") && onClose()} aria-hidden="false">
       <div className="modal-shell">
@@ -1169,16 +1282,29 @@ function MemoryModal({ memory, closing, onClose }) {
               <h3>{memory.title}</h3>
             </div>
           </div>
-          <div className="modal-grid">
-            {memory.media.map((item, index) => (
-              <figure className="modal-memory" key={`${item.src}-${index}`}>
-                <div className="modal-photo">
-                  <Media item={item} />
-                </div>
-                <figcaption className="modal-caption">{item.caption || item.alt || memory.memo}</figcaption>
-              </figure>
-            ))}
+          <div className="modal-grid" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} aria-label={`${memory.title} 사진 넘기기`}>
+            <div className="modal-track" style={{ transform:`translate3d(-${activeIndex * 100}%,0,0)` }}>
+              {memory.media.map((item, index) => (
+                <figure className="modal-memory" key={`${item.src}-${index}`}>
+                  <div className="modal-photo">
+                    <Media item={item} />
+                  </div>
+                  <figcaption className="modal-caption">{item.caption || item.alt || memory.memo}</figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
+          {mediaCount > 1 && (
+            <>
+              <button className="modal-nav prev" type="button" onClick={() => goToSlide(activeIndex - 1)} disabled={activeIndex === 0} aria-label="이전 사진">‹</button>
+              <button className="modal-nav next" type="button" onClick={() => goToSlide(activeIndex + 1)} disabled={activeIndex === mediaCount - 1} aria-label="다음 사진">›</button>
+              <div className="modal-pager" aria-hidden="true">
+                {memory.media.map((item, index) => (
+                  <span className={`modal-dot${index === activeIndex ? " active" : ""}`} key={`${item.src}-dot`} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
         <button className="modal-close-floating" type="button" onClick={onClose} aria-label="앨범 닫기">닫기</button>
       </div>
