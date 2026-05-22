@@ -307,14 +307,38 @@ button { cursor:pointer; }
 .stack-card.back-b { --tx:210px; --ty:-88px; --tz:-82px; --rot:14deg; z-index:2; }
 .stack-card.back-c { --tx:-202px; --ty:154px; --tz:-64px; --rot:12deg; z-index:3; }
 .stack-card.back-d { --tx:204px; --ty:156px; --tz:-58px; --rot:-13deg; z-index:4; }
-.stack-card.blank { --tx:0; --ty:0; --tz:0; --rot:1.5deg; z-index:5; width:66%; max-width:340px; }
+.stack-card.blank {
+  --tx:0;
+  --ty:0;
+  --tz:0;
+  --rot:1.5deg;
+  z-index:5;
+  width:66%;
+  max-width:340px;
+  padding:10px;
+  border:1px solid rgba(255,255,255,.9);
+  background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,240,.34));
+  box-shadow:0 28px 74px rgba(69,43,36,.18), inset 0 1px 0 rgba(255,255,255,.82);
+}
+.stack-card.blank::before {
+  content:"기념일 메인 사진";
+  position:absolute;
+  left:50%;
+  top:-38px;
+  transform:translateX(-50%);
+  z-index:2;
+  padding:7px 12px;
+  border:1px solid rgba(255,255,255,.82);
+  border-radius:999px;
+  background:rgba(255,250,247,.88);
+  color:#8a5b55;
+  box-shadow:0 12px 28px rgba(126,78,63,.12);
+  font-size:12px;
+  font-weight:950;
+  white-space:nowrap;
+}
 .stack-card.blank.active {
   transform:translate3d(0,-14px,120px) rotate(.4deg) scale(1.02);
-}
-.memory-stack.hide-empty-slot .stack-card.blank {
-  opacity:0;
-  pointer-events:none;
-  transform:translate3d(0,8px,-40px) rotate(0) scale(.94);
 }
 .stack-photo {
   position:relative;
@@ -328,6 +352,11 @@ button { cursor:pointer; }
 .stack-card.active .stack-photo {
   border-radius:22px;
   box-shadow:0 36px 90px rgba(69,43,36,.28), inset 0 1px 0 rgba(255,255,255,.42);
+}
+.stack-card.blank .stack-photo {
+  height:100%;
+  border:1px solid rgba(183,110,121,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.62);
 }
 .stack-photo::after,
 .photo-surface::after,
@@ -388,7 +417,7 @@ button { cursor:pointer; }
   aspect-ratio:4/5;
   display:block;
   overflow:hidden;
-  border-radius:22px;
+  border-radius:18px;
   cursor:pointer;
 }
 .stack-upload-photo .stack-photo {
@@ -662,6 +691,19 @@ button { cursor:pointer; }
   color:var(--brown);
   font-weight:900;
   text-align:right;
+}
+.current-wrap {
+  display:grid;
+  grid-template-columns:.82fr 1.18fr;
+  gap:18px;
+}
+.current-photo {
+  min-height:300px;
+  border:2px dashed rgba(183,110,121,.32);
+  display:grid;
+  place-items:center;
+  color:var(--rose);
+  font-weight:900;
 }
 .final-card {
   text-align:center;
@@ -938,7 +980,8 @@ footer {
 }
 @media (max-width:900px) {
   .hero-card,
-  .letter-wrap { grid-template-columns:1fr; }
+  .letter-wrap,
+  .current-wrap { grid-template-columns:1fr; }
   .hero-photo-wrap { min-height:360px; }
   .album-grid { grid-template-columns:repeat(2,1fr); }
 }
@@ -1281,7 +1324,7 @@ function Intro() {
           <span className="tape two"></span>
           <span className="sticker heart-a">♥</span>
           <span className="sticker heart-b">♥</span>
-          <div className={`memory-stack${activeStackCard !== "blank" && !anniversaryPhoto ? " hide-empty-slot" : ""}`} aria-label="기념일 사진 카드 스택">
+          <div className="memory-stack" aria-label="기념일 사진 카드 스택">
             <article className={`stack-card back-a${activeStackCard === "summer" ? " active" : ""}`} data-label="summer" role="button" tabIndex="0" onClick={() => activateStackCard("summer")} onKeyDown={event => handleStackKey(event, "summer")}>
               <div className="stack-photo" style={{ "--photo":'url("assets/hero-stack/stack-1.jpg")' }}></div>
             </article>
@@ -1399,6 +1442,22 @@ function Timeline() {
             <p>{item.description}</p>
           </article>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function CurrentSlot() {
+  return (
+    <section className="section fade-up" id="current">
+      <div className="current-wrap">
+        <article className="paper-card final-card">
+          <h2>그리고, 현재의 우리</h2>
+          <p className="bento-text">기념일 당일 사진을 채워 넣을 빈 페이지.</p>
+        </article>
+        <article className="paper-card current-photo">
+          <span>기념일 당일 사진 자리</span>
+        </article>
       </div>
     </section>
   );
@@ -1628,6 +1687,7 @@ function App() {
         <Intro />
         <Summary />
         <Album onOpen={openMemory} />
+        <CurrentSlot />
         <Timeline />
         <Letter />
         <FinalSection />
