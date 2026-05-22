@@ -362,6 +362,24 @@ button { cursor:pointer; }
   font-weight:950;
   line-height:1.55;
 }
+.stack-status {
+  position:absolute;
+  left:50%;
+  bottom:-42px;
+  z-index:12;
+  width:min(300px,76vw);
+  transform:translateX(-50%);
+  padding:9px 14px;
+  border:1px solid rgba(255,255,255,.78);
+  border-radius:999px;
+  background:rgba(255,250,247,.78);
+  backdrop-filter:blur(18px) saturate(1.22);
+  box-shadow:0 14px 34px rgba(126,78,63,.14);
+  color:#684942;
+  font-size:13px;
+  font-weight:850;
+  text-align:center;
+}
 .stack-upload-photo {
   width:100%;
   aspect-ratio:4/5;
@@ -972,6 +990,70 @@ footer {
 <script src="assets/vendor/react.production.min.js"></script>
 <script src="assets/vendor/react-dom.production.min.js"></script>
 <script src="assets/vendor/babel.min.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  appId: ""
+};
+
+const PHOTO_PATH = "anniversary/current-main.jpg";
+const hasFirebaseConfig = Object.values(firebaseConfig).every(value => value && !String(value).includes("YOUR_"));
+
+async function createFirebaseStorage() {
+  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
+  const { getAuth, signInAnonymously } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js");
+  const { getStorage, ref, getDownloadURL, uploadBytesResumable } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js");
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  await signInAnonymously(auth);
+  const storage = getStorage(app);
+
+  return {
+    async loadAnniversaryPhoto() {
+      return getDownloadURL(ref(storage, PHOTO_PATH));
+    },
+    uploadAnniversaryPhoto(file, onProgress) {
+      if (!file.type.startsWith("image/")) {
+        return Promise.reject(new Error("image-only"));
+      }
+      if (file.size > 12 * 1024 * 1024) {
+        return Promise.reject(new Error("file-too-large"));
+      }
+      const task = uploadBytesResumable(ref(storage, PHOTO_PATH), file, {
+        contentType: file.type || "image/jpeg",
+        cacheControl: "public,max-age=60"
+      });
+      return new Promise((resolve, reject) => {
+        task.on("state_changed", snapshot => {
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          onProgress?.(progress);
+        }, reject, async () => {
+          resolve(await getDownloadURL(task.snapshot.ref));
+        });
+      });
+    }
+  };
+}
+
+window.mongliniStorage = {
+  isConfigured: hasFirebaseConfig,
+  async ready() {
+    if (!hasFirebaseConfig) throw new Error("firebase-config-missing");
+    if (!this.instance) this.instance = await createFirebaseStorage();
+    return this.instance;
+  },
+  async loadAnniversaryPhoto() {
+    return (await this.ready()).loadAnniversaryPhoto();
+  },
+  async uploadAnniversaryPhoto(file, onProgress) {
+    return (await this.ready()).uploadAnniversaryPhoto(file, onProgress);
+  }
+};
+document.documentElement.dataset.firebaseUpload = hasFirebaseConfig ? "configured" : "waiting-config";
+</script>
 <script type="text/babel">
 const CONFIG = {
   anniversaryStart: "2025-05-27",
@@ -1100,12 +1182,23 @@ function Nav() {
 function Intro() {
   const [anniversaryPhoto, setAnniversaryPhoto] = React.useState("");
   const [activeStackCard, setActiveStackCard] = React.useState("blank");
+  const [uploadStatus, setUploadStatus] = React.useState("");
 
   React.useEffect(() => {
     try {
       const savedPhoto = window.localStorage.getItem("monglini-anniversary-photo");
       if (savedPhoto) setAnniversaryPhoto(savedPhoto);
     } catch (error) {}
+    if (window.mongliniStorage?.isConfigured) {
+      window.mongliniStorage.loadAnniversaryPhoto()
+        .then(url => {
+          setAnniversaryPhoto(url);
+          try {
+            window.localStorage.setItem("monglini-anniversary-photo", url);
+          } catch (error) {}
+        })
+        .catch(() => {});
+    }
   }, []);
 
   const handleAnniversaryPhoto = event => {
@@ -1120,6 +1213,30 @@ function Intro() {
       } catch (error) {}
     };
     reader.readAsDataURL(file);
+
+    if (!window.mongliniStorage?.isConfigured) {
+      setUploadStatus("Firebase 설정값을 넣으면 서버에 저장돼요. 지금은 이 기기에만 임시 저장됐어요.");
+      window.setTimeout(() => setUploadStatus(""), 5200);
+      return;
+    }
+
+    setUploadStatus("Firebase에 업로드 준비 중...");
+    window.mongliniStorage.uploadAnniversaryPhoto(file, progress => {
+      setUploadStatus(`Firebase에 업로드 중 ${progress}%`);
+    }).then(url => {
+      setAnniversaryPhoto(url);
+      try {
+        window.localStorage.setItem("monglini-anniversary-photo", url);
+      } catch (error) {}
+      setUploadStatus("업로드 완료. 이제 다른 기기에서도 같은 사진이 보여요.");
+      window.setTimeout(() => setUploadStatus(""), 4200);
+    }).catch(error => {
+      const message = error?.message === "file-too-large"
+        ? "사진 용량이 커서 업로드하지 못했어요. 12MB 이하 사진으로 다시 선택해줘요."
+        : "Firebase 업로드에 실패했어요. 설정값과 Storage 규칙을 확인해줘요.";
+      setUploadStatus(message);
+      window.setTimeout(() => setUploadStatus(""), 6200);
+    });
   };
 
   const activateStackCard = key => {
@@ -1176,6 +1293,7 @@ function Intro() {
                 </label>
               )}
             </article>
+            {uploadStatus && <div className="stack-status">{uploadStatus}</div>}
           </div>
         </div>
       </div>
