@@ -269,8 +269,8 @@ button { cursor:pointer; }
 }
 .stack-card {
   position:absolute;
-  width:76%;
-  max-width:330px;
+  width:64%;
+  max-width:280px;
   aspect-ratio:4/5.35;
   padding:13px 13px 46px;
   border:1px solid rgba(255,255,255,.86);
@@ -290,11 +290,11 @@ button { cursor:pointer; }
   font-size:14px;
   white-space:nowrap;
 }
-.stack-card.back-a { --tx:-78px; --ty:-18px; --tz:-70px; --rot:-10deg; z-index:1; }
-.stack-card.back-b { --tx:76px; --ty:-8px; --tz:-60px; --rot:9deg; z-index:2; }
-.stack-card.back-c { --tx:-58px; --ty:50px; --tz:-42px; --rot:7deg; z-index:3; }
-.stack-card.back-d { --tx:60px; --ty:58px; --tz:-38px; --rot:-8deg; z-index:4; }
-.stack-card.blank { --tx:0; --ty:0; --tz:0; --rot:1.5deg; z-index:5; }
+.stack-card.back-a { --tx:-122px; --ty:-34px; --tz:-90px; --rot:-13deg; z-index:1; }
+.stack-card.back-b { --tx:122px; --ty:-28px; --tz:-82px; --rot:12deg; z-index:2; }
+.stack-card.back-c { --tx:-106px; --ty:92px; --tz:-64px; --rot:10deg; z-index:3; }
+.stack-card.back-d { --tx:108px; --ty:94px; --tz:-58px; --rot:-11deg; z-index:4; }
+.stack-card.blank { --tx:0; --ty:0; --tz:0; --rot:1.5deg; z-index:5; width:76%; max-width:330px; }
 .stack-photo {
   position:relative;
   width:100%;
@@ -860,12 +860,13 @@ footer {
   .hero-card { padding:20px; border-radius:26px; }
   .hero-photo-wrap { min-height:300px; }
   .memory-stack { width:min(330px,86vw); height:410px; }
-  .stack-card { width:74%; padding:10px 10px 38px; border-radius:15px; }
+  .stack-card { width:60%; padding:10px 10px 38px; border-radius:15px; }
   .stack-card::after { font-size:12px; }
-  .stack-card.back-a { --tx:-48px; --ty:-12px; }
-  .stack-card.back-b { --tx:48px; --ty:-4px; }
-  .stack-card.back-c { --tx:-38px; --ty:38px; }
-  .stack-card.back-d { --tx:40px; --ty:44px; }
+  .stack-card.back-a { --tx:-78px; --ty:-18px; }
+  .stack-card.back-b { --tx:78px; --ty:-14px; }
+  .stack-card.back-c { --tx:-68px; --ty:64px; }
+  .stack-card.back-d { --tx:70px; --ty:66px; }
+  .stack-card.blank { width:74%; }
   .title { font-size:48px; }
   .subtitle { font-size:15px; }
   .actions { display:grid; }
@@ -1196,7 +1197,25 @@ function MemoryModal({ memory, closing, onClose }) {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const activeIndexRef = React.useRef(0);
   const touchStartX = React.useRef(null);
+  const lockStateRef = React.useRef(null);
+  const lockRestoredRef = React.useRef(false);
   const mediaCount = memory?.media?.length || 0;
+
+  const restoreScrollLock = React.useCallback(() => {
+    const lockState = lockStateRef.current;
+    if (!lockState || lockRestoredRef.current) return;
+    lockRestoredRef.current = true;
+    document.documentElement.classList.remove("modal-locked-root");
+    document.body.classList.remove("modal-locked");
+    document.documentElement.style.overflow = lockState.previousHtmlOverflow;
+    document.body.style.position = lockState.previousBodyStyle.position;
+    document.body.style.top = lockState.previousBodyStyle.top;
+    document.body.style.left = lockState.previousBodyStyle.left;
+    document.body.style.right = lockState.previousBodyStyle.right;
+    document.body.style.width = lockState.previousBodyStyle.width;
+    document.body.style.overflow = lockState.previousBodyStyle.overflow;
+    window.scrollTo({ top:lockState.lockedScrollY, left:0, behavior:"auto" });
+  }, []);
 
   React.useEffect(() => {
     activeIndexRef.current = activeIndex;
@@ -1253,6 +1272,8 @@ function MemoryModal({ memory, closing, onClose }) {
       overflow:document.body.style.overflow
     };
     const previousHtmlOverflow = document.documentElement.style.overflow;
+    lockStateRef.current = { lockedScrollY, previousBodyStyle, previousHtmlOverflow };
+    lockRestoredRef.current = false;
 
     function handleKey(event) {
       if (event.key === "Escape") onClose();
@@ -1290,19 +1311,17 @@ function MemoryModal({ memory, closing, onClose }) {
       window.clearTimeout(playTimer);
       document.querySelectorAll(".modal video").forEach(video => video.pause?.());
       document.querySelector(".modal")?.removeEventListener("touchmove", lockBackgroundTouch);
-      document.documentElement.classList.remove("modal-locked-root");
-      document.body.classList.remove("modal-locked");
-      document.documentElement.style.overflow = previousHtmlOverflow;
-      document.body.style.position = previousBodyStyle.position;
-      document.body.style.top = previousBodyStyle.top;
-      document.body.style.left = previousBodyStyle.left;
-      document.body.style.right = previousBodyStyle.right;
-      document.body.style.width = previousBodyStyle.width;
-      document.body.style.overflow = previousBodyStyle.overflow;
-      window.scrollTo(0, lockedScrollY);
+      restoreScrollLock();
+      lockStateRef.current = null;
       window.removeEventListener("keydown", handleKey);
     };
-  }, [memory, onClose, goToSlide]);
+  }, [memory, onClose, goToSlide, restoreScrollLock]);
+
+  React.useEffect(() => {
+    if (!closing) return undefined;
+    const restoreTimer = window.setTimeout(restoreScrollLock, 80);
+    return () => window.clearTimeout(restoreTimer);
+  }, [closing, restoreScrollLock]);
 
   if (!memory) return null;
   const handleTouchStart = event => {
