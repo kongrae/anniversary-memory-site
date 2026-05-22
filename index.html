@@ -278,7 +278,18 @@ button { cursor:pointer; }
   background:rgba(255,255,255,.84);
   box-shadow:0 24px 58px rgba(69,43,36,.18), inset 0 1px 0 rgba(255,255,255,.8);
   transform:translate3d(var(--tx),var(--ty),var(--tz)) rotate(var(--rot));
-  transition:transform .28s ease, box-shadow .28s ease;
+  transition:transform .46s cubic-bezier(.16,1,.3,1), box-shadow .34s ease, filter .28s ease;
+  cursor:pointer;
+  outline:none;
+}
+.stack-card:focus-visible {
+  box-shadow:0 0 0 4px rgba(244,167,163,.28), 0 24px 58px rgba(69,43,36,.18);
+}
+.stack-card.active {
+  z-index:9 !important;
+  transform:translate3d(0,-18px,120px) rotate(.6deg) scale(1.14);
+  box-shadow:0 34px 86px rgba(69,43,36,.26), inset 0 1px 0 rgba(255,255,255,.86);
+  filter:saturate(1.04) brightness(1.03);
 }
 .stack-card::after {
   content:attr(data-label);
@@ -295,6 +306,9 @@ button { cursor:pointer; }
 .stack-card.back-c { --tx:-202px; --ty:154px; --tz:-64px; --rot:12deg; z-index:3; }
 .stack-card.back-d { --tx:204px; --ty:156px; --tz:-58px; --rot:-13deg; z-index:4; }
 .stack-card.blank { --tx:0; --ty:0; --tz:0; --rot:1.5deg; z-index:5; width:60%; max-width:310px; }
+.stack-card.blank.active {
+  transform:translate3d(0,-14px,120px) rotate(.4deg) scale(1.06);
+}
 .stack-photo {
   position:relative;
   width:100%;
@@ -343,7 +357,7 @@ button { cursor:pointer; }
   opacity:0;
   pointer-events:none;
 }
-.memory-stack:hover .stack-card.blank {
+.memory-stack:hover .stack-card.blank:not(.active) {
   transform:translate3d(0,-6px,0) rotate(1deg);
   box-shadow:0 30px 74px rgba(69,43,36,.22), inset 0 1px 0 rgba(255,255,255,.86);
 }
@@ -1044,6 +1058,7 @@ function Nav() {
 
 function Intro() {
   const [anniversaryPhoto, setAnniversaryPhoto] = React.useState("");
+  const [activeStackCard, setActiveStackCard] = React.useState("blank");
 
   React.useEffect(() => {
     try {
@@ -1066,6 +1081,17 @@ function Intro() {
     reader.readAsDataURL(file);
   };
 
+  const activateStackCard = key => {
+    setActiveStackCard(current => current === key ? "blank" : key);
+  };
+
+  const handleStackKey = (event, key) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      activateStackCard(key);
+    }
+  };
+
   return (
     <section className="section intro" id="intro">
       <div className="hero-card fade-up">
@@ -1084,20 +1110,20 @@ function Intro() {
           <span className="sticker heart-a">♥</span>
           <span className="sticker heart-b">♥</span>
           <div className="memory-stack" aria-label="기념일 사진 카드 스택">
-            <article className="stack-card back-a" data-label="summer">
+            <article className={`stack-card back-a${activeStackCard === "summer" ? " active" : ""}`} data-label="summer" role="button" tabIndex="0" onClick={() => activateStackCard("summer")} onKeyDown={event => handleStackKey(event, "summer")}>
               <div className="stack-photo" style={{ "--photo":'url("assets/hero-stack/stack-1.jpg")' }}></div>
             </article>
-            <article className="stack-card back-b" data-label="autumn">
+            <article className={`stack-card back-b${activeStackCard === "autumn" ? " active" : ""}`} data-label="autumn" role="button" tabIndex="0" onClick={() => activateStackCard("autumn")} onKeyDown={event => handleStackKey(event, "autumn")}>
               <div className="stack-photo" style={{ "--photo":'url("assets/hero-stack/stack-2.jpg")' }}></div>
             </article>
-            <article className="stack-card back-c" data-label="winter">
+            <article className={`stack-card back-c${activeStackCard === "winter" ? " active" : ""}`} data-label="winter" role="button" tabIndex="0" onClick={() => activateStackCard("winter")} onKeyDown={event => handleStackKey(event, "winter")}>
               <div className="stack-photo" style={{ "--photo":'url("assets/hero-stack/stack-3.jpg")' }}></div>
             </article>
-            <article className="stack-card back-d" data-label="spring">
+            <article className={`stack-card back-d${activeStackCard === "spring" ? " active" : ""}`} data-label="spring" role="button" tabIndex="0" onClick={() => activateStackCard("spring")} onKeyDown={event => handleStackKey(event, "spring")}>
               <div className="stack-photo" style={{ "--photo":'url("assets/hero-stack/stack-4.jpg")' }}></div>
             </article>
-            <article className="stack-card blank" data-label="anniversary day">
-              <label className="stack-placeholder">
+            <article className={`stack-card blank${activeStackCard === "blank" ? " active" : ""}`} data-label="anniversary day" role="button" tabIndex="0" onClick={() => setActiveStackCard("blank")} onKeyDown={event => handleStackKey(event, "blank")}>
+              <label className="stack-placeholder" onClick={() => setActiveStackCard("blank")}>
                 {anniversaryPhoto ? (
                   <span className="stack-photo" style={{ "--photo":`url("${anniversaryPhoto}")` }}></span>
                 ) : (
