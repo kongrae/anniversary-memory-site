@@ -37,10 +37,12 @@ body {
   font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
   font-size:17px;
   background:
-    radial-gradient(circle at 10% 8%,rgba(244,167,163,.42),transparent 25%),
-    radial-gradient(circle at 88% 6%,rgba(244,200,162,.42),transparent 26%),
-    radial-gradient(circle at 78% 72%,rgba(183,110,121,.18),transparent 32%),
+    radial-gradient(circle at 12% 10%,rgba(244,167,163,.38),transparent 25%),
+    radial-gradient(circle at 88% 8%,rgba(244,200,162,.38),transparent 27%),
+    radial-gradient(circle at 80% 74%,rgba(183,110,121,.16),transparent 34%),
+    linear-gradient(115deg,rgba(255,255,255,.24) 0 12%,transparent 12% 28%,rgba(255,255,255,.18) 28% 42%,transparent 42% 100%),
     linear-gradient(145deg,var(--cream),var(--ivory));
+  background-attachment:fixed;
   min-height:100svh;
 }
 body.modal-locked {
@@ -49,18 +51,19 @@ body.modal-locked {
 html.modal-locked-root,
 html.modal-locked-root body {
   overscroll-behavior:none;
-  background:#5a4b4c !important;
+  background-color:var(--cream);
 }
 body::before {
   content:"";
   position:fixed;
   inset:0;
   pointer-events:none;
-  opacity:.38;
+  opacity:.52;
   background-image:
-    radial-gradient(circle,rgba(61,44,46,.07) 0 1px,transparent 1.4px),
-    linear-gradient(90deg,rgba(255,255,255,.22),rgba(255,255,255,0));
-  background-size:24px 24px,100% 100%;
+    radial-gradient(circle at 1px 1px,rgba(61,44,46,.07) 0 1px,transparent 1.8px),
+    repeating-linear-gradient(135deg,rgba(183,110,121,.045) 0 1px,transparent 1px 18px),
+    repeating-linear-gradient(45deg,rgba(201,143,112,.035) 0 1px,transparent 1px 22px);
+  background-size:26px 26px,180px 180px,220px 220px;
   mix-blend-mode:multiply;
 }
 body::after {
@@ -70,9 +73,10 @@ body::after {
   z-index:-1;
   pointer-events:none;
   background:
-    linear-gradient(120deg,rgba(255,255,255,.7),rgba(255,255,255,0) 34%,rgba(255,255,255,.42) 72%,rgba(255,255,255,0)),
-    radial-gradient(ellipse at 22% 28%,rgba(255,255,255,.72),rgba(255,255,255,0) 28%),
-    radial-gradient(ellipse at 72% 38%,rgba(255,255,255,.52),rgba(255,255,255,0) 26%);
+    linear-gradient(120deg,rgba(255,255,255,.68),rgba(255,255,255,0) 34%,rgba(255,255,255,.4) 72%,rgba(255,255,255,0)),
+    radial-gradient(ellipse at 22% 28%,rgba(255,255,255,.68),rgba(255,255,255,0) 28%),
+    radial-gradient(ellipse at 72% 38%,rgba(255,255,255,.5),rgba(255,255,255,0) 26%),
+    linear-gradient(180deg,rgba(255,247,240,.2),rgba(248,241,231,.08));
   filter:blur(.2px);
 }
 button,a { font:inherit; }
@@ -637,8 +641,10 @@ button { cursor:pointer; }
   top:-40lvh;
   height:220lvh;
   z-index:0;
-  background:rgba(86,68,66,.34);
-  backdrop-filter:blur(16px) saturate(1.16);
+  background:
+    radial-gradient(circle at 22% 12%,rgba(255,255,255,.28),transparent 30%),
+    linear-gradient(145deg,rgba(82,62,60,.22),rgba(104,82,80,.18));
+  backdrop-filter:blur(18px) saturate(1.24) brightness(1.08);
 }
 .modal-shell {
   position:relative;
@@ -660,9 +666,11 @@ button { cursor:pointer; }
   border-radius:28px;
   isolation:isolate;
   border:1px solid rgba(255,255,255,.76);
-  background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,247,240,.34));
-  backdrop-filter:blur(40px) saturate(1.62);
-  box-shadow:0 28px 90px rgba(61,44,46,.2), inset 0 1px 0 rgba(255,255,255,.82);
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.68),rgba(255,247,240,.4)),
+    radial-gradient(circle at 12% 8%,rgba(244,167,163,.18),transparent 34%);
+  backdrop-filter:blur(42px) saturate(1.7) brightness(1.05);
+  box-shadow:0 28px 90px rgba(61,44,46,.16), inset 0 1px 0 rgba(255,255,255,.86);
 }
 .modal-head {
   position:relative;
@@ -673,10 +681,10 @@ button { cursor:pointer; }
   margin:14px 14px 0;
   border-radius:22px;
   padding:20px 22px;
-  border:1px solid rgba(255,255,255,.66);
-  background:linear-gradient(145deg,rgba(255,250,247,.68),rgba(255,246,239,.38));
-  backdrop-filter:blur(34px) saturate(1.52);
-  box-shadow:0 12px 28px rgba(61,44,46,.06), inset 0 1px 0 rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.58);
+  background:linear-gradient(145deg,rgba(255,255,255,.46),rgba(255,247,240,.22));
+  backdrop-filter:blur(30px) saturate(1.48) brightness(1.04);
+  box-shadow:0 10px 24px rgba(61,44,46,.04), inset 0 1px 0 rgba(255,255,255,.7);
 }
 .modal-head h3 {
   margin:0;
@@ -701,7 +709,9 @@ button { cursor:pointer; }
   overflow:auto;
   overscroll-behavior:contain;
   border-radius:0 0 28px 28px;
-  background:linear-gradient(180deg,rgba(255,247,240,.2),rgba(255,247,240,.08));
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,247,240,.14)),
+    radial-gradient(circle at 82% 18%,rgba(244,200,162,.12),transparent 34%);
   font-size:18px;
 }
 .modal-photo {
