@@ -24,7 +24,7 @@
   --apricot:#f4c8a2;
   --rose:#b76e79;
   --brown:#c98f70;
-  --aura:linear-gradient(120deg,#6f5cff 0%,#d86f9f 28%,#f0a262 58%,#7ab7cf 100%);
+  --aura:linear-gradient(120deg,#7b4e45 0%,#b76e79 34%,#d89a78 68%,#8f6f62 100%);
   --line:rgba(112,78,67,.16);
   --shadow:0 22px 60px rgba(126,78,63,.14);
   --soft:0 12px 32px rgba(126,78,63,.1);
@@ -545,6 +545,24 @@ button { cursor:pointer; }
   grid-template-columns:.82fr 1.18fr;
   gap:18px;
 }
+.memory-connector {
+  width:min(980px,100%);
+  margin:-12px auto -10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  color:rgba(183,110,121,.5);
+  font-size:26px;
+  letter-spacing:8px;
+}
+.memory-connector::before,
+.memory-connector::after {
+  content:"";
+  width:min(22vw,120px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(183,110,121,.26),transparent);
+}
 .current-photo {
   min-height:300px;
   border:2px dashed rgba(183,110,121,.32);
@@ -576,6 +594,34 @@ button { cursor:pointer; }
   overflow:hidden;
 }
 .modal.open { display:grid; }
+.modal.open .modal-shell {
+  animation:modalIn .26s cubic-bezier(.2,.8,.2,1) both;
+}
+.modal.closing .modal-shell {
+  animation:modalOut .18s ease both;
+}
+.modal.open::before {
+  animation:veilIn .26s ease both;
+}
+.modal.closing::before {
+  animation:veilOut .18s ease both;
+}
+@keyframes modalIn {
+  from { opacity:0; transform:translateY(30px) scale(.975); }
+  to { opacity:1; transform:translateY(8px) scale(1); }
+}
+@keyframes modalOut {
+  from { opacity:1; transform:translateY(8px) scale(1); }
+  to { opacity:0; transform:translateY(26px) scale(.985); }
+}
+@keyframes veilIn {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+@keyframes veilOut {
+  from { opacity:1; }
+  to { opacity:0; }
+}
 .modal::before {
   content:"";
   position:fixed;
@@ -606,9 +652,10 @@ button { cursor:pointer; }
   overflow-anchor:none;
   border-radius:28px;
   isolation:isolate;
-  background:linear-gradient(145deg,rgba(255,255,255,.74),rgba(255,247,240,.56));
-  backdrop-filter:blur(30px) saturate(1.38);
-  box-shadow:0 28px 90px rgba(61,44,46,.34), inset 0 1px 0 rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.62);
+  background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,247,240,.2));
+  backdrop-filter:blur(38px) saturate(1.55);
+  box-shadow:0 28px 90px rgba(61,44,46,.28), inset 0 1px 0 rgba(255,255,255,.74);
 }
 .modal-head {
   position:relative;
@@ -616,9 +663,9 @@ button { cursor:pointer; }
   border-radius:28px 28px 0 0;
   padding:20px 22px;
   border-bottom:1px solid var(--line);
-  background:linear-gradient(145deg,rgba(255,250,247,.72),rgba(255,246,239,.5));
-  backdrop-filter:blur(30px) saturate(1.42);
-  box-shadow:0 12px 28px rgba(61,44,46,.08);
+  background:linear-gradient(145deg,rgba(255,250,247,.5),rgba(255,246,239,.24));
+  backdrop-filter:blur(34px) saturate(1.52);
+  box-shadow:0 12px 28px rgba(61,44,46,.07), inset 0 1px 0 rgba(255,255,255,.62);
 }
 .modal-head h3 {
   margin:0 0 6px;
@@ -647,7 +694,7 @@ button { cursor:pointer; }
   overflow:auto;
   overscroll-behavior:contain;
   border-radius:0 0 28px 28px;
-  background:linear-gradient(180deg,rgba(255,247,240,.22),rgba(255,247,240,.08));
+  background:linear-gradient(180deg,rgba(255,247,240,.14),rgba(255,247,240,.04));
 }
 .modal-photo {
   position:relative;
@@ -658,7 +705,7 @@ button { cursor:pointer; }
   align-items:center;
   justify-content:center;
   background:
-    linear-gradient(145deg,rgba(255,250,247,.74),rgba(234,217,205,.72));
+    linear-gradient(145deg,rgba(255,250,247,.46),rgba(234,217,205,.28));
 }
 .modal-memory {
   margin:0;
@@ -671,8 +718,8 @@ button { cursor:pointer; }
   border:1px solid rgba(255,255,255,.58);
   border-radius:15px;
   color:#5f4740;
-  background:linear-gradient(145deg,rgba(255,255,255,.55),rgba(255,247,240,.28));
-  backdrop-filter:blur(18px) saturate(1.28);
+  background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,247,240,.18));
+  backdrop-filter:blur(24px) saturate(1.35);
   box-shadow:0 10px 24px rgba(61,44,46,.08), inset 0 1px 0 rgba(255,255,255,.66);
   font-size:13px;
   font-weight:750;
@@ -742,6 +789,14 @@ footer {
   .letter-card { padding:24px; }
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell { max-height:calc(100svh - 18px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; transform:translateY(4px); }
+  @keyframes modalIn {
+    from { opacity:0; transform:translateY(22px) scale(.975); }
+    to { opacity:1; transform:translateY(4px) scale(1); }
+  }
+  @keyframes modalOut {
+    from { opacity:1; transform:translateY(4px) scale(1); }
+    to { opacity:0; transform:translateY(20px) scale(.985); }
+  }
   .brand { font-size:13px; }
   .modal-card { max-height:calc(100svh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); border-radius:24px; }
   .modal-head { padding:18px; border-radius:24px 24px 0 0; }
@@ -1026,7 +1081,7 @@ function FinalSection() {
   );
 }
 
-function MemoryModal({ memory, onClose }) {
+function MemoryModal({ memory, closing, onClose }) {
   React.useEffect(() => {
     if (!memory) return undefined;
 
@@ -1067,13 +1122,12 @@ function MemoryModal({ memory, onClose }) {
 
   if (!memory) return null;
   return (
-    <div className="modal open" onClick={event => event.target.classList.contains("modal") && onClose()} aria-hidden="false">
+    <div className={`modal open${closing ? " closing" : ""}`} onClick={event => event.target.classList.contains("modal") && onClose()} aria-hidden="false">
       <div className="modal-shell">
         <div className="modal-card">
           <div className="modal-head">
             <div>
               <h3>{memory.title}</h3>
-              <p>{memory.date} · {memory.place}<br />{memory.memo}</p>
             </div>
           </div>
           <div className="modal-grid">
@@ -1095,6 +1149,19 @@ function MemoryModal({ memory, onClose }) {
 
 function App() {
   const [selectedMemory, setSelectedMemory] = React.useState(null);
+  const [isModalClosing, setIsModalClosing] = React.useState(false);
+  const openMemory = React.useCallback(memory => {
+    setIsModalClosing(false);
+    setSelectedMemory(memory);
+  }, []);
+  const closeMemory = React.useCallback(() => {
+    if (!selectedMemory) return;
+    setIsModalClosing(true);
+    window.setTimeout(() => {
+      setSelectedMemory(null);
+      setIsModalClosing(false);
+    }, 180);
+  }, [selectedMemory]);
   return (
     <>
       <div className="heart-rain" aria-hidden="true">
@@ -1114,13 +1181,14 @@ function App() {
         <Nav />
         <Intro />
         <Summary />
-        <Album onOpen={setSelectedMemory} />
+        <Album onOpen={openMemory} />
+        <div className="memory-connector" aria-hidden="true">···</div>
         <CurrentSlot />
         <Timeline />
         <Letter />
         <FinalSection />
       </div>
-      <MemoryModal memory={selectedMemory} onClose={() => setSelectedMemory(null)} />
+      <MemoryModal memory={selectedMemory} closing={isModalClosing} onClose={closeMemory} />
       <footer>Made for our first anniversary</footer>
     </>
   );

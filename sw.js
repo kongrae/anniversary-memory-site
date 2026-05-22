@@ -1,4 +1,4 @@
-const CACHE_NAME = "anniversary-memory-v19";
+const CACHE_NAME = "anniversary-memory-v20";
 const APP_SHELL = [
   "./",
   "./index.html",
