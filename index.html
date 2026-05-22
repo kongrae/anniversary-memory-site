@@ -365,20 +365,23 @@ button { cursor:pointer; }
 .stack-status {
   position:absolute;
   left:50%;
-  bottom:-42px;
+  bottom:10px;
   z-index:12;
-  width:min(300px,76vw);
+  width:min(360px,86vw);
   transform:translateX(-50%);
-  padding:9px 14px;
-  border:1px solid rgba(255,255,255,.78);
-  border-radius:999px;
-  background:rgba(255,250,247,.78);
-  backdrop-filter:blur(18px) saturate(1.22);
-  box-shadow:0 14px 34px rgba(126,78,63,.14);
-  color:#684942;
-  font-size:13px;
+  padding:12px 15px;
+  border:1px solid rgba(255,255,255,.86);
+  border-radius:18px;
+  background:rgba(255,250,247,.94);
+  backdrop-filter:blur(20px) saturate(1.25);
+  box-shadow:0 18px 42px rgba(126,78,63,.2);
+  color:#51322e;
+  font-size:14px;
   font-weight:850;
   text-align:center;
+  line-height:1.45;
+  white-space:normal;
+  word-break:keep-all;
 }
 .stack-upload-photo {
   width:100%;
@@ -1183,6 +1186,7 @@ function Intro() {
   const [anniversaryPhoto, setAnniversaryPhoto] = React.useState("");
   const [activeStackCard, setActiveStackCard] = React.useState("blank");
   const [uploadStatus, setUploadStatus] = React.useState("");
+  const clearStatus = delay => window.setTimeout(() => setUploadStatus(""), delay);
 
   React.useEffect(() => {
     try {
@@ -1216,7 +1220,7 @@ function Intro() {
 
     if (!window.mongliniStorage?.isConfigured) {
       setUploadStatus("Supabase 설정값을 넣으면 서버에 저장돼요. 지금은 이 기기에만 임시 저장됐어요.");
-      window.setTimeout(() => setUploadStatus(""), 5200);
+      clearStatus(6200);
       return;
     }
 
@@ -1229,13 +1233,14 @@ function Intro() {
         window.localStorage.setItem("monglini-anniversary-photo", url);
       } catch (error) {}
       setUploadStatus("업로드 완료. 이제 다른 기기에서도 같은 사진이 보여요.");
-      window.setTimeout(() => setUploadStatus(""), 4200);
+      clearStatus(4600);
     }).catch(error => {
+      const detail = error?.message || error?.error_description || error?.hint || "";
       const message = error?.message === "file-too-large"
         ? "사진 용량이 커서 업로드하지 못했어요. 12MB 이하 사진으로 다시 선택해줘요."
-        : "Supabase 업로드에 실패했어요. URL, anon key, bucket policy를 확인해줘요.";
+        : `Supabase 업로드 실패. anniversary 버킷, Public 설정, SQL policy를 확인해줘요.${detail ? ` (${detail.slice(0, 90)})` : ""}`;
       setUploadStatus(message);
-      window.setTimeout(() => setUploadStatus(""), 6200);
+      clearStatus(12000);
     });
   };
 
