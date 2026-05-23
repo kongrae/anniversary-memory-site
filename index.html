@@ -1251,6 +1251,11 @@ function daysTogether() {
   return Math.max(1, Math.floor((now - start) / 86400000) + 1);
 }
 
+function updateAppBadge() {
+  if (typeof navigator === "undefined" || !("setAppBadge" in navigator)) return;
+  navigator.setAppBadge(daysTogether()).catch(() => {});
+}
+
 function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior:"smooth", block:"start" });
 }
@@ -1757,6 +1762,11 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+updateAppBadge();
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") updateAppBadge();
+});
+window.setInterval(updateAppBadge, 60 * 60 * 1000);
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
