@@ -697,6 +697,26 @@ button { cursor:pointer; }
   grid-template-columns:.82fr 1.18fr;
   gap:18px;
 }
+.memory-connector {
+  width:min(980px,100%);
+  margin:-4px auto -4px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  gap:7px;
+  color:rgba(183,110,121,.78);
+  font-size:38px;
+  line-height:.42;
+  text-shadow:0 10px 24px rgba(183,110,121,.2);
+}
+.memory-connector::before,
+.memory-connector::after {
+  content:"";
+  width:1px;
+  height:44px;
+  background:linear-gradient(180deg,transparent,rgba(183,110,121,.4),transparent);
+}
 .current-photo {
   min-height:300px;
   border:2px dashed rgba(183,110,121,.32);
@@ -1055,6 +1075,8 @@ const supabaseConfig = {
 const hasSupabaseConfig = Boolean(supabaseConfig.url && supabaseConfig.anonKey);
 const supabasePublicPhotoUrl = () =>
   `${supabaseConfig.url}/storage/v1/object/public/${supabaseConfig.bucket}/${supabaseConfig.path}`;
+const supabaseDisplayPhotoUrl = () =>
+  `${supabaseConfig.url}/storage/v1/render/image/public/${supabaseConfig.bucket}/${supabaseConfig.path}?width=1200&quality=82&resize=contain`;
 
 async function createSupabaseStorage() {
   const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2.45.4");
@@ -1087,7 +1109,7 @@ async function createSupabaseStorage() {
         });
       if (error) throw error;
       onProgress?.(100);
-      return `${publicPhotoUrl()}?v=${Date.now()}`;
+      return `${supabaseDisplayPhotoUrl()}&v=${Date.now()}`;
     }
   };
 }
@@ -1096,7 +1118,7 @@ window.mongliniStorage = {
   isConfigured: hasSupabaseConfig,
   publicPhotoUrl() {
     if (!hasSupabaseConfig) throw new Error("supabase-config-missing");
-    return `${supabasePublicPhotoUrl()}?v=${Date.now()}`;
+    return `${supabaseDisplayPhotoUrl()}&v=${Date.now()}`;
   },
   async ready() {
     if (!hasSupabaseConfig) throw new Error("supabase-config-missing");
@@ -1687,6 +1709,7 @@ function App() {
         <Intro />
         <Summary />
         <Album onOpen={openMemory} />
+        <div className="memory-connector" aria-hidden="true"><span>·</span><span>·</span><span>·</span></div>
         <CurrentSlot />
         <Timeline />
         <Letter />
