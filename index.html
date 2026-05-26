@@ -283,7 +283,12 @@ button { cursor:pointer; }
     0 -1px 0 rgba(147,102,88,.08) inset;
   transform:translate3d(var(--tx),var(--ty),var(--tz)) rotate(var(--rot));
   opacity:1;
-  transition:transform .34s cubic-bezier(.2,.8,.2,1), filter .28s ease, box-shadow .28s ease;
+  transition:
+    transform .54s cubic-bezier(.22,1,.36,1),
+    width .54s cubic-bezier(.22,1,.36,1),
+    max-width .54s cubic-bezier(.22,1,.36,1),
+    filter .32s ease,
+    box-shadow .32s ease;
   cursor:pointer;
   outline:none;
   will-change:transform,filter;
@@ -331,7 +336,6 @@ button { cursor:pointer; }
   z-index:5;
   width:62%;
   max-width:368px;
-  cursor:default;
   transform:translate3d(var(--tx),var(--ty),var(--tz)) rotate(var(--rot));
   box-shadow:
     0 38px 84px rgba(69,43,36,.24),
@@ -1296,18 +1300,18 @@ function Nav() {
 }
 
 function Intro() {
-  const [activeStackCard, setActiveStackCard] = React.useState("center");
+  const [activeStackCard, setActiveStackCard] = React.useState("moon");
   const heroCards = [
-    { key:"moon", label:"분홍빛 밤", src:"assets/hero-stack/stack-1.jpg", className:"back-a" },
-    { key:"sea", label:"파란 장면", src:"assets/hero-stack/stack-2.jpg", className:"back-b" },
-    { key:"cafe", label:"카페의 우리", src:"assets/hero-stack/stack-3.jpg", className:"back-c" },
-    { key:"picnic", label:"햇살 나들이", src:"assets/hero-stack/stack-4.jpg", className:"back-d" },
-    { key:"center", label:"첫 화면", src:"assets/main-hero-cropped.jpg?v=51", className:"center" }
+    { key:"moon", label:"분홍빛 밤", src:"assets/hero-stack/stack-1.jpg" },
+    { key:"sea", label:"파란 장면", src:"assets/hero-stack/stack-2.jpg" },
+    { key:"cafe", label:"카페의 우리", src:"assets/hero-stack/stack-3.jpg" },
+    { key:"picnic", label:"햇살 나들이", src:"assets/hero-stack/stack-4.jpg" },
+    { key:"main", label:"가을 햇살", src:"assets/main-hero-cropped.jpg?v=51" }
   ];
-  const activeHeroCard = heroCards.find(card => card.key === activeStackCard) || heroCards[4];
+  const sideSlots = ["back-a", "back-b", "back-c", "back-d"];
 
   const activateStackCard = key => {
-    setActiveStackCard(current => current === key ? "center" : key);
+    setActiveStackCard(key);
   };
 
   const handleStackKey = (event, key) => {
@@ -1335,22 +1339,25 @@ function Intro() {
           <span className="sticker heart-a">♥</span>
           <span className="sticker heart-b">♥</span>
           <div className="memory-stack" aria-label="기념일 사진 카드 스택">
-            {heroCards.filter(card => card.key !== "center").map(card => (
-              <article
-                className={`stack-card ${card.className}${activeStackCard === card.key ? " selected" : ""}`}
-                data-label={card.label}
-                role="button"
-                tabIndex="0"
-                key={card.key}
-                onClick={() => activateStackCard(card.key)}
-                onKeyDown={event => handleStackKey(event, card.key)}
-              >
-                <div className="stack-photo" style={{ "--photo":`url("${card.src}")` }}></div>
-              </article>
-            ))}
-            <article className="stack-card center" data-label={activeHeroCard.label} aria-live="polite">
-              <div key={activeHeroCard.key} className="stack-photo" style={{ "--photo":`url("${activeHeroCard.src}")` }}></div>
-            </article>
+            {heroCards.map(card => {
+              const sideIndex = heroCards.filter(item => item.key !== activeStackCard).findIndex(item => item.key === card.key);
+              const isCenter = card.key === activeStackCard;
+              const slotClass = isCenter ? "center" : sideSlots[sideIndex];
+              return (
+                <article
+                  className={`stack-card ${slotClass}`}
+                  data-label={card.label}
+                  role="button"
+                  tabIndex="0"
+                  key={card.key}
+                  aria-current={isCenter ? "true" : undefined}
+                  onClick={() => activateStackCard(card.key)}
+                  onKeyDown={event => handleStackKey(event, card.key)}
+                >
+                  <div className="stack-photo" style={{ "--photo":`url("${card.src}")` }}></div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>
