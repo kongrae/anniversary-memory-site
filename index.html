@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=65" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=65" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=65" />
+<link rel="manifest" href="manifest.webmanifest?v=66" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=66" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=66" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -26,8 +26,11 @@
   --brown:#c98f70;
   --aura:linear-gradient(120deg,#7b4e45 0%,#b76e79 34%,#d89a78 68%,#8f6f62 100%);
   --line:rgba(112,78,67,.16);
-  --shadow:0 22px 60px rgba(126,78,63,.14);
-  --soft:0 12px 32px rgba(126,78,63,.1);
+  --glass-bg:linear-gradient(145deg,rgba(255,255,255,.58),rgba(255,247,240,.28));
+  --glass-border:rgba(255,255,255,.76);
+  --glass-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.74);
+  --shadow:var(--glass-shadow);
+  --soft:0 14px 34px rgba(126,78,63,.1), inset 0 1px 0 rgba(255,255,255,.64);
 }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -102,9 +105,9 @@ button { cursor:pointer; }
   padding:10px 14px;
   border:1px solid rgba(255,255,255,.7);
   border-radius:999px;
-  background:linear-gradient(135deg,rgba(255,255,255,.42),rgba(255,247,240,.18));
-  backdrop-filter:blur(30px) saturate(1.45);
-  box-shadow:0 18px 48px rgba(126,78,63,.13), inset 0 1px 0 rgba(255,255,255,.78);
+  background:linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,247,240,.32));
+  backdrop-filter:blur(18px) saturate(1.2);
+  box-shadow:0 14px 38px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.82);
 }
 .brand {
   display:flex;
@@ -163,20 +166,25 @@ button { cursor:pointer; }
   gap:26px;
   align-items:center;
   padding:28px;
-  border:1px solid rgba(255,255,255,.72);
+  border:1px solid var(--glass-border);
   border-radius:34px;
-  background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,247,240,.32));
-  backdrop-filter:blur(26px) saturate(1.22);
-  box-shadow:0 28px 80px rgba(126,78,63,.16), inset 0 1px 0 rgba(255,255,255,.8);
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(1.18);
+  box-shadow:var(--glass-shadow);
 }
 .heart-rain {
-  display:none;
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  contain:strict;
 }
 .heart-rain span {
   position:absolute;
   top:-40px;
   left:var(--x);
-  color:rgba(183,110,121,.32);
+  color:rgba(183,110,121,.2);
   font-size:var(--s);
   animation:heartFall var(--d) linear infinite;
   animation-delay:var(--delay);
@@ -444,11 +452,11 @@ button { cursor:pointer; }
 }
 .bento-card,
 .paper-card {
-  border:1px solid rgba(255,255,255,.74);
+  border:1px solid var(--glass-border);
   border-radius:26px;
-  background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,247,240,.18));
-  backdrop-filter:blur(30px) saturate(1.45);
-  box-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.72);
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(1.18);
+  box-shadow:var(--glass-shadow);
 }
 .bento-card {
   min-height:172px;
@@ -497,14 +505,13 @@ button { cursor:pointer; }
 .polaroid {
   display:block;
   width:100%;
-  border:1px solid rgba(255,255,255,.74);
+  border:1px solid var(--glass-border);
   text-align:left;
   padding:14px;
   border-radius:26px;
-  background:
-    linear-gradient(145deg,rgba(255,255,255,.48),rgba(255,247,240,.22));
-  backdrop-filter:blur(30px) saturate(1.45);
-  box-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.72);
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(1.18);
+  box-shadow:var(--glass-shadow);
   cursor:pointer;
   transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
 }
@@ -628,8 +635,9 @@ button { cursor:pointer; }
   background:
     linear-gradient(90deg,rgba(201,143,112,.12) 1px,transparent 1px) 0 0/28px 100%,
     rgba(255,255,255,.76);
-  border:1px solid rgba(255,255,255,.78);
-  box-shadow:var(--soft);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  transition:min-height .32s ease, padding .28s ease, box-shadow .28s ease;
 }
 .letter-card.expanded {
   padding-bottom:38px;
@@ -652,12 +660,16 @@ button { cursor:pointer; }
   overflow:hidden;
   max-height:0;
   opacity:0;
-  transition:max-height .34s cubic-bezier(.2,.78,.24,1), opacity .24s ease;
+  clip-path:inset(0 0 100% 0);
+  transform:translateY(-8px);
+  transition:max-height .5s cubic-bezier(.2,.78,.24,1), clip-path .46s cubic-bezier(.2,.78,.24,1), opacity .28s ease, transform .34s ease;
 }
 .letter-card.expanded .letter-body {
-  max-height:none;
-  overflow:visible;
+  max-height:1800px;
+  overflow:hidden;
   opacity:1;
+  clip-path:inset(0 0 0 0);
+  transform:translateY(0);
 }
 .letter-body::after {
   content:"";
@@ -739,9 +751,9 @@ button { cursor:pointer; }
   line-height:.42;
   text-shadow:none;
   border-radius:24px;
-  background:linear-gradient(145deg,rgba(255,255,255,.46),rgba(255,247,240,.18));
-  border:1px solid rgba(255,255,255,.58);
-  box-shadow:0 12px 32px rgba(126,78,63,.08), inset 0 1px 0 rgba(255,255,255,.56);
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
 }
 .memory-connector::before,
 .memory-connector::after {
@@ -755,9 +767,9 @@ button { cursor:pointer; }
   padding:14px;
   border:1px solid rgba(255,255,255,.82);
   display:block;
-  background:linear-gradient(145deg,rgba(255,255,255,.7),rgba(255,247,240,.34));
-  backdrop-filter:blur(24px) saturate(1.22);
-  box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.78);
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(1.18);
+  box-shadow:var(--glass-shadow);
   color:var(--rose);
   font-weight:900;
 }
@@ -1182,7 +1194,6 @@ footer {
   .current-wrap { grid-template-columns:1fr; }
   .hero-photo-wrap { min-height:430px; }
   .album-grid { grid-template-columns:repeat(2,1fr); }
-  .nav,
   .hero-card,
   .bento-card,
   .polaroid,
@@ -1193,6 +1204,9 @@ footer {
   .modal-pager,
   .modal-nav {
     backdrop-filter:none;
+  }
+  .nav {
+    backdrop-filter:blur(14px) saturate(1.14);
   }
 }
 @media (max-width:640px) {
@@ -1225,7 +1239,7 @@ footer {
   .letter-photo { min-height:260px; }
   .letter-card { padding:24px; }
   .letter-body { max-height:0; }
-  .letter-card.expanded .letter-body { max-height:none; overflow:visible; }
+  .letter-card.expanded .letter-body { max-height:2200px; overflow:hidden; }
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell {
     height:calc(100svh - 46px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
@@ -1320,6 +1334,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=65" defer></script>
+<script src="assets/app.js?v=66" defer></script>
 </body>
 </html>
