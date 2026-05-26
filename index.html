@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=70" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=70" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=70" />
+<link rel="manifest" href="manifest.webmanifest?v=71" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=71" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=71" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -630,7 +630,7 @@ button { cursor:pointer; }
 .letter-photo {
   min-height:320px;
   border-radius:0;
-  background:url("assets/letter-photo.jpg?v=54") center 38%/cover no-repeat;
+  background:url("assets/letter-photo.jpg?v=54") center 44%/cover no-repeat;
   box-shadow:none;
 }
 .letter-card {
@@ -745,7 +745,7 @@ button { cursor:pointer; }
 }
 .memory-connector {
   width:min(980px,100%);
-  margin:18px auto;
+  margin:24px auto;
   padding:0;
   display:flex;
   justify-content:center;
@@ -754,7 +754,7 @@ button { cursor:pointer; }
   gap:2px;
   color:rgba(183,110,121,.78);
   font-size:22px;
-  line-height:.34;
+  line-height:.38;
   text-shadow:0 8px 20px rgba(183,110,121,.14);
   border-radius:0;
   background:transparent;
@@ -765,45 +765,85 @@ button { cursor:pointer; }
 .memory-connector::after {
   content:"";
   width:1px;
-  height:14px;
+  height:16px;
   background:linear-gradient(180deg,transparent,rgba(183,110,121,.28),transparent);
 }
 .current-photo {
-  min-height:330px;
-  padding:14px;
+  position:relative;
+  min-height:392px;
+  padding:26px 20px 70px;
   border:1px solid rgba(255,255,255,.82);
   display:block;
-  background:var(--glass-bg);
+  background:
+    linear-gradient(180deg,rgba(255,253,249,.95),rgba(255,248,242,.82)),
+    var(--glass-bg);
   backdrop-filter:blur(20px) saturate(1.18);
-  box-shadow:var(--glass-shadow);
+  box-shadow:
+    0 28px 72px rgba(126,78,63,.16),
+    0 10px 24px rgba(183,110,121,.08),
+    inset 0 1px 0 rgba(255,255,255,.82);
   color:var(--rose);
   font-weight:900;
+}
+.current-photo::before {
+  content:"";
+  position:absolute;
+  z-index:2;
+  top:10px;
+  left:50%;
+  width:108px;
+  height:30px;
+  border-radius:6px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.28),transparent 48%),
+    rgba(244,200,162,.62);
+  box-shadow:0 10px 22px rgba(126,78,63,.11);
+  transform:translateX(-50%) rotate(-2deg);
+  pointer-events:none;
+}
+.current-photo::after {
+  content:"2026.05.27  지금의 우리";
+  position:absolute;
+  left:24px;
+  right:24px;
+  bottom:22px;
+  color:#8a5b55;
+  font-family:var(--display);
+  font-size:18px;
+  font-weight:950;
+  letter-spacing:.02em;
+  text-align:center;
+  text-shadow:0 1px 0 rgba(255,255,255,.72);
+  pointer-events:none;
 }
 .current-upload-label {
   position:relative;
   display:grid;
   width:100%;
-  min-height:302px;
+  min-height:296px;
   place-items:center;
   overflow:hidden;
-  border-radius:26px;
+  border-radius:12px;
   cursor:pointer;
   background:
     linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,240,.36)),
     repeating-linear-gradient(135deg,rgba(183,110,121,.08) 0 1px,transparent 1px 18px);
-  border:2px dashed rgba(183,110,121,.3);
+  border:1px solid rgba(126,78,63,.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.5),
+    0 16px 32px rgba(126,78,63,.1);
   transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease;
 }
 .current-upload-label:hover {
   transform:translateY(-2px);
-  border-color:rgba(183,110,121,.48);
+  border-color:rgba(183,110,121,.34);
   box-shadow:0 20px 44px rgba(126,78,63,.14);
 }
 .current-photo-surface {
   position:absolute;
   inset:0;
   overflow:hidden;
-  border-radius:24px;
+  border-radius:11px;
 }
 .current-photo-surface img {
   width:100%;
@@ -831,7 +871,7 @@ button { cursor:pointer; }
 }
 .current-photo.has-photo .current-upload-label {
   border-style:solid;
-  border-color:rgba(255,255,255,.82);
+  border-color:rgba(126,78,63,.14);
 }
 .current-photo.has-photo .current-placeholder {
   position:absolute;
@@ -1242,7 +1282,7 @@ footer {
   .bento-label { font-size:12px; }
   .stats, .album-grid, .modal-grid { grid-template-columns:1fr; }
   .polaroid { transform:rotate(0deg) !important; }
-  .letter-photo { min-height:190px; background-position:center 34%; }
+  .letter-photo { min-height:190px; background-position:center 40%; }
   .letter-card { padding:24px; border-left:0; border-top:1px solid rgba(183,110,121,.12); }
   .letter-body { max-height:0; }
   .letter-card.expanded .letter-body { max-height:2200px; overflow:hidden; }
@@ -1340,6 +1380,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=70" defer></script>
+<script src="assets/app.js?v=71" defer></script>
 </body>
 </html>
