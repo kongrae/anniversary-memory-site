@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=62" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=62" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=62" />
+<link rel="manifest" href="manifest.webmanifest?v=63" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=63" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=63" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -886,9 +886,8 @@ button { cursor:pointer; }
   height:220lvh;
   z-index:0;
   background:
-    radial-gradient(circle at 22% 12%,rgba(255,255,255,.28),transparent 30%),
-    linear-gradient(145deg,rgba(82,62,60,.22),rgba(104,82,80,.18));
-  backdrop-filter:blur(18px) saturate(1.24) brightness(1.08);
+    radial-gradient(circle at 22% 12%,rgba(255,255,255,.22),transparent 30%),
+    linear-gradient(145deg,rgba(82,62,60,.3),rgba(104,82,80,.24));
 }
 .modal-shell {
   position:relative;
@@ -898,7 +897,7 @@ button { cursor:pointer; }
   max-height:calc(100svh - 44px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   display:grid;
   grid-template-rows:minmax(0,1fr) auto;
-  gap:14px;
+  gap:12px;
   justify-items:end;
   align-content:center;
 }
@@ -910,7 +909,7 @@ button { cursor:pointer; }
   min-height:0;
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:10px;
   overflow:visible;
   overflow-anchor:none;
   border-radius:0;
@@ -923,57 +922,36 @@ button { cursor:pointer; }
 .modal-head {
   position:relative;
   flex:0 0 auto;
-  min-height:78px;
+  min-height:62px;
   display:flex;
   align-items:center;
   margin:0;
-  border-radius:28px;
-  padding:18px 26px;
+  border-radius:22px;
+  padding:14px 20px;
   overflow:hidden;
   border:1px solid rgba(121,84,73,.12);
   background:
     linear-gradient(180deg,rgba(255,252,247,.96),rgba(255,244,236,.9)),
-    radial-gradient(circle at 92% 12%,rgba(244,167,163,.22),transparent 34%);
-  backdrop-filter:blur(18px) saturate(1.1);
-  box-shadow:0 14px 34px rgba(96,67,59,.12), inset 0 1px 0 rgba(255,255,255,.86);
+    radial-gradient(circle at 92% 12%,rgba(244,167,163,.16),transparent 34%);
+  box-shadow:0 10px 26px rgba(96,67,59,.1), inset 0 1px 0 rgba(255,255,255,.86);
 }
 .modal-head::before {
-  content:"";
-  position:absolute;
-  left:22px;
-  top:50%;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  transform:translateY(-50%);
-  background:linear-gradient(180deg,var(--rose),var(--caramel));
-  box-shadow:0 8px 18px rgba(183,110,121,.22);
+  display:none;
 }
 .modal-head::after {
-  content:"";
-  position:absolute;
-  right:18px;
-  top:50%;
-  width:46px;
-  height:8px;
-  border-radius:999px;
-  transform:translateY(-50%) rotate(-4deg);
-  background:rgba(244,167,163,.18);
-  border:1px solid rgba(183,110,121,.12);
+  display:none;
 }
 .modal-head h3 {
   position:relative;
   z-index:1;
   margin:0;
-  padding-left:22px;
-  color:transparent;
-  background:linear-gradient(90deg,#523b34,#a86968 72%,#c98f70);
-  -webkit-background-clip:text;
-  background-clip:text;
-  font-size:clamp(27px,4.3vw,40px);
-  line-height:1.14;
+  padding-left:0;
+  color:#523b34;
+  background:none;
+  font-size:clamp(24px,3.4vw,34px);
+  line-height:1.12;
   font-weight:950;
-  letter-spacing:-.01em;
+  letter-spacing:0;
   text-shadow:none;
 }
 .modal-grid {
@@ -987,8 +965,7 @@ button { cursor:pointer; }
   background:
     linear-gradient(145deg,rgba(255,255,255,.48),rgba(255,247,240,.22)),
     radial-gradient(circle at 82% 18%,rgba(244,200,162,.12),transparent 34%);
-  backdrop-filter:blur(34px) saturate(1.56) brightness(1.05);
-  box-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.76);
+  box-shadow:0 14px 38px rgba(126,78,63,.1), inset 0 1px 0 rgba(255,255,255,.76);
   font-size:18px;
   touch-action:none;
   --slide-gap:28px;
@@ -1020,32 +997,41 @@ button { cursor:pointer; }
   min-width:100%;
   min-height:0;
   display:grid;
-  grid-template-rows:minmax(0,1fr) minmax(168px,auto);
+  grid-template-rows:minmax(0,1fr) auto;
   align-content:center;
   gap:12px;
   padding:0;
 }
 .modal-caption {
   margin:0;
-  min-height:168px;
-  padding:14px 16px;
-  max-height:min(38svh,240px);
-  overflow:auto;
-  overscroll-behavior:contain;
+  min-height:52px;
+  max-height:52px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 12px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  overscroll-behavior-x:contain;
   border:1px solid rgba(255,255,255,.72);
   border-radius:15px;
   color:#412f2b;
   background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,240,.42));
-  backdrop-filter:blur(24px) saturate(1.35);
   box-shadow:0 10px 24px rgba(61,44,46,.08), inset 0 1px 0 rgba(255,255,255,.66);
-  font-size:17px;
+  scrollbar-width:none;
+  font-size:15px;
   font-weight:850;
-  line-height:1.62;
+  line-height:1.35;
+  white-space:nowrap;
+}
+.modal-caption::-webkit-scrollbar {
+  display:none;
 }
 .modal-caption-date {
-  display:block;
+  display:inline-flex;
+  flex:0 0 auto;
   width:max-content;
-  margin:0 0 6px;
+  margin:0;
   padding:4px 9px;
   border-radius:999px;
   color:#8f5b57;
@@ -1054,6 +1040,9 @@ button { cursor:pointer; }
   font-size:13px;
   font-weight:900;
   letter-spacing:.02em;
+}
+.modal-caption > span:not(.modal-caption-date) {
+  flex:0 0 auto;
 }
 .modal-pager {
   position:static;
@@ -1068,7 +1057,6 @@ button { cursor:pointer; }
   border:1px solid rgba(255,255,255,.58);
   border-radius:999px;
   background:linear-gradient(135deg,rgba(255,255,255,.44),rgba(255,247,240,.2));
-  backdrop-filter:blur(22px) saturate(1.45);
   box-shadow:0 12px 30px rgba(61,44,46,.12), inset 0 1px 0 rgba(255,255,255,.7);
 }
 .modal-dot {
@@ -1097,7 +1085,6 @@ button { cursor:pointer; }
   border-radius:50%;
   color:#5b403a;
   background:linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,247,240,.22));
-  backdrop-filter:blur(24px) saturate(1.45);
   box-shadow:0 12px 30px rgba(61,44,46,.14), inset 0 1px 0 rgba(255,255,255,.72);
   transform:translateY(-50%);
 }
@@ -1194,13 +1181,11 @@ footer {
   }
   .brand { font-size:13px; }
   .modal-card { gap:10px; }
-  .modal-head { min-height:auto; padding:15px 18px; border-radius:22px; }
-  .modal-head::before { left:16px; width:9px; height:9px; }
-  .modal-head::after { display:none; }
-  .modal-head h3 { padding-left:18px; font-size:25px; line-height:1.18; }
+  .modal-head { min-height:auto; padding:13px 16px; border-radius:20px; }
+  .modal-head h3 { padding-left:0; font-size:24px; line-height:1.16; }
   .modal-grid { padding:12px; border-radius:24px; --slide-gap:22px; }
-  .modal-memory { grid-template-rows:minmax(0,1fr) minmax(190px,auto); gap:10px; }
-  .modal-caption { min-height:190px; max-height:min(42svh,260px); font-size:16px; line-height:1.55; }
+  .modal-memory { grid-template-rows:minmax(0,1fr) auto; gap:10px; }
+  .modal-caption { min-height:48px; max-height:48px; font-size:13px; line-height:1.3; }
   .modal-nav { display:none; }
   .modal-close-floating { height:50px; min-width:88px; }
 }
@@ -1280,6 +1265,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=62" defer></script>
+<script src="assets/app.js?v=63" defer></script>
 </body>
 </html>

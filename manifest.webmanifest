@@ -1,7 +1,7 @@
 {
-  "name": "뭉리니♥",
-  "short_name": "뭉리니♥",
-  "description": "2025년 5월 27일부터 이어진 우리의 첫 번째 1년 앨범",
+  "name": "moongliny",
+  "short_name": "moongliny",
+  "description": "moongliny anniversary album",
   "lang": "ko-KR",
   "start_url": "./",
   "scope": "./",
@@ -11,13 +11,13 @@
   "theme_color": "#f9dfe4",
   "icons": [
     {
-      "src": "assets/icons/icon-192.png?v=60",
+      "src": "assets/icons/icon-192.png?v=63",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/icons/icon-512.png?v=60",
+      "src": "assets/icons/icon-512.png?v=63",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
