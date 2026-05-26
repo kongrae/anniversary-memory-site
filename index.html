@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=68" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=68" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=68" />
+<link rel="manifest" href="manifest.webmanifest?v=69" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=69" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=69" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -145,21 +145,17 @@ button { cursor:pointer; }
 }
 .section {
   width:min(980px,100%);
-  margin:0 auto;
-  padding:34px 0;
-  content-visibility:auto;
-  contain-intrinsic-size:1px 760px;
-}
-.section + .section {
-  padding-top:22px;
+  margin:0 auto 30px;
+  padding:0;
 }
 .intro {
-  min-height:calc(100svh - 112px);
+  min-height:auto;
   display:grid;
   align-items:center;
   grid-template-columns:1fr;
   gap:14px;
   padding-top:20px;
+  margin-bottom:30px;
 }
 .hero-card {
   position:relative;
@@ -430,7 +426,7 @@ button { cursor:pointer; }
   justify-content:space-between;
   align-items:end;
   gap:18px;
-  margin-bottom:18px;
+  margin-bottom:16px;
 }
 .section-heading h2 {
   margin:0;
@@ -632,9 +628,9 @@ button { cursor:pointer; }
   width:min(1120px,100%);
 }
 .letter-photo {
-  min-height:340px;
+  min-height:320px;
   border-radius:0;
-  background:url("assets/letter-photo.jpg?v=54") center 54%/cover no-repeat;
+  background:url("assets/letter-photo.jpg?v=54") center 26%/cover no-repeat;
   box-shadow:none;
 }
 .letter-card {
@@ -749,16 +745,16 @@ button { cursor:pointer; }
 }
 .memory-connector {
   width:min(980px,100%);
-  margin:-12px auto -14px;
+  margin:-16px auto -4px;
   padding:0;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  gap:2px;
+  gap:1px;
   color:rgba(183,110,121,.78);
-  font-size:24px;
-  line-height:.32;
+  font-size:20px;
+  line-height:.28;
   text-shadow:0 8px 20px rgba(183,110,121,.14);
   border-radius:0;
   background:transparent;
@@ -769,7 +765,7 @@ button { cursor:pointer; }
 .memory-connector::after {
   content:"";
   width:1px;
-  height:16px;
+  height:10px;
   background:linear-gradient(180deg,transparent,rgba(183,110,121,.28),transparent);
 }
 .current-photo {
@@ -1223,9 +1219,8 @@ footer {
   .app { padding:calc(10px + env(safe-area-inset-top)) 12px 12px; }
   .nav { top:calc(8px + env(safe-area-inset-top)); margin-bottom:2px; border-radius:20px; }
   .nav-links { display:none; }
-  .section { padding:24px 0; }
-  .section + .section { padding-top:14px; }
-  .intro { min-height:auto; padding-top:12px; padding-bottom:8px; }
+  .section { margin-bottom:22px; padding:0; }
+  .intro { min-height:auto; padding-top:12px; padding-bottom:0; margin-bottom:22px; }
   .hero-card { padding:20px; border-radius:26px; }
   .hero-photo-wrap { min-height:390px; }
   .memory-stack { width:min(400px,96vw); height:480px; }
@@ -1247,7 +1242,7 @@ footer {
   .bento-label { font-size:12px; }
   .stats, .album-grid, .modal-grid { grid-template-columns:1fr; }
   .polaroid { transform:rotate(0deg) !important; }
-  .letter-photo { min-height:200px; }
+  .letter-photo { min-height:190px; background-position:center 22%; }
   .letter-card { padding:24px; border-left:0; border-top:1px solid rgba(183,110,121,.12); }
   .letter-body { max-height:0; }
   .letter-card.expanded .letter-body { max-height:2200px; overflow:hidden; }
@@ -1345,6 +1340,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=68" defer></script>
+<script src="assets/app.js?v=69" defer></script>
 </body>
 </html>
