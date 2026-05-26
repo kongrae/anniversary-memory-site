@@ -1,4 +1,4 @@
-const CACHE_NAME = "anniversary-memory-v52";
+const CACHE_NAME = "anniversary-memory-v53";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -16,10 +16,20 @@ const APP_SHELL = [
   "./assets/icons/icon-512.png",
   "./assets/seasons/summer-1.jpg",
   "./assets/seasons/summer-2.jpg",
-  "./assets/seasons/autumn-1.mp4",
+  "./assets/seasons/summer-3.jpg",
+  "./assets/seasons/summer-4.jpg",
+  "./assets/seasons/summer-5.jpg",
+  "./assets/seasons/summer-6.jpg",
+  "./assets/seasons/autumn-1.jpg",
   "./assets/seasons/autumn-2.jpg",
+  "./assets/seasons/autumn-3.mp4",
+  "./assets/seasons/autumn-4.jpg",
+  "./assets/seasons/autumn-5.jpg",
+  "./assets/seasons/autumn-6.jpg",
+  "./assets/seasons/autumn-7.jpg",
+  "./assets/seasons/autumn-8.jpg",
   "./assets/seasons/winter-1.jpg",
-  "./assets/seasons/winter-2.jpg",
+  "./assets/seasons/winter-2.mov",
   "./assets/seasons/winter-3.jpg",
   "./assets/seasons/winter-4.jpg",
   "./assets/seasons/winter-5.jpg",
@@ -28,7 +38,13 @@ const APP_SHELL = [
   "./assets/seasons/spring-3.jpg",
   "./assets/seasons/spring-4.jpg",
   "./assets/seasons/spring-5.jpg",
-  "./assets/seasons/spring-6.jpg"
+  "./assets/seasons/spring-6.jpg",
+  "./assets/seasons/spring-7.jpg",
+  "./assets/seasons/spring-8.jpg",
+  "./assets/seasons/spring-9.jpg",
+  "./assets/seasons/spring-10.jpg",
+  "./assets/seasons/spring-11.jpg",
+  "./assets/seasons/spring-12.jpg"
 ];
 
 self.addEventListener("install", event => {
