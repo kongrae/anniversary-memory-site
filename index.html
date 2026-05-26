@@ -1032,6 +1032,19 @@ button { cursor:pointer; }
   font-weight:850;
   line-height:1.62;
 }
+.modal-caption-date {
+  display:block;
+  width:max-content;
+  margin:0 0 6px;
+  padding:4px 9px;
+  border-radius:999px;
+  color:#8f5b57;
+  background:rgba(255,255,255,.72);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 6px 14px rgba(183,110,121,.1);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
 .modal-pager {
   position:absolute;
   left:50%;
@@ -1269,12 +1282,12 @@ const memories = [
     image: "assets/seasons/summer-1.jpg",
     tilt: "-2deg",
     media: [
-      { type:"image", src:"assets/seasons/summer-1.jpg", alt:"2025년 5월 31일 여름 사진", caption:"첫 계절의 첫 장면. 아직은 조금 서툴렀지만 그래서 더 오래 남는 시작." },
-      { type:"image", src:"assets/seasons/summer-2.jpg", alt:"2025년 6월 2일 여름 사진", caption:"평범한 하루도 같이 있으면 이상하게 선명해지던 초여름." },
-      { type:"image", src:"assets/seasons/summer-3.jpg", alt:"2025년 6월 4일 여름 사진", caption:"가까워지는 속도만큼 사진 속 표정도 조금씩 자연스러워졌어." },
-      { type:"image", src:"assets/seasons/summer-4.jpg", alt:"2025년 6월 7일 강릉여행 사진", caption:"강릉 바람 사이로 남겨둔 우리 첫 여행의 기분." },
-      { type:"image", src:"assets/seasons/summer-5.jpg", alt:"2025년 6월 7일 강릉여행 두 번째 사진", caption:"같은 날의 다른 장면, 그래서 더 꺼내 보고 싶은 기억." },
-      { type:"image", src:"assets/seasons/summer-6.jpg", alt:"2025년 8월 10일 계곡 사진", caption:"더운 계절 끝에서 시원하게 웃었던 우리." }
+      { type:"image", src:"assets/seasons/summer-1.jpg", date:"2025.05.31", alt:"2025년 5월 31일 여름 사진", caption:"첫 계절의 첫 장면. 아직은 조금 서툴렀지만 그래서 더 오래 남는 시작." },
+      { type:"image", src:"assets/seasons/summer-2.jpg", date:"2025.06.02", alt:"2025년 6월 2일 여름 사진", caption:"평범한 하루도 같이 있으면 이상하게 선명해지던 초여름." },
+      { type:"image", src:"assets/seasons/summer-3.jpg", date:"2025.06.04", alt:"2025년 6월 4일 여름 사진", caption:"가까워지는 속도만큼 사진 속 표정도 조금씩 자연스러워졌어." },
+      { type:"image", src:"assets/seasons/summer-4.jpg", date:"2025.06.07", alt:"2025년 6월 7일 강릉여행 사진", caption:"강릉 바람 사이로 남겨둔 우리 첫 여행의 기분." },
+      { type:"image", src:"assets/seasons/summer-5.jpg", date:"2025.06.07", alt:"2025년 6월 7일 강릉여행 두 번째 사진", caption:"같은 날의 다른 장면, 그래서 더 꺼내 보고 싶은 기억." },
+      { type:"image", src:"assets/seasons/summer-6.jpg", date:"2025.08.10", alt:"2025년 8월 10일 계곡 사진", caption:"더운 계절 끝에서 시원하게 웃었던 우리." }
     ]
   },
   {
@@ -1286,14 +1299,14 @@ const memories = [
     image: "assets/seasons/autumn-1.jpg",
     tilt: "1.6deg",
     media: [
-      { type:"image", src:"assets/seasons/autumn-1.jpg", alt:"2025년 9월 21일 가을 사진", caption:"가을이 시작될 무렵, 우리도 조금 더 편안한 표정이 됐어." },
-      { type:"image", src:"assets/seasons/autumn-2.jpg", alt:"2025년 10월 9일 가을 사진", caption:"선선한 날씨가 잘 어울리던 날, 우리답게 남은 한 장." },
-      { type:"video", src:"assets/seasons/autumn-3.mp4", alt:"2025년 10월 18일 제주도 영상", autoPlay:true, caption:"제주에서 남긴 움직이는 장면. 바람까지 같이 저장해두고 싶은 가을." },
-      { type:"image", src:"assets/seasons/autumn-4.jpg", alt:"2025년 10월 18일 제주도 카페 사진", caption:"여행 중 잠깐 쉬어간 시간도 우리에게는 꽤 근사한 페이지였어." },
-      { type:"image", src:"assets/seasons/autumn-5.jpg", alt:"2025년 10월 19일 제주도 사진", caption:"제주 풍경보다 먼저 생각나는 건 그날의 우리 표정." },
-      { type:"image", src:"assets/seasons/autumn-6.jpg", alt:"2025년 11월 11일 가을 사진", caption:"계절이 깊어질수록 추억도 더 단단하게 쌓여갔어." },
-      { type:"image", src:"assets/seasons/autumn-7.jpg", alt:"2025년 11월 12일 가을 사진", caption:"소소한 하루가 오래 기억에 남는 건, 같이 있었기 때문이겠지." },
-      { type:"image", src:"assets/seasons/autumn-8.jpg", alt:"2025년 11월 12일 도마 만들기 사진", caption:"같이 무언가를 만드는 날은 늘 조금 더 특별해." }
+      { type:"image", src:"assets/seasons/autumn-1.jpg", date:"2025.09.21", alt:"2025년 9월 21일 가을 사진", caption:"가을이 시작될 무렵, 우리도 조금 더 편안한 표정이 됐어." },
+      { type:"image", src:"assets/seasons/autumn-2.jpg", date:"2025.10.09", alt:"2025년 10월 9일 가을 사진", caption:"선선한 날씨가 잘 어울리던 날, 우리답게 남은 한 장." },
+      { type:"video", src:"assets/seasons/autumn-3.mp4", date:"2025.10.18", alt:"2025년 10월 18일 제주도 영상", autoPlay:true, caption:"제주에서 남긴 움직이는 장면. 바람까지 같이 저장해두고 싶은 가을." },
+      { type:"image", src:"assets/seasons/autumn-4.jpg", date:"2025.10.18", alt:"2025년 10월 18일 제주도 카페 사진", caption:"여행 중 잠깐 쉬어간 시간도 우리에게는 꽤 근사한 페이지였어." },
+      { type:"image", src:"assets/seasons/autumn-5.jpg", date:"2025.10.19", alt:"2025년 10월 19일 제주도 사진", caption:"제주 풍경보다 먼저 생각나는 건 그날의 우리 표정." },
+      { type:"image", src:"assets/seasons/autumn-6.jpg", date:"2025.11.11", alt:"2025년 11월 11일 가을 사진", caption:"계절이 깊어질수록 추억도 더 단단하게 쌓여갔어." },
+      { type:"image", src:"assets/seasons/autumn-7.jpg", date:"2025.11.12", alt:"2025년 11월 12일 가을 사진", caption:"소소한 하루가 오래 기억에 남는 건, 같이 있었기 때문이겠지." },
+      { type:"image", src:"assets/seasons/autumn-8.jpg", date:"2025.11.12", alt:"2025년 11월 12일 도마 만들기 사진", caption:"같이 무언가를 만드는 날은 늘 조금 더 특별해." }
     ]
   },
   {
@@ -1305,11 +1318,11 @@ const memories = [
     image: "assets/seasons/winter-5.jpg",
     tilt: "-1.2deg",
     media: [
-      { type:"image", src:"assets/seasons/winter-1.jpg", alt:"2025년 11월 29일 겨울 사진", caption:"겨울의 시작, 함께 떠날 수 있는 길이 조금 더 넓어졌어." },
-      { type:"video", src:"assets/seasons/winter-2.mov", alt:"2025년 12월 12일 포천 캠핑 영상", autoPlay:true, caption:"포천의 밤과 캠핑의 공기까지 담긴, 따뜻한 겨울 기록." },
-      { type:"image", src:"assets/seasons/winter-3.jpg", alt:"2026년 2월 12일 겨울 사진", caption:"차 안에서 보낸 시간도 우리의 작은 여행이 됐던 날." },
-      { type:"image", src:"assets/seasons/winter-4.jpg", alt:"2026년 2월 21일 겨울 사진", caption:"캠핑이라는 취미가 생기고, 평범한 밤도 특별한 장면이 됐어." },
-      { type:"image", src:"assets/seasons/winter-5.jpg", alt:"2026년 2월 21일 차박 사진", caption:"추운 계절인데도 함께 있으면 묘하게 따뜻했던 순간." }
+      { type:"image", src:"assets/seasons/winter-1.jpg", date:"2025.11.29", alt:"2025년 11월 29일 겨울 사진", caption:"겨울의 시작, 함께 떠날 수 있는 길이 조금 더 넓어졌어." },
+      { type:"video", src:"assets/seasons/winter-2.mov", date:"2025.12.12", alt:"2025년 12월 12일 포천 캠핑 영상", autoPlay:true, caption:"포천의 밤과 캠핑의 공기까지 담긴, 따뜻한 겨울 기록." },
+      { type:"image", src:"assets/seasons/winter-3.jpg", date:"2026.02.12", alt:"2026년 2월 12일 겨울 사진", caption:"차 안에서 보낸 시간도 우리의 작은 여행이 됐던 날." },
+      { type:"image", src:"assets/seasons/winter-4.jpg", date:"2026.02.21", alt:"2026년 2월 21일 겨울 사진", caption:"캠핑이라는 취미가 생기고, 평범한 밤도 특별한 장면이 됐어." },
+      { type:"image", src:"assets/seasons/winter-5.jpg", date:"2026.02.21", alt:"2026년 2월 21일 차박 사진", caption:"추운 계절인데도 함께 있으면 묘하게 따뜻했던 순간." }
     ]
   },
   {
@@ -1321,18 +1334,18 @@ const memories = [
     image: "assets/seasons/spring-2.jpg",
     tilt: "2deg",
     media: [
-      { type:"image", src:"assets/seasons/spring-1.jpg", alt:"2026년 3월 8일 봄 사진", caption:"봄의 문이 열리자마자 우리는 또 밖으로 나갈 준비를 했어." },
-      { type:"image", src:"assets/seasons/spring-2.jpg", alt:"2026년 3월 21일 봄 사진", caption:"차박과 캠핑이 자연스럽게 우리의 주말 언어가 되던 때." },
-      { type:"image", src:"assets/seasons/spring-3.jpg", alt:"2026년 3월 21일 케이크 사진", caption:"작은 케이크 하나에도 우리의 계절이 또렷하게 남았어." },
-      { type:"image", src:"assets/seasons/spring-4.jpg", alt:"2026년 4월 4일 봄 사진", caption:"꽃이 피던 길 위에서, 우리도 다시 환하게 피어난 날." },
-      { type:"image", src:"assets/seasons/spring-5.jpg", alt:"2026년 4월 11일 더본캠핑장 사진", caption:"캠핑 장비가 하나씩 늘어날수록 앞으로의 주말도 더 기대됐어." },
-      { type:"image", src:"assets/seasons/spring-6.jpg", alt:"2026년 4월 12일 봄 사진", caption:"봄 햇살 아래 남긴 장면들은 유난히 부드럽게 기억돼." },
-      { type:"image", src:"assets/seasons/spring-7.jpg", alt:"2026년 4월 12일 봄 두 번째 사진", caption:"같은 계절, 다른 장소, 그래도 늘 중심에는 우리가 있었어." },
-      { type:"image", src:"assets/seasons/spring-8.jpg", alt:"2026년 4월 19일 한강 나들이 사진", caption:"한강 바람과 나들이의 여유가 잘 어울리던 하루." },
-      { type:"image", src:"assets/seasons/spring-9.jpg", alt:"2026년 5월 2일 송도 나들이 사진", caption:"이곳저곳 많이 다닌 봄, 걸음마다 다음 추억이 생겼어." },
-      { type:"image", src:"assets/seasons/spring-10.jpg", alt:"2026년 5월 16일 봄 사진", caption:"1주년을 앞둔 봄 끝자락, 더 단단해진 우리." },
-      { type:"image", src:"assets/seasons/spring-11.jpg", alt:"2026년 5월 16일 조개찜 사진", caption:"맛있는 것 앞에서는 언제나 조금 더 솔직하게 웃게 돼." },
-      { type:"image", src:"assets/seasons/spring-12.jpg", alt:"2026년 5월 16일 조개찜 두 번째 사진", caption:"봄의 마지막 페이지까지 꽉 채워준 다정한 저녁." }
+      { type:"image", src:"assets/seasons/spring-1.jpg", date:"2026.03.08", alt:"2026년 3월 8일 봄 사진", caption:"봄의 문이 열리자마자 우리는 또 밖으로 나갈 준비를 했어." },
+      { type:"image", src:"assets/seasons/spring-2.jpg", date:"2026.03.21", alt:"2026년 3월 21일 봄 사진", caption:"차박과 캠핑이 자연스럽게 우리의 주말 언어가 되던 때." },
+      { type:"image", src:"assets/seasons/spring-3.jpg", date:"2026.03.21", alt:"2026년 3월 21일 케이크 사진", caption:"작은 케이크 하나에도 우리의 계절이 또렷하게 남았어." },
+      { type:"image", src:"assets/seasons/spring-4.jpg", date:"2026.04.04", alt:"2026년 4월 4일 봄 사진", caption:"꽃이 피던 길 위에서, 우리도 다시 환하게 피어난 날." },
+      { type:"image", src:"assets/seasons/spring-5.jpg", date:"2026.04.11", alt:"2026년 4월 11일 더본캠핑장 사진", caption:"캠핑 장비가 하나씩 늘어날수록 앞으로의 주말도 더 기대됐어." },
+      { type:"image", src:"assets/seasons/spring-6.jpg", date:"2026.04.12", alt:"2026년 4월 12일 봄 사진", caption:"봄 햇살 아래 남긴 장면들은 유난히 부드럽게 기억돼." },
+      { type:"image", src:"assets/seasons/spring-7.jpg", date:"2026.04.12", alt:"2026년 4월 12일 봄 두 번째 사진", caption:"같은 계절, 다른 장소, 그래도 늘 중심에는 우리가 있었어." },
+      { type:"image", src:"assets/seasons/spring-8.jpg", date:"2026.04.19", alt:"2026년 4월 19일 한강 나들이 사진", caption:"한강 바람과 나들이의 여유가 잘 어울리던 하루." },
+      { type:"image", src:"assets/seasons/spring-9.jpg", date:"2026.05.02", alt:"2026년 5월 2일 송도 나들이 사진", caption:"이곳저곳 많이 다닌 봄, 걸음마다 다음 추억이 생겼어." },
+      { type:"image", src:"assets/seasons/spring-10.jpg", date:"2026.05.16", alt:"2026년 5월 16일 봄 사진", caption:"1주년을 앞둔 봄 끝자락, 더 단단해진 우리." },
+      { type:"image", src:"assets/seasons/spring-11.jpg", date:"2026.05.16", alt:"2026년 5월 16일 조개찜 사진", caption:"맛있는 것 앞에서는 언제나 조금 더 솔직하게 웃게 돼." },
+      { type:"image", src:"assets/seasons/spring-12.jpg", date:"2026.05.16", alt:"2026년 5월 16일 조개찜 두 번째 사진", caption:"봄의 마지막 페이지까지 꽉 채워준 다정한 저녁." }
     ]
   }
 ];
@@ -1800,7 +1813,10 @@ function MemoryModal({ memory, closing, onClose }) {
                   <div className="modal-photo">
                     <Media item={item} />
                   </div>
-                  <figcaption className="modal-caption">{item.caption || item.alt || memory.memo}</figcaption>
+                  <figcaption className="modal-caption">
+                    {item.date && <span className="modal-caption-date">{item.date}</span>}
+                    <span>{item.caption || item.alt || memory.memo}</span>
+                  </figcaption>
                 </figure>
               ))}
             </div>
