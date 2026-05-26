@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=60" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=60" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=60" />
+<link rel="manifest" href="manifest.webmanifest?v=62" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=62" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=62" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -42,7 +42,7 @@ body {
     radial-gradient(circle at 80% 74%,rgba(183,110,121,.16),transparent 34%),
     linear-gradient(115deg,rgba(255,255,255,.24) 0 12%,transparent 12% 28%,rgba(255,255,255,.18) 28% 42%,transparent 42% 100%),
     linear-gradient(145deg,var(--cream),var(--ivory));
-  background-attachment:fixed;
+  background-attachment:scroll;
   min-height:100svh;
 }
 body.modal-locked {
@@ -144,6 +144,8 @@ button { cursor:pointer; }
   width:min(980px,100%);
   margin:0 auto;
   padding:44px 0;
+  content-visibility:auto;
+  contain-intrinsic-size:1px 760px;
 }
 .intro {
   min-height:calc(100svh - 112px);
@@ -607,9 +609,12 @@ button { cursor:pointer; }
 }
 .letter-wrap {
   display:grid;
-  grid-template-columns:.82fr 1.18fr;
+  grid-template-columns:.58fr 1.42fr;
   gap:18px;
   align-items:stretch;
+}
+#letter {
+  width:min(1120px,100%);
 }
 .letter-photo {
   min-height:420px;
@@ -627,6 +632,9 @@ button { cursor:pointer; }
   border:1px solid rgba(255,255,255,.78);
   box-shadow:var(--soft);
 }
+.letter-card.expanded {
+  padding-bottom:38px;
+}
 .hand-title {
   margin:0 0 20px;
   color:var(--rose);
@@ -642,7 +650,8 @@ button { cursor:pointer; }
   transition:max-height .34s cubic-bezier(.2,.78,.24,1), opacity .24s ease;
 }
 .letter-card.expanded .letter-body {
-  max-height:680px;
+  max-height:none;
+  overflow:visible;
   opacity:1;
 }
 .letter-body::after {
@@ -919,7 +928,7 @@ button { cursor:pointer; }
   align-items:center;
   margin:0;
   border-radius:28px;
-  padding:18px 24px;
+  padding:18px 26px;
   overflow:hidden;
   border:1px solid rgba(121,84,73,.12);
   background:
@@ -931,11 +940,11 @@ button { cursor:pointer; }
 .modal-head::before {
   content:"";
   position:absolute;
-  left:18px;
+  left:22px;
   top:50%;
-  width:7px;
-  height:36px;
-  border-radius:999px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
   transform:translateY(-50%);
   background:linear-gradient(180deg,var(--rose),var(--caramel));
   box-shadow:0 8px 18px rgba(183,110,121,.22);
@@ -956,7 +965,7 @@ button { cursor:pointer; }
   position:relative;
   z-index:1;
   margin:0;
-  padding-left:18px;
+  padding-left:22px;
   color:transparent;
   background:linear-gradient(90deg,#523b34,#a86968 72%,#c98f70);
   -webkit-background-clip:text;
@@ -1011,16 +1020,18 @@ button { cursor:pointer; }
   min-width:100%;
   min-height:0;
   display:grid;
-  grid-template-rows:minmax(0,1fr) auto;
+  grid-template-rows:minmax(0,1fr) minmax(168px,auto);
   align-content:center;
   gap:12px;
   padding:0;
 }
 .modal-caption {
   margin:0;
-  padding:12px 14px;
-  max-height:92px;
+  min-height:168px;
+  padding:14px 16px;
+  max-height:min(38svh,240px);
   overflow:auto;
+  overscroll-behavior:contain;
   border:1px solid rgba(255,255,255,.72);
   border-radius:15px;
   color:#412f2b;
@@ -1045,14 +1056,14 @@ button { cursor:pointer; }
   letter-spacing:.02em;
 }
 .modal-pager {
-  position:absolute;
-  left:50%;
-  bottom:74px;
+  position:static;
+  align-self:center;
   z-index:2;
   display:flex;
   align-items:center;
   gap:8px;
-  transform:translateX(-50%);
+  transform:none;
+  margin:-4px 0 0;
   padding:8px 11px;
   border:1px solid rgba(255,255,255,.58);
   border-radius:999px;
@@ -1104,6 +1115,15 @@ button { cursor:pointer; }
   object-fit:contain;
   display:block;
   border-radius:inherit;
+}
+.modal-media-placeholder {
+  width:100%;
+  height:100%;
+  min-height:220px;
+  border-radius:inherit;
+  background:
+    linear-gradient(145deg,rgba(255,250,247,.74),rgba(234,217,205,.5)),
+    radial-gradient(circle at 50% 42%,rgba(183,110,121,.16),transparent 28%);
 }
 .modal-close-floating {
   position:static;
@@ -1164,23 +1184,23 @@ footer {
   .polaroid { transform:rotate(0deg) !important; }
   .letter-photo { min-height:260px; }
   .letter-card { padding:24px; }
-  .letter-body { max-height:148px; }
-  .letter-card.expanded .letter-body { max-height:760px; }
+  .letter-body { max-height:220px; }
+  .letter-card.expanded .letter-body { max-height:none; overflow:visible; }
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell {
-    height:calc(100svh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-    max-height:calc(100svh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height:calc(100svh - 46px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height:calc(100svh - 46px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     gap:10px;
   }
   .brand { font-size:13px; }
   .modal-card { gap:10px; }
   .modal-head { min-height:auto; padding:15px 18px; border-radius:22px; }
-  .modal-head::before { left:14px; height:28px; }
+  .modal-head::before { left:16px; width:9px; height:9px; }
   .modal-head::after { display:none; }
-  .modal-head h3 { padding-left:16px; font-size:25px; line-height:1.18; }
+  .modal-head h3 { padding-left:18px; font-size:25px; line-height:1.18; }
   .modal-grid { padding:12px; border-radius:24px; --slide-gap:22px; }
-  .modal-caption { max-height:76px; font-size:16px; line-height:1.5; }
-  .modal-pager { bottom:66px; }
+  .modal-memory { grid-template-rows:minmax(0,1fr) minmax(190px,auto); gap:10px; }
+  .modal-caption { min-height:190px; max-height:min(42svh,260px); font-size:16px; line-height:1.55; }
   .modal-nav { display:none; }
   .modal-close-floating { height:50px; min-width:88px; }
 }
@@ -1190,7 +1210,6 @@ footer {
 <div id="root"></div>
 <script src="assets/vendor/react.production.min.js"></script>
 <script src="assets/vendor/react-dom.production.min.js"></script>
-<script src="assets/vendor/babel.min.js"></script>
 <script>
 const supabaseConfig = {
   url: "https://xolhvicxptkgdtklwjlp.supabase.co",
@@ -1261,650 +1280,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script type="text/babel">
-const CONFIG = {
-  anniversaryStart: "2025-05-27",
-  firstMetLabel: "2025.05.27",
-  brandTitle: "하린 ♥ 홍래 | Day 365",
-  heroTitle: "가장 행복했던 365일",
-  heroSubtitle: "함께한 시간들을 돌아보면,\n웃음과 추억으로 가득한 1년이었어.",
-  signature: "From. 홍래"
-};
-
-const memories = [
-  {
-    id: 1,
-    date: "2025 여름",
-    title: "여름, 우리라는 계절의 시작",
-    place: "첫 계절",
-    memo: "5월 27일 이후의 첫계절, 서툴게 시작된 설렘의 계절",
-    image: "assets/seasons/summer-1.jpg",
-    tilt: "-2deg",
-    media: [
-      { type:"image", src:"assets/seasons/summer-1.jpg", date:"2025.05.31", alt:"2025년 5월 31일 여름 사진", caption:"한성대입구 야장, 적당한 긴장감으로 술이 술술 들어가도 모르던 그 때" },
-      { type:"image", src:"assets/seasons/summer-2.jpg", date:"2025.06.02", alt:"2025년 6월 2일 여름 사진", caption:"지친 평일에도 평냉 뿌시기와 서든어택은 못참지" },
-      { type:"image", src:"assets/seasons/summer-3.jpg", date:"2025.06.04", alt:"2025년 6월 4일 여름 사진", caption:"서순라길에서 조금 더 가까워지는 우리" },
-      { type:"image", src:"assets/seasons/summer-4.jpg", date:"2025.06.07", alt:"2025년 6월 7일 강릉여행 사진", caption:"첫 강릉여행, 한결 편해진 우리의 표정" },
-      { type:"image", src:"assets/seasons/summer-5.jpg", date:"2025.06.07", alt:"2025년 6월 7일 강릉여행 두 번째 사진", caption:"선남선녀, 그림같은 커플" },
-      { type:"image", src:"assets/seasons/summer-6.jpg", date:"2025.08.10", alt:"2025년 8월 10일 계곡 사진", caption:"더운 계절 끝에 떠난 계곡, 웃는모습 참닮았쥬?" }
-    ]
-  },
-  {
-    id: 2,
-    date: "2025 가을",
-    title: "가을, 조금 더 우리답게",
-    place: "제주도와 테니스",
-    memo: "꿈 같은 제주도 여행, 함께 시작한 테니스까지 유난히 좋았던 계절",
-    image: "assets/seasons/autumn-1.jpg",
-    tilt: "1.6deg",
-    media: [
-      { type:"image", src:"assets/seasons/autumn-1.jpg", date:"2025.09.21", alt:"2025년 9월 21일 가을 사진", caption:"즉흥으로 떠난 올림픽공원 테니스 관람" },
-      { type:"image", src:"assets/seasons/autumn-2.jpg", date:"2025.10.09", alt:"2025년 10월 9일 가을 사진", caption:"테린이들의 복장갖추기놀이, 제법 테니스인 된 느낌?" },
-      { type:"video", src:"assets/seasons/autumn-3.mp4", date:"2025.10.18", alt:"2025년 10월 18일 제주도 영상", autoPlay:true, caption:"제주도 1일차, 인생네컷 뿌시기!!!" },
-      { type:"image", src:"assets/seasons/autumn-4.jpg", date:"2025.10.18", alt:"2025년 10월 18일 제주도 카페 사진", caption:"바다뷰 카페에서 이쁜 너랑 나랑" },
-      { type:"image", src:"assets/seasons/autumn-5.jpg", date:"2025.10.19", alt:"2025년 10월 19일 제주도 사진", caption:"애꿎은 날씨지만서도 핑크뮬리와 하린이와 함께라면" },
-      { type:"image", src:"assets/seasons/autumn-6.jpg", date:"2025.11.11", alt:"2025년 11월 11일 가을 사진", caption:"예상치도 못한 빼빼로!!! 서프라이즈와 맛 둘다 잡기 쉽지않은데… " },
-      { type:"image", src:"assets/seasons/autumn-7.jpg", date:"2025.11.12", alt:"2025년 11월 12일 가을 사진", caption:"해피리니데이♥ 처음맞이하는 생일, 앞으로도 항상 내가 챙겨줄게" },
-      { type:"image", src:"assets/seasons/autumn-8.jpg", date:"2025.11.12", alt:"2025년 11월 12일 도마 만들기 사진", caption:"도마장인 린선생포스.. 하지만 패배를 인정하는가?" }
-    ]
-  },
-  {
-    id: 3,
-    date: "2025 겨울",
-    title: "겨울, 따뜻한 쪽으로",
-    place: "차, 캠핑, 스키장",
-    memo: "함께 여행할 차가 생기고, 캠핑이라는 취미도 만들고, 스키장까지 다녀오며 추억을 차곡차곡 쌓았던 계절.",
-    image: "assets/seasons/winter-5.jpg",
-    tilt: "-1.2deg",
-    media: [
-      { type:"image", src:"assets/seasons/winter-1.jpg", date:"2025.11.29", alt:"2025년 11월 29일 겨울 사진", caption:"겨울의 시작, 뭉리니. IFC를 점령하다." },
-      { type:"video", src:"assets/seasons/winter-2.mov", date:"2025.12.12", alt:"2025년 12월 12일 포천 캠핑 영상", autoPlay:true, caption:"포천이 우리 안의 캠핑 유전자를 깨웠다" },
-      { type:"image", src:"assets/seasons/winter-3.jpg", date:"2026.02.12", alt:"2026년 2월 12일 겨울 사진", caption:"우리의 필수품이 된 뭉리니♥ 자기가 사준 핸들 덕에 더 빛이나" },
-      { type:"image", src:"assets/seasons/winter-4.jpg", date:"2026.02.21", alt:"2026년 2월 21일 겨울 사진", caption:"조금, 아니 많이 엉성했던 우리의 첫 캠핑. 너무 귀엽자나?" },
-      { type:"image", src:"assets/seasons/winter-5.jpg", date:"2026.02.21", alt:"2026년 2월 21일 차박 사진", caption:"우리의 첫 차박. 비록 텐트는 실패했지만 차박은 대성공!" }
-    ]
-  },
-  {
-    id: 4,
-    date: "2026 봄",
-    title: "봄, 다시 피어난 우리",
-    place: "차박, 캠핑, 나들이",
-    memo: "차박, 캠핑, 나들이로 이곳저곳 많이 다녔고, 업그레이드된 캠핑 장비 덕분에 앞으로가 더 기대되는 계절.",
-    image: "assets/seasons/spring-2.jpg",
-    tilt: "2deg",
-    media: [
-      { type:"image", src:"assets/seasons/spring-1.jpg", date:"2026.03.08", alt:"2026년 3월 8일 봄 사진", caption:"업그레이드 된 캠핑장비, 연곡 is GOD" },
-      { type:"image", src:"assets/seasons/spring-2.jpg", date:"2026.03.21", alt:"2026년 3월 21일 봄 사진", caption:"머나먼 지리산치즈랜드.. 하지만 너와 함께라면 뭔들is.." },
-      { type:"image", src:"assets/seasons/spring-3.jpg", date:"2026.03.21", alt:"2026년 3월 21일 케이크 사진", caption:"우리의 300일, 소박하지만 행복했던 그날" },
-      { type:"image", src:"assets/seasons/spring-4.jpg", date:"2026.04.04", alt:"2026년 4월 4일 봄 사진", caption:"오도치캠핑장, 또가자 또가자 또가자!!!" },
-      { type:"image", src:"assets/seasons/spring-5.jpg", date:"2026.04.11", alt:"2026년 4월 11일 더본캠핑장 사진", caption:"이제 타프도 껌이쥬~? 쿠디들고 또가자!!!" },
-      { type:"image", src:"assets/seasons/spring-6.jpg", date:"2026.04.12", alt:"2026년 4월 12일 봄 사진", caption:"귀가길에 들린 봄축제, 벚꽃한가득 그림같던 그 곳" },
-      { type:"image", src:"assets/seasons/spring-7.jpg", date:"2026.04.12", alt:"2026년 4월 12일 봄 두 번째 사진", caption:"살랑살랑 설레이는 봄, 내년에도 잘 부탁해!" },
-      { type:"image", src:"assets/seasons/spring-8.jpg", date:"2026.04.19", alt:"2026년 4월 19일 한강 나들이 사진", caption:"광나루한강공원 나들이, 잠깐이여도 너무 좋았던 그 때" },
-      { type:"image", src:"assets/seasons/spring-9.jpg", date:"2026.05.02", alt:"2026년 5월 2일 송도 나들이 사진", caption:"송도 센트럴파크는 처음이지? 어때 좋다고 했지 했지!" },
-      { type:"image", src:"assets/seasons/spring-10.jpg", date:"2026.05.16", alt:"2026년 5월 16일 봄 사진", caption:"선녀바위 차박, 근래 가장 진하게 남았던 여행지!" },
-      { type:"image", src:"assets/seasons/spring-11.jpg", date:"2026.05.16", alt:"2026년 5월 16일 조개찜 사진", caption:"이 분위기와 조개찜 어떻게 말로 표현하냐고요~" },
-      { type:"image", src:"assets/seasons/spring-12.jpg", date:"2026.05.16", alt:"2026년 5월 16일 조개찜 두 번째 사진", caption:"이뻐서 그냥 넣어봤따." }
-    ]
-  }
-];
-
-const timeline = [
-  { date:"2025.05.27", title:"우리가 시작된 날", description:"조금 서툴렀지만, 내 행복의 시작점" },
-  { date:"2025 여름", title:"우리라는 계절의 시작", description:"설레임에 더운줄도 몰랐던 날들" },
-  { date:"2025 가을", title:"제주도와 테니스", description:"선선한 날씨와 함께 추억을 쌓아나가던 날들" },
-  { date:"2025 겨울", title:"스키장, 차, 캠핑", description:"함께 떠날 수 있는 길이 더 넓어진 계절." },
-  { date:"2026 봄", title:"다시 피어난 우리", description:"차박과 캠핑, 나들이로 앞으로가 더 기대되는 봄." }
-];
-
-function daysTogether() {
-  const start = new Date(`${CONFIG.anniversaryStart}T00:00:00`);
-  const now = new Date();
-  return Math.max(1, Math.floor((now - start) / 86400000) + 1);
-}
-
-function updateAppBadge() {
-  if (typeof navigator === "undefined" || !("setAppBadge" in navigator)) return;
-  navigator.setAppBadge(daysTogether()).catch(() => {});
-}
-
-function scrollToId(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior:"smooth", block:"start" });
-}
-
-function Media({ item, className = "" }) {
-  if (item.type === "video") {
-    const auto = Boolean(item.autoPlay);
-    return (
-      <video
-        className={className}
-        src={item.src}
-        controls={!auto}
-        playsInline
-        preload={auto ? "auto" : "metadata"}
-        autoPlay={auto}
-        muted={auto}
-        loop={auto}
-        disablePictureInPicture={auto}
-        controlsList={auto ? "nodownload noplaybackrate noremoteplayback" : "nodownload"}
-      />
-    );
-  }
-  return <img className={className} src={item.src || item.image} alt={item.alt || item.title || ""} loading="lazy" />;
-}
-
-function Nav() {
-  return (
-    <nav className="nav">
-      <div className="brand"><span className="brand-mark">♥</span><span className="brand-text">{CONFIG.brandTitle}</span></div>
-      <div className="nav-links">
-        <a href="#summary">요약</a>
-        <a href="#album">앨범</a>
-        <a href="#timeline">타임라인</a>
-        <a href="#letter">편지</a>
-      </div>
-    </nav>
-  );
-}
-
-function Intro() {
-  const [activeStackCard, setActiveStackCard] = React.useState("moon");
-  const heroCards = [
-    { key:"moon", label:"2025.10.20 제주도 아르떼 뮤지엄", src:"assets/hero-stack/stack-1.jpg" },
-    { key:"sea", label:"2025.10.20 제주도 아르떼 뮤지엄", src:"assets/hero-stack/stack-2.jpg" },
-    { key:"cafe", label:"2026.03.08 강릉 카페에서", src:"assets/hero-stack/stack-3.jpg" },
-    { key:"picnic", label:"2026.03.21 치즈랜드 나들이", src:"assets/hero-stack/stack-4.jpg" },
-    { key:"main", label:"2025.11.01 정독도서관에서", src:"assets/main-hero-cropped.jpg?v=51" }
-  ];
-  const sideSlots = ["back-a", "back-b", "back-c", "back-d"];
-
-  const activateStackCard = key => {
-    setActiveStackCard(key);
-  };
-
-  const handleStackKey = (event, key) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      activateStackCard(key);
-    }
-  };
-
-  return (
-    <section className="section intro" id="intro">
-      <div className="hero-card fade-up">
-        <div>
-          <span className="kicker">♥ 뭉리니 스크랩북</span>
-          <h1 className="title">{CONFIG.heroTitle}</h1>
-          <p className="subtitle">{CONFIG.heroSubtitle}<br />이 추억들을 간직하며,<br />다가올 날들도 행복으로 채워가고 싶어.</p>
-          <div className="actions">
-            <button className="primary-btn" onClick={() => scrollToId("album")}>앨범 보기</button>
-            <button className="ghost-btn" onClick={() => scrollToId("letter")}>편지 보기</button>
-          </div>
-        </div>
-        <div className="hero-photo-wrap" aria-label="대표 커플 사진">
-          <span className="tape one"></span>
-          <span className="tape two"></span>
-          <span className="sticker heart-a">♥</span>
-          <span className="sticker heart-b">♥</span>
-          <div className="memory-stack" aria-label="기념일 사진 카드 스택">
-            {heroCards.map(card => {
-              const sideIndex = heroCards.filter(item => item.key !== activeStackCard).findIndex(item => item.key === card.key);
-              const isCenter = card.key === activeStackCard;
-              const slotClass = isCenter ? "center" : sideSlots[sideIndex];
-              return (
-                <article
-                  className={`stack-card ${slotClass}`}
-                  data-label={card.label}
-                  role="button"
-                  tabIndex="0"
-                  key={card.key}
-                  aria-current={isCenter ? "true" : undefined}
-                  onClick={() => activateStackCard(card.key)}
-                  onKeyDown={event => handleStackKey(event, card.key)}
-                >
-                  <div className="stack-photo" style={{ "--photo":`url("${card.src}")` }}></div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Summary() {
-  const days = daysTogether();
-  return (
-    <section className="section fade-up" id="summary">
-      <div className="section-heading">
-        <h2>Memory Summary</h2>
-        <p>숫자로 보는 우리의 요약카드</p>
-      </div>
-      <div className="bento">
-        <article className="bento-card large">
-          <span className="bento-label">함께한 날</span>
-          <p className="bento-value">D+{Math.max(1, days - 1)}</p>
-          <span className="stamp">{CONFIG.firstMetLabel} - Today</span>
-        </article>
-        <article className="bento-card medium">
-          <span className="bento-label">계절처럼 쌓인 달</span>
-          <p className="bento-value">12</p>
-        </article>
-        <article className="bento-card medium">
-          <span className="bento-label">다시 보고 싶은 순간</span>
-          <p className="bento-value">∞</p>
-        </article>
-        <article className="bento-card small">
-          <span className="bento-label">첫 번째 기념일</span>
-          <p className="bento-value">1st</p>
-        </article>
-      </div>
-    </section>
-  );
-}
-
-function Album({ onOpen }) {
-  return (
-    <section className="section fade-up" id="album">
-      <div className="section-heading">
-        <h2>Photo Album</h2>
-        <p>계절별로 보는 우리의 앨범.</p>
-      </div>
-      <div className="album-grid">
-        {memories.map(memory => (
-          <article
-            className="polaroid"
-            key={memory.id}
-            role="button"
-            tabIndex="0"
-            onClick={() => onOpen(memory)}
-            onKeyDown={event => {
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                onOpen(memory);
-              }
-            }}
-            style={{ "--tilt": memory.tilt, transform:`rotate(${memory.tilt})` }}
-          >
-            <div className="photo-surface"><img src={memory.image} alt={memory.title} loading="lazy" /></div>
-            <div className="polaroid-meta">
-              <time>{memory.date}</time>
-              <h3>{memory.title}</h3>
-              <p>{memory.place} · {memory.memo}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Timeline() {
-  return (
-    <section className="section fade-up" id="timeline">
-      <div className="section-heading">
-        <h2>Timeline</h2>
-        <p>시간 순서대로 꺼내보는 우리의 페이지. 작은 하트마다 하나의 장면이 있어.</p>
-      </div>
-      <div className="timeline">
-        {timeline.map(item => (
-          <article className="timeline-item" key={`${item.date}-${item.title}`}>
-            <time>{item.date}</time>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function CurrentSlot() {
-  const [anniversaryPhoto, setAnniversaryPhoto] = React.useState("");
-  const [uploadStatus, setUploadStatus] = React.useState("");
-  const clearStatus = delay => window.setTimeout(() => setUploadStatus(""), delay);
-
-  React.useEffect(() => {
-    try {
-      const savedPhoto = window.localStorage.getItem("monglini-anniversary-photo");
-      if (savedPhoto) setAnniversaryPhoto(savedPhoto);
-    } catch (error) {}
-    if (window.mongliniStorage?.isConfigured) {
-      try {
-        const url = window.mongliniStorage.publicPhotoUrl();
-        setAnniversaryPhoto(url);
-        window.localStorage.setItem("monglini-anniversary-photo", url);
-      } catch (error) {}
-    }
-  }, []);
-
-  const handleAnniversaryPhoto = event => {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = String(reader.result || "");
-      setAnniversaryPhoto(result);
-      try {
-        window.localStorage.setItem("monglini-anniversary-photo", result);
-      } catch (error) {}
-    };
-    reader.readAsDataURL(file);
-
-    if (!window.mongliniStorage?.isConfigured) {
-      setUploadStatus("사진을 이 기기에 담아뒀어.");
-      clearStatus(4200);
-      return;
-    }
-
-    setUploadStatus("업로드 중...");
-    window.mongliniStorage.uploadAnniversaryPhoto(file, progress => {
-      setUploadStatus(`업로드 중 ${progress}%`);
-    }).then(url => {
-      setAnniversaryPhoto(url);
-      try {
-        window.localStorage.setItem("monglini-anniversary-photo", url);
-      } catch (error) {}
-      setUploadStatus("업로드 완료");
-      clearStatus(3600);
-    }).catch(error => {
-      const detail = error?.message || "";
-      setUploadStatus(error?.message === "file-too-large" ? "12MB 이하 사진으로 다시 선택해줘." : `업로드 실패${detail ? ` (${detail.slice(0, 60)})` : ""}`);
-      clearStatus(9000);
-    });
-  };
-
-  return (
-    <section className="section fade-up" id="current">
-      <div className="current-wrap">
-        <article className="paper-card final-card">
-          <h2>그리고, 현재의 우리</h2>
-        </article>
-        <article className={`paper-card current-photo${anniversaryPhoto ? " has-photo" : ""}`}>
-          <label className="current-upload-label">
-            {anniversaryPhoto && (
-              <span className="current-photo-surface">
-                <img src={anniversaryPhoto} alt="기념일 당일 사진" />
-              </span>
-            )}
-            <input className="current-upload-input" type="file" accept="image/*" onChange={handleAnniversaryPhoto} />
-          </label>
-          {uploadStatus && <div className="current-status">{uploadStatus}</div>}
-        </article>
-      </div>
-    </section>
-  );
-}
-
-function Letter() {
-  const [isExpanded, setIsExpanded] = React.useState(false);
-  return (
-    <section className="section fade-up" id="letter">
-      <div className="letter-wrap">
-        <div className="letter-photo" aria-label="커플 사진"></div>
-        <article className={`letter-card${isExpanded ? " expanded" : ""}`}>
-          <h2 className="hand-title">To. 사랑하는 하린이에게</h2>
-          <div className="letter-body" aria-hidden={!isExpanded}>
-            <p>하린아, 안녕!!<br />우리가 벌써 1주년이라니… 내가 살아오면서 이렇게 쏜살같이 지나간 1년은 처음인 것 같아.<br />이번에 우리 사진들이랑 추억들 정리하면서 지난 시간을 다시 돌아보는데, 신기하게도 단순히 1년이라기보단 훨씬 더 긴 시간을 함께 보낸 느낌이 들더라구.</p>
-            <p>사계절을 같이 보내면서 정말 다양한 추억들을 만들었던 것 같아.<br />처음엔 하린이랑 어떤 시간을 보내야 할지 고민도 많이 했었는데, 테니스를 시작으로 자연스럽게 서로의 취미가 공유되고, 또 새로운 이야기거리들이 계속 생겼던 것 같아.<br />돌이켜보면 그런 순간들이 우리가 “벌써 1년이야?” 싶을 정도로 행복하고 재밌게 시간을 보낼 수 있었던 원동력이었던 것 같아ㅎㅎ</p>
-            <p>자기가 가끔 나한테 “에너지가 넘친다”라고 말해줄 때마다 혼자 깊게 생각해본 적도 있었어.<br />나는 원래 무기력한 사람이라고 생각하며 살아왔는데, 하린이를 만나고 나서 나도 몰랐던 에너지가 생긴 것 같더라구.<br />사람을 만나면 오히려 기가 빠질 때도 많다는데, 나는 자기랑 있으면 없던 기력도 다시 채워지는 느낌을 항상 받아.<br />그래서 더 활동적으로 테니스도 치고, 캠핑도 가고, 차박도 다니면서 이것저것 함께할 수 있었던 것 같아.<br />그만큼 우리가 참 잘 맞는다는 뜻이겠지?ㅎㅎ<br />물론 어쩌면 자기가 나한테 많이 맞춰주고 있는 걸 수도 있구…</p>
-            <p>사실 나는 항상 느끼고 있었어.<br />자기가 나를 배려해주는 모습, 내가 부족한 모습을 보여도 이해해주려고 하는 모습들.<br />평소엔 부끄러워서 표현을 많이 못했지만, 그런 순간들을 나는 늘 마음속에 담아두고 있었어.<br />그래서 오늘은 이 편지로 그동안 다 전하지 못했던 내 마음을 조금이라도 남겨보려 해ㅎㅎ</p>
-            <p>나는 자기보다 감정 표현도 서툴고, 아직 많이 부족한 사람이야.<br />가끔은 이해가 안 되거나 답답하게 느껴지는 순간도 분명 있었을 거야.<br />그래도 나 역시 그런 내 모습을 알고 있고, 조금씩 더 좋은 사람이 되려고 노력하고 있어.<br />지금은 아직 모난 돌 같을지 몰라도, 자기와 함께라면 언젠가는 예쁜 조약돌처럼 다듬어질 수 있을 것 같아ㅎㅎ</p>
-            <p>앞으로의 1년, 2년… 그리고 그 이후의 시간들은 또 어떤 모습일지 벌써 궁금해져.<br />우리 지금처럼 서로 아껴주면서, 더 성숙하고 더 사랑스러운 사이로 오래오래 함께해보자!!</p>
-            <p>1주년 정말 축하해, 우리 뭉리니❤</p>
-            <div className="signature">{CONFIG.signature}</div>
-          </div>
-          <button
-            className="letter-toggle"
-            type="button"
-            aria-expanded={isExpanded}
-            onClick={() => setIsExpanded(value => !value)}
-          >
-            {isExpanded ? "편지 접기" : "편지 펼치기"}
-          </button>
-        </article>
-      </div>
-    </section>
-  );
-}
-
-function FinalSection() {
-  return (
-    <section className="section fade-up">
-      <article className="paper-card final-card">
-        <h2 className="hand-title">앞으로의 우리에게</h2>
-        <p className="bento-text">아직 채워지지 않은 페이지가 더 많아서 좋아.</p>
-        <div className="actions" style={{ justifyContent:"center" }}>
-          <button className="primary-btn" onClick={() => scrollToId("intro")}>다시 처음으로</button>
-        </div>
-      </article>
-    </section>
-  );
-}
-
-function MemoryModal({ memory, closing, onClose }) {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const activeIndexRef = React.useRef(0);
-  const touchStartX = React.useRef(null);
-  const mediaCount = memory?.media?.length || 0;
-
-  React.useEffect(() => {
-    activeIndexRef.current = activeIndex;
-  }, [activeIndex]);
-
-  const goToSlide = React.useCallback(index => {
-    if (!mediaCount) return;
-    const nextIndex = Math.max(0, Math.min(index, mediaCount - 1));
-    setActiveIndex(nextIndex);
-    window.requestAnimationFrame(() => {
-      document.querySelectorAll(".modal-memory").forEach((slide, slideIndex) => {
-        const video = slide.querySelector("video");
-        if (!video || !video.autoplay) return;
-        video.controls = false;
-        video.muted = true;
-        if (slideIndex === nextIndex) {
-          video.play?.().catch(() => {});
-        } else {
-          video.pause?.();
-        }
-      });
-    });
-  }, [mediaCount]);
-
-  React.useEffect(() => {
-    setActiveIndex(0);
-  }, [memory?.id]);
-
-  React.useEffect(() => {
-    if (!memory) return;
-    document.querySelectorAll(".modal-memory").forEach((slide, index) => {
-      const video = slide.querySelector("video");
-      if (!video) return;
-      if (!video.autoplay) return;
-      video.controls = false;
-      video.muted = true;
-      if (index === activeIndex) {
-        video.play?.().catch(() => {});
-      } else {
-        video.pause?.();
-      }
-    });
-  }, [memory, activeIndex]);
-
-  React.useEffect(() => {
-    if (!memory) return undefined;
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousBodyOverscroll = document.body.style.overscrollBehavior;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-    const previousHtmlOverscroll = document.documentElement.style.overscrollBehavior;
-
-    function handleKey(event) {
-      if (event.key === "Escape") onClose();
-      if (event.key === "ArrowLeft") goToSlide(activeIndexRef.current - 1);
-      if (event.key === "ArrowRight") goToSlide(activeIndexRef.current + 1);
-    }
-
-    function lockBackgroundTouch(event) {
-      event.preventDefault();
-    }
-
-    document.documentElement.classList.add("modal-locked-root");
-    document.body.classList.add("modal-locked");
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overscrollBehavior = "none";
-    document.body.style.overscrollBehavior = "none";
-    window.addEventListener("keydown", handleKey);
-    window.addEventListener("wheel", lockBackgroundTouch, { passive:false });
-    window.addEventListener("touchmove", lockBackgroundTouch, { passive:false });
-    document.querySelector(".modal")?.addEventListener("touchmove", lockBackgroundTouch, { passive:false });
-    const playTimer = window.setTimeout(() => {
-      document.querySelectorAll(".modal video").forEach(video => {
-        if (!video.autoplay) return;
-        video.muted = true;
-        video.controls = false;
-        video.playsInline = true;
-        video.currentTime = 0;
-        video.play?.().catch(() => {});
-      });
-    }, 120);
-    return () => {
-      window.clearTimeout(playTimer);
-      document.querySelectorAll(".modal video").forEach(video => video.pause?.());
-      document.querySelector(".modal")?.removeEventListener("touchmove", lockBackgroundTouch);
-      window.removeEventListener("wheel", lockBackgroundTouch);
-      window.removeEventListener("touchmove", lockBackgroundTouch);
-      document.documentElement.classList.remove("modal-locked-root");
-      document.body.classList.remove("modal-locked");
-      document.documentElement.style.overflow = previousHtmlOverflow;
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overscrollBehavior = previousHtmlOverscroll;
-      document.body.style.overscrollBehavior = previousBodyOverscroll;
-      window.removeEventListener("keydown", handleKey);
-    };
-  }, [memory, onClose, goToSlide]);
-
-  if (!memory) return null;
-  const handleTouchStart = event => {
-    touchStartX.current = event.touches[0]?.clientX ?? null;
-  };
-  const handleTouchEnd = event => {
-    if (touchStartX.current === null) return;
-    const endX = event.changedTouches[0]?.clientX ?? touchStartX.current;
-    const diff = touchStartX.current - endX;
-    touchStartX.current = null;
-    if (Math.abs(diff) < 42) return;
-    goToSlide(activeIndex + (diff > 0 ? 1 : -1));
-  };
-
-  return (
-    <div className={`modal open${closing ? " closing" : ""}`} onClick={event => event.target.classList.contains("modal") && onClose()} aria-hidden="false">
-      <div className="modal-shell">
-        <div className="modal-card">
-          <div className="modal-head">
-            <div>
-              <h3>{memory.title}</h3>
-            </div>
-          </div>
-          <div className="modal-grid" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} aria-label={`${memory.title} 사진 넘기기`}>
-            <div className="modal-track" style={{ transform:`translate3d(calc(-${activeIndex * 100}% - ${activeIndex} * var(--slide-gap)),0,0)` }}>
-              {memory.media.map((item, index) => (
-                <figure className="modal-memory" key={`${item.src}-${index}`}>
-                  <div className="modal-photo">
-                    <Media item={item} />
-                  </div>
-                  <figcaption className="modal-caption">
-                    {item.date && <span className="modal-caption-date">{item.date}</span>}
-                    <span>{item.caption || item.alt || memory.memo}</span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-          {mediaCount > 1 && (
-            <>
-              <button className="modal-nav prev" type="button" onClick={() => goToSlide(activeIndex - 1)} disabled={activeIndex === 0} aria-label="이전 사진">‹</button>
-              <button className="modal-nav next" type="button" onClick={() => goToSlide(activeIndex + 1)} disabled={activeIndex === mediaCount - 1} aria-label="다음 사진">›</button>
-              <div className="modal-pager" aria-hidden="true">
-                {memory.media.map((item, index) => (
-                  <span className={`modal-dot${index === activeIndex ? " active" : ""}`} key={`${item.src}-dot`} />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-        <button className="modal-close-floating" type="button" onClick={onClose} aria-label="앨범 닫기">닫기</button>
-      </div>
-    </div>
-  );
-}
-
-function App() {
-  const [selectedMemory, setSelectedMemory] = React.useState(null);
-  const [isModalClosing, setIsModalClosing] = React.useState(false);
-  const openMemory = React.useCallback(memory => {
-    setIsModalClosing(false);
-    setSelectedMemory(memory);
-  }, []);
-  const closeMemory = React.useCallback(() => {
-    if (!selectedMemory) return;
-    setIsModalClosing(true);
-    window.setTimeout(() => {
-      setSelectedMemory(null);
-      setIsModalClosing(false);
-    }, 190);
-  }, [selectedMemory]);
-  return (
-    <>
-      <div className="heart-rain" aria-hidden="true">
-        <span style={{ "--x":"4%", "--s":"28px", "--d":"10.5s", "--delay":"-1s", "--drift":"24px" }}>♥</span>
-        <span style={{ "--x":"19%", "--s":"18px", "--d":"12s", "--delay":"-5s", "--drift":"-18px" }}>♥</span>
-        <span style={{ "--x":"32%", "--s":"28px", "--d":"11.2s", "--delay":"-3s", "--drift":"22px" }}>♥</span>
-        <span style={{ "--x":"48%", "--s":"24px", "--d":"13s", "--delay":"-7s", "--drift":"-26px" }}>♥</span>
-        <span style={{ "--x":"62%", "--s":"26px", "--d":"10.8s", "--delay":"-2s", "--drift":"18px" }}>♥</span>
-        <span style={{ "--x":"76%", "--s":"19px", "--d":"12.6s", "--delay":"-6s", "--drift":"-20px" }}>♥</span>
-        <span style={{ "--x":"91%", "--s":"30px", "--d":"11.8s", "--delay":"-4s", "--drift":"16px" }}>♥</span>
-        <span style={{ "--x":"12%", "--s":"32px", "--d":"14s", "--delay":"-9s", "--drift":"-30px" }}>♥</span>
-        <span style={{ "--x":"41%", "--s":"22px", "--d":"15s", "--delay":"-10s", "--drift":"28px" }}>♥</span>
-        <span style={{ "--x":"69%", "--s":"34px", "--d":"13.8s", "--delay":"-8s", "--drift":"-24px" }}>♥</span>
-        <span style={{ "--x":"84%", "--s":"25px", "--d":"16s", "--delay":"-11s", "--drift":"30px" }}>♥</span>
-        <span style={{ "--x":"25%", "--s":"36px", "--d":"14.5s", "--delay":"-12s", "--drift":"-34px" }}>♥</span>
-        <span style={{ "--x":"55%", "--s":"30px", "--d":"12.8s", "--delay":"-9.5s", "--drift":"34px" }}>♥</span>
-        <span style={{ "--x":"96%", "--s":"22px", "--d":"15.5s", "--delay":"-13s", "--drift":"-22px" }}>♥</span>
-        <span style={{ "--x":"1%", "--s":"20px", "--d":"13.4s", "--delay":"-6.5s", "--drift":"28px" }}>♥</span>
-      </div>
-      <div className="app">
-        <Nav />
-        <Intro />
-        <Summary />
-        <Album onOpen={openMemory} />
-        <div className="memory-connector" aria-hidden="true"><span>·</span><span>·</span><span>·</span></div>
-        <CurrentSlot />
-        <Timeline />
-        <Letter />
-        <FinalSection />
-      </div>
-      <MemoryModal memory={selectedMemory} closing={isModalClosing} onClose={closeMemory} />
-      <footer>뭉래와 하린이의 첫 번째 앨범</footer>
-    </>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-updateAppBadge();
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") updateAppBadge();
-});
-window.setInterval(updateAppBadge, 60 * 60 * 1000);
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
-  });
-}
-</script>
+<script src="assets/app.js?v=62" defer></script>
 </body>
 </html>
