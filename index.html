@@ -619,6 +619,7 @@ button { cursor:pointer; }
   box-shadow:var(--soft);
 }
 .letter-card {
+  position:relative;
   padding:34px;
   border-radius:26px;
   background:
@@ -635,11 +636,65 @@ button { cursor:pointer; }
   font-size:clamp(28px,5vw,44px);
   line-height:1.15;
 }
+.letter-body {
+  overflow:hidden;
+  max-height:156px;
+  opacity:.88;
+  transition:max-height .34s cubic-bezier(.2,.78,.24,1), opacity .24s ease;
+}
+.letter-card.expanded .letter-body {
+  max-height:680px;
+  opacity:1;
+}
+.letter-body::after {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:82px;
+  height:64px;
+  pointer-events:none;
+  opacity:1;
+  transition:opacity .2s ease;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.86));
+}
+.letter-card.expanded .letter-body::after {
+  opacity:0;
+}
 .letter-card p {
   margin:0 0 16px;
   color:var(--deep);
   line-height:1.9;
   font-size:17px;
+}
+.letter-toggle {
+  position:relative;
+  z-index:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:8px;
+  min-height:46px;
+  padding:0 18px;
+  border:1px solid rgba(183,110,121,.18);
+  border-radius:999px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  box-shadow:0 14px 32px rgba(183,110,121,.22);
+  font-weight:900;
+}
+.letter-toggle::after {
+  content:"";
+  width:8px;
+  height:8px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform .2s ease;
+}
+.letter-card.expanded .letter-toggle::after {
+  transform:rotate(225deg) translateY(-2px);
 }
 .signature {
   margin-top:8px;
@@ -1097,6 +1152,8 @@ footer {
   .polaroid { transform:rotate(0deg) !important; }
   .letter-photo { min-height:260px; }
   .letter-card { padding:24px; }
+  .letter-body { max-height:148px; }
+  .letter-card.expanded .letter-body { max-height:760px; }
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell {
     height:calc(100svh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
@@ -1571,16 +1628,27 @@ function CurrentSlot() {
 }
 
 function Letter() {
+  const [isExpanded, setIsExpanded] = React.useState(false);
   return (
     <section className="section fade-up" id="letter">
       <div className="letter-wrap">
         <div className="letter-photo" aria-label="커플 사진"></div>
-        <article className="letter-card">
+        <article className={`letter-card${isExpanded ? " expanded" : ""}`}>
           <h2 className="hand-title">To. 사랑하는 너에게</h2>
-          <p>우리 벌써 1년이라니, 시간은 빠른데 나는 아직도 네가 웃으면 잠깐 멈칫하는 사람으로 살고 있어.</p>
-          <p>지난 1년 동안 같이 웃고, 먹고, 걷고, 가끔은 아무 말 없이 있어도 편했던 순간들이 생각보다 많이 쌓였더라.</p>
-          <p>앞으로도 우리답게, 가볍게 웃고 오래 함께하자.</p>
-          <div className="signature">{CONFIG.signature}</div>
+          <div className="letter-body" aria-hidden={!isExpanded}>
+            <p>우리 벌써 1년이라니, 시간은 빠른데 나는 아직도 네가 웃으면 잠깐 멈칫하는 사람으로 살고 있어.</p>
+            <p>지난 1년 동안 같이 웃고, 먹고, 걷고, 가끔은 아무 말 없이 있어도 편했던 순간들이 생각보다 많이 쌓였더라.</p>
+            <p>앞으로도 우리답게, 가볍게 웃고 오래 함께하자.</p>
+            <div className="signature">{CONFIG.signature}</div>
+          </div>
+          <button
+            className="letter-toggle"
+            type="button"
+            aria-expanded={isExpanded}
+            onClick={() => setIsExpanded(value => !value)}
+          >
+            {isExpanded ? "편지 접기" : "편지 펼치기"}
+          </button>
         </article>
       </div>
     </section>
