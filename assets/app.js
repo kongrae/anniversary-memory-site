@@ -11,7 +11,7 @@ const memories = [{
   date: "2025 여름",
   title: "여름, 우리라는 계절의 시작",
   place: "첫 계절",
-  memo: "5월 27일 이후의 첫계절, 서툴게 시작된 설렘의 계절",
+  memo: "5월 27일 이후의 첫 계절, 서툴지만 설렜던 시작",
   image: "assets/optimized/seasons/summer-1.webp",
   tilt: "-2deg",
   media: [{
@@ -19,13 +19,13 @@ const memories = [{
     src: "assets/optimized/seasons/summer-1.webp",
     date: "2025.05.31",
     alt: "2025년 5월 31일 여름 사진",
-    caption: "한성대입구 야장, 적당한 긴장감으로 술이 술술 들어가도 모르던 그 때"
+    caption: "한성대입구 야장, 적당한 긴장감에 취하지도 않았던 그 때"
   }, {
     type: "image",
     src: "assets/optimized/seasons/summer-2.webp",
     date: "2025.06.02",
     alt: "2025년 6월 2일 여름 사진",
-    caption: "지친 평일에도 평냉 뿌시기와 서든어택은 못참지"
+    caption: "지친 평일에도 평냉 뿌시기와 서든어택은 못 참지"
   }, {
     type: "image",
     src: "assets/optimized/seasons/summer-3.webp",
@@ -43,20 +43,20 @@ const memories = [{
     src: "assets/optimized/seasons/summer-5.webp",
     date: "2025.06.07",
     alt: "2025년 6월 7일 강릉여행 두 번째 사진",
-    caption: "선남선녀, 그림같은 커플"
+    caption: "선남선녀, 그림 같은 우리"
   }, {
     type: "image",
     src: "assets/optimized/seasons/summer-6.webp",
     date: "2025.08.10",
     alt: "2025년 8월 10일 계곡 사진",
-    caption: "더운 계절 끝에 떠난 계곡, 웃는모습 참닮았쥬?"
+    caption: "더운 계절 끝에 떠난 계곡, 웃는 모습 참 닮았쥬?"
   }]
 }, {
   id: 2,
   date: "2025 가을",
   title: "가을, 조금 더 우리답게",
   place: "제주도와 테니스",
-  memo: "꿈 같은 제주도 여행, 함께 시작한 테니스까지 유난히 좋았던 계절",
+  memo: "꿈같았던 제주도 여행, 함께 시작한 테니스까지 유난히 좋았던 계절",
   image: "assets/optimized/seasons/autumn-1.webp",
   tilt: "1.6deg",
   media: [{
@@ -95,13 +95,13 @@ const memories = [{
     src: "assets/optimized/seasons/autumn-6.webp",
     date: "2025.11.11",
     alt: "2025년 11월 11일 가을 사진",
-    caption: "예상치도 못한 빼빼로!!! 서프라이즈와 맛 둘다 잡기 쉽지않은데… "
+    caption: "예상치 못한 빼빼로!!! 서프라이즈와 맛, 둘 다 잡기 쉽지 않은데…"
   }, {
     type: "image",
     src: "assets/optimized/seasons/autumn-7.webp",
     date: "2025.11.12",
     alt: "2025년 11월 12일 가을 사진",
-    caption: "해피리니데이♥ 처음맞이하는 생일, 앞으로도 항상 내가 챙겨줄게"
+    caption: "해피리니데이♥ 처음 맞이하는 생일, 앞으로도 항상 내가 챙겨줄게"
   }, {
     type: "image",
     src: "assets/optimized/seasons/autumn-8.webp",
@@ -135,13 +135,13 @@ const memories = [{
     src: "assets/optimized/seasons/winter-3.webp",
     date: "2026.02.12",
     alt: "2026년 2월 12일 겨울 사진",
-    caption: "우리의 필수품이 된 뭉리니♥ 자기가 사준 핸들 덕에 더 빛이나"
+    caption: "우리의 필수품이 된 뭉리니♥ 자기가 사준 핸들 덕에 더 빛이 나"
   }, {
     type: "image",
     src: "assets/optimized/seasons/winter-4.webp",
     date: "2026.02.21",
     alt: "2026년 2월 21일 겨울 사진",
-    caption: "조금, 아니 많이 엉성했던 우리의 첫 캠핑. 너무 귀엽자나?"
+    caption: "조금, 아니 많이 엉성했던 우리의 첫 캠핑. 그래도 너무 귀엽잖아?"
   }, {
     type: "image",
     src: "assets/optimized/seasons/winter-5.webp",
@@ -162,7 +162,7 @@ const memories = [{
     src: "assets/optimized/seasons/spring-1.webp",
     date: "2026.03.08",
     alt: "2026년 3월 8일 봄 사진",
-    caption: "업그레이드 된 캠핑장비, 연곡 is GOD"
+    caption: "업그레이드된 캠핑 장비, 연곡 is GOD"
   }, {
     type: "image",
     src: "assets/optimized/seasons/spring-2.webp",
@@ -192,19 +192,19 @@ const memories = [{
     src: "assets/optimized/seasons/spring-6.webp",
     date: "2026.04.12",
     alt: "2026년 4월 12일 봄 사진",
-    caption: "귀가길에 들린 봄축제, 벚꽃한가득 그림같던 그 곳"
+    caption: "귀갓길에 들른 봄축제, 벚꽃 한가득 그림 같던 그곳"
   }, {
     type: "image",
     src: "assets/optimized/seasons/spring-7.webp",
     date: "2026.04.12",
     alt: "2026년 4월 12일 봄 두 번째 사진",
-    caption: "살랑살랑 설레이는 봄, 내년에도 잘 부탁해!"
+    caption: "살랑살랑 설레는 봄, 내년에도 잘 부탁해!"
   }, {
     type: "image",
     src: "assets/optimized/seasons/spring-8.webp",
     date: "2026.04.19",
     alt: "2026년 4월 19일 한강 나들이 사진",
-    caption: "광나루한강공원 나들이, 잠깐이여도 너무 좋았던 그 때"
+    caption: "광나루한강공원 나들이, 잠깐이어도 너무 좋았던 그때"
   }, {
     type: "image",
     src: "assets/optimized/seasons/spring-9.webp",
@@ -228,7 +228,7 @@ const memories = [{
     src: "assets/optimized/seasons/spring-12.webp",
     date: "2026.05.16",
     alt: "2026년 5월 16일 조개찜 두 번째 사진",
-    caption: "이뻐서 그냥 넣어봤따."
+    caption: "예뻐서 그냥 넣어봤다."
   }]
 }];
 const timeline = [{
@@ -417,7 +417,7 @@ function Summary() {
     id: "summary"
   }, React.createElement("div", {
     className: "section-heading"
-  }, React.createElement("h2", null, "Memory Summary"), React.createElement("p", null, "\uC22B\uC790\uB85C \uBCF4\uB294 \uC6B0\uB9AC\uC758 \uC694\uC57D\uCE74\uB4DC")), React.createElement("div", {
+  }, React.createElement("h2", null, "Memory Summary"), React.createElement("p", null, "숫자로 남겨보는 우리의 1년")), React.createElement("div", {
     className: "bento"
   }, React.createElement("article", {
     className: "bento-card large"
@@ -455,7 +455,7 @@ function Album({
     id: "album"
   }, React.createElement("div", {
     className: "section-heading"
-  }, React.createElement("h2", null, "Photo Album"), React.createElement("p", null, "\uACC4\uC808\uBCC4\uB85C \uBCF4\uB294 \uC6B0\uB9AC\uC758 \uC568\uBC94.")), React.createElement("div", {
+  }, React.createElement("h2", null, "Photo Album"), React.createElement("p", null, "사계절에 담아둔 우리의 순간들.")), React.createElement("div", {
     className: "album-grid"
   }, memories.map(memory => React.createElement("article", {
     className: "polaroid",
@@ -490,7 +490,7 @@ function Timeline() {
     id: "timeline"
   }, React.createElement("div", {
     className: "section-heading"
-  }, React.createElement("h2", null, "Timeline"), React.createElement("p", null, "\uC2DC\uAC04 \uC21C\uC11C\uB300\uB85C \uAEBC\uB0B4\uBCF4\uB294 \uC6B0\uB9AC\uC758 \uD398\uC774\uC9C0. \uC791\uC740 \uD558\uD2B8\uB9C8\uB2E4 \uD558\uB098\uC758 \uC7A5\uBA74\uC774 \uC788\uC5B4.")), React.createElement("div", {
+  }, React.createElement("h2", null, "Timeline"), React.createElement("p", null, "시간 순서대로 꺼내보는 우리의 페이지.")), React.createElement("div", {
     className: "timeline"
   }, timeline.map(item => React.createElement("article", {
     className: "timeline-item",
@@ -606,9 +606,9 @@ function FinalSection() {
     className: "paper-card final-card"
   }, React.createElement("h2", {
     className: "hand-title"
-  }, "\uC55E\uC73C\uB85C\uC758 \uC6B0\uB9AC\uC5D0\uAC8C"), React.createElement("p", {
+  }, "앞으로의 우리에게 남기는 말"), React.createElement("p", {
     className: "bento-text"
-  }, "\uC544\uC9C1 \uCC44\uC6CC\uC9C0\uC9C0 \uC54A\uC740 \uD398\uC774\uC9C0\uAC00 \uB354 \uB9CE\uC544\uC11C \uC88B\uC544."), React.createElement("div", {
+  }, "아직 함께 채워갈 페이지가 더 많아서 좋아."), React.createElement("div", {
     className: "actions",
     style: {
       justifyContent: "center"
